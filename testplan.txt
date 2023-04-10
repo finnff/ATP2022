@@ -1,0 +1,37 @@
+Project- en Testplan: Cruisecontrol voor Skateboard
+
+Casusbeschrijving
+Het te ontwikkelen controlesysteem is een cruisecontrol voor een elektrisch skateboard. Het systeem moet de snelheid en remkracht van het skateboard regelen op basis van de huidige snelheid en de gewenste snelheid. Belangrijke waardes zijn de huidige snelheid, gewenste snelheid, acceleratie en remkracht. Er zullen twee sensoren worden gebruikt: een snelheidssensor en een versnellingsmeter. Twee actuatoren zijn nodig om het systeem te beïnvloeden: een motor voor acceleratie en een remmechanisme.
+
+Architectuurschets
+Hardware:
+
+Snelheidssensor: meet huidige snelheid
+Versnellingsmeter: meet acceleratie en remkracht
+Motor: zorgt voor acceleratie
+Remmechanisme: regelt de remkracht
+Microcontroller: verbindt sensoren en actuatoren, voert software uit
+Software:
+
+Snelheidscontroller (pure functie): ontvangt huidige en gewenste snelheid, berekent benodigde acceleratie of remkracht
+SensorInterface: communiceert met sensoren (snelheidssensor en versnellingsmeter)
+ActuatorInterface: communiceert met actuatoren (motor en remmechanisme)
+MainController: coördineert interacties tussen de interfaces en de snelheidscontroller
+Testselectie
+a. Unit test
+Snelheidscontroller: test of de berekening van de benodigde acceleratie en remkracht correct is op basis van de huidige en gewenste snelheid.
+b. Integratietest
+
+SensorInterface en ActuatorInterface: test of de communicatie tussen de interfaces en de bijbehorende hardwarecomponenten correct verloopt. Dit omvat het uitlezen van sensordata en het aansturen van de actuatoren.
+c. Systeemtest
+
+Reactietijd: test of het systeem snel genoeg reageert op veranderingen in de gewenste snelheid en de huidige snelheid om een veilige en comfortabele skateboardervaring te garanderen.
+Testuitvoering
+a. Unit test
+Snelheidscontroller: maak testcases met verschillende huidige en gewenste snelheden en controleer of de uitvoer overeenkomt met de verwachte waarden.
+b. Integratietest
+
+SensorInterface en ActuatorInterface: gebruik gemockte of gesimuleerde hardwarecomponenten om te testen of de interfaces correct communiceren met de sensoren en actuatoren.
+c. Systeemtest
+
+Reactietijd: simuleer verschillende scenario's waarin de gewenste snelheid of huidige snelheid verandert en meet hoe lang het systeem nodig heeft om de nieuwe situatie te bereiken. Vergelijk deze tijden met vooraf gedefinieerde drempelwaarden voor acceptabele reactietijden.

@@ -1,0 +1,237 @@
+---
+title: "Project en Testplan *Adaptive Cruise Control*"
+subtitle: "Finn Fonteijn ATP Bezem 22/33"
+date: 9-4-23
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+#  Casusbeschrijving:
+Het doel van dit project is het ontwikkelen van een adaptief cruise control systeem (ACCS) voor een voertuig. Het systeem regelt de snelheid van het voertuig en de afstand tot het voorliggende voertuig, waarbij gebruik wordt gemaakt van de volgende sensoren en actuatoren:
+
+# Sensoren:
+## **Wheel speed sensor**: meet de eigensnelheid van de wielen in m/s
+### Hardware: Infineon TLE5041plusC
+De TLE5041plusC is een magnetische hoeksensor die de wielsnelheid kan meten dankzij het Hall-effect in combinatie met een roterende as of magneet. Deze sensor is speciaal ontwikkeld voor 'harsh automotive requirements' en heeft geen andere componenten nodig dan het magnetische encoderwiel dat vastgemaakt moet worden aan de as/wiel. 
+
+De TLE5041plusC zet de sinusoïde van de sterkte van het magnetische veld, die ontstaat als het wiel draait, om naar een High/Low signaal via een two-wire current interface. De frequentie van deze veranderingen kan vervolgens door een microcontroller (of onze C++/Python binding) samen met informatie over de grootte van het wiel en het aantal magneten op het encoderwiel (Counts Per Revolution = CPR) omgezet worden naar een snelheid in meters per seconde.
+
+
+
+
+
+
+- Werkt van 1-5000hz (magnetisch veld veranderingen per seconde)
+- Kosten 5.15 euro per stuk.
+- Input voltage tussen 4.5v en 20v
+- Interfaced over current modulation:
+    +  Supply current - output low  :  7 mA
+    +  Supply current - output high : 14 mA
+- Self calibrating na 5 pulses
+
+[Link Datasheet](https://www.infineon.com/dgdl/Infineon-TLE5041PLUSC-DataSheet-v01_02-EN.pdf?fileId=5546d46265f064ff016632437f574f75)
+[Link buy on Mouser](https://nl.mouser.com/ProductDetail/Infineon-Technologies/TLE5041PLUSCAAMA1?qs=3Bi3m9r5MQasB7gUvrCn8A%3D%3D)
+
+
+![TLE](images/TLE.jpg){width=30%}
+![TLE](images/TLElevels.png){width=30%}
+
+
+####  **Front facing radar sensor**: *meet de afstand tot het voorliggende voertuig in meters
+Bosch Front radar
+<https://www.bosch-mobility.com/en/solutions/sensors/front-radar-sensor/>
+<https://www.bosch-mobility.com/media/global/products-and-services/passenger-cars-and-light-commercial-vehicles/driver-assistance-systems/multi-camera-system/front-radar-plus/onepager_front-radar_en_200608.pdf>
+
+
+### Actuatoren:
+
+- **Gaspedaal:** regelt de acceleratie van het voertuig (verhoogt eigensnelheid)
+    + Met interface: 0-100% waar 100 versnellen is met de maximale acceleratie constante
+
+- **Remsysteem:** regelt het afremmen van het voertuig (vermindert eigensnelheid)
+    + Met interface: 0-100% waar 100 remmen is met de maximale deacceleratie constante
+
+### Constanten:
+
+- **Maximale acceleratieconstante in $m/s^2$:** een constante waarde die de maximale acceleratie van het voertuig vertegenwoordigt
+- **Maximale vertragingconstante (remmen) in $m/s^2$:** een constante waarde die de maximale vertraging of vermindering van de snelheid van het voertuig vertegenwoordigt
+- **Wieldiameter in meters:**  een maat die wordt gebruikt om de omtrek van het wiel (velg + band) te berekenen, wat nodig is om de snelheid van het voertuig te bepalen
+- **Aantal counts per revolution van de wheelencoder voor wheel speed:**  een waarde die aangeeft hoeveel pulsen de wheelencoder genereert voor elke volledige omwenteling van het wiel; deze informatie wordt gebruikt om de snelheid van het voertuig te berekenen
+- **Seconden afstand tot voorligger in S:** een constante waarde die aangeeft wat de minimale veilige tijd is die nodig is om een veilige afstand te behouden tussen het voertuig en de voorligger
+
+De twee regelwaarden (eigensnelheid en afstand tot voorligger) worden beïnvloed door de actuatoren (gaspedaal en remsysteem) op basis van de constanten die in het systeem zijn gedefinieerd. Door de maximale acceleratie- en vertragingconstanten kan het systeem de snelheid van het voertuig effectief aanpassen om een veilige en comfortabele afstand tot het voorliggende voertuig te behouden. De informatie van de wheelencoder, in combinatie met de wieldiameter, stelt het systeem in staat om de eigensnelheid van het voertuig nauwkeurig te meten en te regelen.
+
+Voor de simulatie gebruiken we 3 verschillende sets Constants, om zo verschillende 
+<!--
+# ```{r}
+# library(knitr)
+
+# # Create a 3x4 matrix
+# my_matrix <- matrix(1:12, nrow = 4, ncol = 3)
+
+# # Convert the matrix to a data frame and add row and column names
+# my_df <- as.data.frame(my_matrix)
+# colnames(my_df) <- c("Hatchback", "SUV", "Ferrari" )
+# rownames(my_df) <- c("Max Acceleration", "Maximale vertraging ", "Wieldiameter", "Encoder CPR")
+
+# # Use kable() to create the table
+# kable(my_df)
+# ```
+-->
+
+|                    | Hatchback | SUV | Ferrari |
+|:---------------------|----------:|-----------:|-------------:|
+| Max Acceleration^[Berekend op basis 0-100 tijd: Mazda3, 1999 Chevrolet Tahoe, LaFerrari (6.4, 12.0, 2.4)] |         4.19 $m/s^2$|   2.23 $m/s^2$|       11.17 $m/s^2$|
+| Maximale vertraging^[ Berekend op basis van  $$\frac{(-31.3 m/s)}{2*stopping distance}$$ data uit *Car And Driver 70mph stopping distance* articlelen voor Mazda 3, Tahoe, LaFerrari (166ft, 248ft, 136ft)] |         -9.68 $m/s^2$|   -6.48 $m/s^2$|      -11.82 $m/s^2$|
+| Wieldiameter  in m     |         0.625m (25in) |   0.838m (33in) |      0.71m (28in) |
+| Encoder CPR        |         45 |   60 |      40 |
+| Seconden afstand  in S      |         3 |   2 |      1.5 |
+
+
+
+
+<!--
+
+
+https://www.caranddriver.com/features/a35048882/tahoe-yukon-escalade-braking-performance/
+https://www.caranddriver.com/features/g29674610/best-stopping-distances-braking-tested/
+https://www.auto-data.net/en/chevrolet-tahoe-gmt820-5.3-i-v8-4wd-273hp-14328
+https://www.topspeed.com/ferrari-laferrari-the-best-hybrid-supercar-ever/
+https://www.motortrend.com/reviews/2022-mazda-3-turbo-awd-sedan-first-test-review/#:~:text=Here%20are%20the%20numbers%3A%200,14.8%20seconds%20at%2094.6%20mph.
+
+-->
+
+
+
+
+
+
+
+
+
+
+Architectuurschetsen:
+Hardware:
+De wheel speed sensor is verbonden met de wielen van het voertuig en stuurt de snelheidsinformatie naar de centrale verwerkingsunit (CPU). De front facing radar sensor is aan de voorzijde van het voertuig geplaatst en stuurt afstandsgegevens naar de CPU. De CPU stuurt de signalen naar de actuatoren (gaspedaal en remsysteem).
+
+Software:
+De software bestaat uit verschillende klassen die de sensoren, actuatoren, CPU en algoritmes voor ACCS bevatten. De interfaces tussen de klassen zijn gedefinieerd om gegevens uit te wisselen en de algehele werking van het systeem te coördineren. Het regelsysteem is geïmplementeerd volgens het Functional Reactive Programming principe en is geschreven in Python, met gebruik van de C++-bibliotheek van de front-facing radar sensor.
+
+Testplan:
+Het testplan omvat unit tests, integratietests en systeemtests om de betrouwbaarheid en functionaliteit van het ACCS te garanderen.
+
+Unit tests:
+
+- Test de nauwkeurigheid van de wheel speed sensor en de front facing radar sensor om te verzekeren dat zij correcte gegevens aanleveren.
+- Test de functionaliteit van het gaspedaal en het remsysteem om te controleren of ze correct reageren op de input van de CPU.
+Integratietests:
+
+- Test de communicatie tussen de sensoren en de CPU, en tussen de CPU en de actuatoren, om te waarborgen dat gegevens correct worden uitgewisseld en het systeem op de juiste manier reageert op sensorinput.
+- Test de interface tussen het regelsysteem en de front-facing radar sensor om te controleren of de communicatie tussen het regelsysteem en de sensor correct verloopt.
+Systeemtests:
+
+- Test het adaptieve cruise control algoritme onder verschillende verkeersomstandigheden en snelheden om te controleren of het systeem correct functioneert en veilig en comfortabel rijgedrag bevordert.
+- Test het rijgedrag van het voertuig in een simulatie-omgeving waarin verschillende scenario's worden nagebootst, zoals een voertuig dat plotseling remt of van rijbaan verandert.
+De uitvoering van deze tests zorgt voor een grondige evaluatie van het ACCS, waarbij de betrouwbaarheid en prestaties van het
+
+
+
+# Adaptive Cruise Control Systeem (ACCS) IEEE 829 Testplan
+(Op basis van <https://www.mammoth-ai.com/how-to-write-a-test-plan-with-the-ieee-829-standard/>)
+
+1. Test plan identifier:
+    ACCS Testplan v1.0
+
+2. Introduction:
+Dit testplan beschrijft de testprocedures en teststrategie voor het Adaptive Cruise Control Systeem (ACCS), dat de snelheid en afstand tot het voorliggende voertuig regelt met behulp van wheel speed sensors, front facing radar sensors, gaspedaal en remsysteem.
+
+3. Test items:
+De test items omvatten de volgende componenten van het ACCS:
+
+- Wheel speed sensor
+- Front facing radar sensor
+- Gaspedaal
+- Remsysteem
+- CPU
+- ACCS algoritme
+
+4. Features to be tested:
+De te testen functies zijn:
+
+- Nauwkeurigheid van de wheel speed sensor en front facing radar sensor
+- Functionaliteit van het gaspedaal en het remsysteem
+- Communicatie tussen sensoren, CPU en actuatoren
+- Adaptieve cruise control algoritme onder verschillende verkeersomstandigheden en snelheden
+
+5. Features not to be tested:
+
+- Niet-ACCS gerelateerde voertuigsystemen
+- Interactie tussen ACCS en bestuurder
+- Hardware- en software compatibiliteit met andere voertuigsystemen
+
+6. Item pass/fail criteria:
+De volgende criteria worden gebruikt om te bepalen of een testitem slaagt of faalt:
+
+- Nauwkeurigheid van sensoren binnen specificaties
+- Correcte werking van actuatoren volgens input van de CPU
+- Ononderbroken en foutloze communicatie tussen componenten
+- Veilig en comfortabel rijgedrag onder verschillende verkeersomstandigheden
+
+7. Suspension criteria and resumption requirements:
+Testen worden opgeschort als een van de volgende situaties zich voordoet:
+
+- Kritieke hardware- of softwarefouten
+- Onveilige testomstandigheden
+- Onvoldoende testresultaten
+Hervatting van de tests zal plaatsvinden zodra de problemen zijn opgelost en de testomgeving weer veilig en functioneel is.
+
+8. Test deliverables:
+De volgende test deliverables zullen worden opgeleverd:
+
+- Testplan
+- Test cases en testscripts
+- Test dataverzameling en analyse
+- Testrapport
+
+9. Testing tasks:
+De tests zullen de volgende taken omvatten:
+
+- Voorbereiding van testomgeving en test cases
+- Uitvoeren van unit tests, integratietests en systeemtests
+- Analyseren van testresultaten
+- Opstellen van testrapport
+
+10. Environmental needs:
+De testomgeving omvat een gesimuleerd of echt voertuig met de ACCS-componenten geïnstalleerd en operationeel. Een testtraject zal worden voorbereid voor systeemtests, met verschillende verkeersomstandigheden en snelheden om de prestaties van het ACCS te evalueren.
+
+11. Responsibilities:
+Het testteam is verantwoordelijk voor het plannen, uitvoeren en analyseren van de tests en het opstellen van het testrapport. Het ontwikkelteam is verantwoordelijk voor het oplossen van eventuele problemen die tijdens de tests worden geïdentificeerd.
+
+12. Staffing and training needs:
+Het testteam zal bestaan uit ervaren test engineers met kennis van voertuigsystemen, sensoren en actuatoren. Indien nodig, zal aanvullende training worden verzorgd om het team vertrouwd te maken met de specifieke aspecten van het ACCS en de gebruikte testapparatuur.
+
+14. Schedule:
+De tests zullen volgens het volgende schema worden uitgevoerd:
+
+- Week 1: Voorbereiding van testomgeving en test cases
+- Week 2-3: Unit tests en integratietests
+- Week 4-5: Systeemtests
+- Week 6: Analyse van testresultaten en opstellen van testrapport
+
+15. Risks and contingencies:
+Mogelijke testrisico's zijn onder meer:
+
+- Onnauwkeurige of onbetrouwbare sensoren en actuatoren
+- Fouten in de communicatie tussen componenten
+- Beperkingen in de testomgeving of testapparatuur
+
+In geval van problemen zullen er geschikte maatregelen worden genomen om de impact op het testschema te minimaliseren en de kwaliteit van de testresultaten te waarborgen.
+16. Approvals:
+Het testplan zal ter goedkeuring worden voorgelegd aan de projectmanager, de verantwoordelijke voor het ontwikkelteam en eventuele andere belanghebbenden. Na goedkeuring van het testplan zullen de tests worden uitgevoerd volgens het opgestelde schema.
