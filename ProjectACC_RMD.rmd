@@ -7,6 +7,7 @@ output:
     toc: true
     toc_depth: 3
     number_sections: true
+urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
@@ -19,16 +20,17 @@ Het doel van dit project is het ontwikkelen van een adaptief cruise control syst
 
 # Sensoren:
 ## MeasuredSpeedSensor
-    Omdat de snelheid van een voortuig afhangt van hoe vaak die wielen roteren en hoe groot die wielen zijn, bestaat deze abstracte sensor uit een WheelSpeedSensor en een MeasuredSpeedCalculator
+    Omdat de snelheid van een voortuig afhangt van hoe vaak die wielen roteren en hoe groot die wielen zijn, bestaat deze abstracte sensor uit twee losse 'sub-sensors' *WheelSpeedSensor* en een *MeasuredSpeedCalculator*
 
-## **Wheel speed sensor**: meet de rotatie van de wielen in hz
-### Hardware: Infineon TLE5041plusC
+### **Wheel speed sensor**: meet de rotatiesnelheid van de wielen
+#### Hardware: Infineon TLE5041plusC
 De TLE5041plusC is een magnetische hoeksensor die de wielsnelheid kan meten dankzij het Hall-effect in combinatie met een roterende as of magneet. Deze sensor is speciaal ontwikkeld voor 'harsh automotive requirements' en heeft geen andere componenten nodig dan het magnetische encoderwiel dat vastgemaakt moet worden aan de as/wiel. 
 
-De TLE5041plusC zet de sinusoïde van de sterkte van het magnetische veld, die ontstaat als het wiel draait, om naar een High/Low signaal via een two-wire current interface. Deze sensor weet aleen iets over de rotatiesnelheid, niet over de snelheid van het voertuig.
+De TLE5041plusC zet de sinusoïde(sterkte magnetischveld over tijd) die ontstaat als het wiel draait, om naar een High/Low signaal via een two-wire current interface. Deze sensor weet aleen iets over de rotatiesnelheid van het encoderwiel, niets over de snelheid van het voertuig.
 De frequentie van deze veranderingen kan vervolgens door bv. een microcontroller (of onze C++/Python binding, zie MeasuredSpeedCalculator) samen met informatie over de grootte van het wiel en het aantal magneten op het encoderwiel (Counts Per Revolution = CPR) omgezet worden naar een snelheid in meters per seconde.
 
 Kenmerken:
+
 - Werkt van 1-5000hz (magnetisch veld veranderingen per seconde)
 - Kosten 5.15 euro per stuk.
 - Input voltage tussen 4.5v en 20v
@@ -38,19 +40,19 @@ Kenmerken:
 - Self calibrating na 5 pulses
 
 [Link Datasheet](https://www.infineon.com/dgdl/Infineon-TLE5041PLUSC-DataSheet-v01_02-EN.pdf?fileId=5546d46265f064ff016632437f574f75)
-[Link buy on Mouser](https://nl.mouser.com/ProductDetail/Infineon-Technologies/TLE5041PLUSCAAMA1?qs=3Bi3m9r5MQasB7gUvrCn8A%3D%3D)
+
+[Link to buy on Mouser](https://nl.mouser.com/ProductDetail/Infineon-Technologies/TLE5041PLUSCAAMA1?qs=3Bi3m9r5MQasB7gUvrCn8A%3D%3D)
 
 
-![Logic levels en magneet sterkte ](images/TLElevels.png){width=30%}
+![Logic levels en magneet sterkte](images/TLElevels.png){width=50%} ![TLE5041plusC sensor](images/TLE.jpg){width=30%}
 
-![TLE5041plusC sensor](images/TLE.jpg){width=30%}
 
-## MeasuredSpeedCalculator
-### C++ Code
-Normaal zou dit door een apparte microcontroller, of de CPU zelf gedaan wordt, maar dit word in C++ nageboost, we moeten een current meter maken, zodat we het verschill in geleverde stroom van de wheelspeed sensor kunnen meten, en hieruit de logic levels halen.
-C++ code die de High/Low current outputs van de TLE5041plusC afleest, de frequentie/interval tussen deze outputs opmeet, en samen met de gegeven constanten Wieldiameter en magnetic wheelencoder CPR kan de MeasuredSpeedCalculator de snelheid van het voertuig berekenen.
 
-\newpage
+### MeasuredSpeedCalculator
+#### C++ Code
+Normaal zou dit door een apparte microcontroller, of de CPU zelf gedaan worden, maar we gaan dit als in C++ nabootsen. Hiervoor moeten we een current meter maken, zodat we het verschill in geleverde stroom van de wheelspeed sensor kunnen meten. Hieruit kunnen we de logic levels halen.
+Naast dat de MeasuredSpeedCalculator C++ code de High/Low current outputs van de TLE5041plusC afleest rekent die ook met de frequentie/interval tussen deze outputs. Als dit bekent is kan de MeasuredSpeedCalculator samen met de gegeven constanten Wieldiameter en magnetic wheelencoder CPR de snelheid van het voertuig berekenen, *MeasuredSpeed*.
+
 
 
 
@@ -65,19 +67,22 @@ We zullen deze sensor als abstracte sensor zien die de afstand tot het voorligge
 - Maximaal bereik: 210 m
 - Update Rate: 500ms
 
-[Link naar Bosch mobility website](https://www.bosch-mobility.com/en/solutions/sensors/front-radar-sensor/)
+[Link naar Bosch mobility website](https://www.bosch-mobility.com/en/solutions/sensors/front-radar-sensor/) ![radar](images/bosch.jpg){width=30%}
+
+
 [Link naar specificaties Bosch Radar](https://www.bosch-mobility.com/media/global/products-and-services/passenger-cars-and-light-commercial-vehicles/driver-assistance-systems/multi-camera-system/front-radar-plus/onepager_front-radar_en_200608.pdf)
 
-![radar](images/bosch.jpg){width=30%}
 
 
 # Actuatoren:
 
-- **Gaspedaal:** regelt de acceleratie van het voertuig (verhoogt TrueVehicleSpeed)
-    + Met interface: 0-100% waar 100 versnellen is met de maximale acceleratie constante
+## Gaspedaal
+Het Gaspedaal regelt de acceleratie van het voertuig (verhoogt TrueVehicleSpeed in de Simulator)
+Met interface: 0-100% waar 100 versnellen is met de maximale acceleratie constante
 
-- **Remsysteem:** regelt het afremmen van het voertuig (vermindert TrueVehicleSpeed)
-    + Met interface: 0-100% waar 100 remmen is met de maximale deacceleratie constante
+## Remsysteem
+Het Remsysteem regelt het afremmen van het voertuig (vermindert TrueVehicleSpeed in de Simulator)
+Met interface: 0-100% waar 100 remmen is met de maximale deacceleratie constante
 
 # Constanten:
 
@@ -85,9 +90,9 @@ We zullen deze sensor als abstracte sensor zien die de afstand tot het voorligge
 - **Maximale vertragingconstante (remmen) in $m/s^2$:** een constante waarde die de maximale vertraging of vermindering van de snelheid van het voertuig vertegenwoordigt
 - **Wieldiameter in meters:**  een maat die wordt gebruikt om de omtrek van het wiel (velg + band) te berekenen, wat nodig is om de snelheid van het voertuig te bepalen
 - **Aantal counts per revolution van de wheelencoder voor wheel speed:**  een waarde die aangeeft hoeveel pulsen de wheelencoder genereert voor elke volledige omwenteling van het wiel; deze informatie wordt gebruikt om de snelheid van het voertuig te berekenen
-- **Seconden afstand tot voorligger in S:** een constante waarde die aangeeft wat de minimale veilige tijd is die nodig is om een veilige afstand te behouden tussen het voertuig en de voorligger
+- **Gewenste seconden afstand tot voorligger in S:** een constante waarde die aangeeft wat de minimale veilige tijd is die nodig is om een veilige afstand te behouden tussen het voertuig en de voorligger
 
-De twee regelwaarden (MeasuredSpeed en afstand tot voorligger) worden beïnvloed door de actuatoren (gaspedaal en remsysteem) op basis van de constanten die in het systeem zijn gedefinieerd. Door de maximale acceleratie- en vertragingconstanten kan het systeem de snelheid van het voertuig effectief aanpassen om een veilige en comfortabele afstand tot het voorliggende voertuig te behouden. De informatie van de wheelencoder, in combinatie met de wieldiameter, stelt het systeem in staat om de MeasuredSpeed van het voertuig nauwkeurig te meten en te regelen.
+De twee regelwaarden (**MeasuredSpeed** en **MeasuredAfstandTotVoorligger**) worden beïnvloed door de actuatoren (gaspedaal en remsysteem) op basis van de constanten die in het systeem zijn gedefinieerd. Door de maximale acceleratie- en vertragingconstanten kan het systeem de snelheid van het voertuig effectief realistisch(snelheid veranderen kost tijd) aanpassen om een veilige en comfortabele afstand tot het voorliggende voertuig te behouden. De informatie van de wheelencoder, in combinatie met de wieldiameter, stelt het systeem in staat om de MeasuredSpeed van het voertuig nauwkeurig te meten.
 
 
 <!--
@@ -111,19 +116,18 @@ De twee regelwaarden (MeasuredSpeed en afstand tot voorligger) worden beïnvloed
 
 Om het hele ACCS-systeem te simuleren, moeten we verschillende externe onderdelen implementeren die de werkelijke waarden en omstandigheden in het systeem vertegenwoordigen. Deze externe componenten zijn de "echte wereld" variabelen die moeten worden gemeten en gecontroleerd door het ACCS-systeem. Hier is een overzicht van de belangrijkste externe onderdelen die nodig zijn voor de simulatie:
 
-- TrueVehicleSpeed: Dit is de werkelijke snelheid van het voertuig in de simulatie. Het ACCS-systeem moet deze waarde benaderen door middel van de VehicleSpeedCalculator en de WheelSpeedSensor.
-- TrueDistanceToVoorligger: Dit is de werkelijke afstand tot het voorliggende voertuig in de simulatie. Het ACCS-systeem moet deze waarde meten met behulp van de Front Facing Radar Sensor.
-- TrueVoorliggerSpeed: Dit is de werkelijke snelheid van het voorliggende voertuig in de simulatie. Deze waarde beïnvloedt de TrueDistanceToVoorligger en moet op de achtergrond worden bijgehouden in de simulatie.
-- TrueGaspedaalPosition: Dit is de werkelijke positie van het gaspedaal in de simulatie. Het ACCS-systeem moet deze waarde aanpassen om de snelheid van het voertuig te regelen.
-- TrueRemsysteemPosition: Dit is de werkelijke positie van het remsysteem in de simulatie. Het ACCS-systeem moet deze waarde aanpassen om het afremmen van het voertuig te regelen.
+- **TrueVehicleSpeed** : Dit is de werkelijke snelheid van het voertuig in de simulatie. Het ACCS-systeem moet deze waarde benaderen door middel van de VehicleSpeedCalculator en de WheelSpeedSensor.
+- **TrueDistanceToVoorligger** : Dit is de werkelijke afstand tot het voorliggende voertuig in de simulatie. Het ACCS-systeem moet deze waarde meten met behulp van de Front Facing Radar Sensor.
+- **TrueVoorliggerSpeed** : Dit is de werkelijke snelheid van het voorliggende voertuig in de simulatie. Deze waarde beïnvloedt de TrueDistanceToVoorligger en moet op de achtergrond worden bijgehouden in de simulatie.
+- **TrueVehicleAcceleration** : Dit is de werkelijke verandering (remmen of gasgeven) van TrueVehicleSpeed in de simulatie. Dit is de waarde die door de Gaspedaal/Remsysteem monads wordt aangepast.
 
 Door deze externe componenten in de simulatie te implementeren, kan het ACCS-systeem worden getest en gevalideerd onder realistische omstandigheden. Het systeem moet in staat zijn om deze "echte wereld" variabelen te meten en erop te reageren om effectief de snelheid van het voertuig en de afstand tot het voorliggende voertuig te regelen.
 
 
-
+\newpage
 
 # Groepen Constants voor Simulator. 
-Voor de simulatie gebruiken we 3 verschillende groepen constants, om zo verschillende type voertuigen te simuleren.
+Voor de simulatie gebruiken we 3 verschillende groepen constants, om zo verschillende type voertuigen te simuleren, deze zullen ook worden gebruikt een Unit test.
 
 |                    | Hatchback | SUV | Ferrari |
 |:---------------------|----------:|-----------:|-------------:|
@@ -211,73 +215,80 @@ webshot("g.html", file = "g.png",vwidth = 650)
 
 
 ## Software:
-De software bestaat uit verschillende klassen die de sensoren, actuatoren, CPU en algoritmes voor ACCS bevatten. De interfaces tussen de klassen zijn gedefinieerd om gegevens uit te wisselen en de algehele werking van het systeem te coördineren. Het regelsysteem is geïmplementeerd volgens het Functional Reactive Programming principe en is geschreven in Python, met gebruik van de C++-bibliotheek van de front-facing radar sensor.
+De software bestaat uit verschillende klassen die de sensoren, actuatoren, CPU en algoritmes voor ACCS bevatten. De interfaces tussen de klassen zijn gedefinieerd om gegevens uit te wisselen en de algehele werking van het systeem te coördineren. Het regelsysteem is geïmplementeerd volgens het Functional Reactive Programming principe en is geschreven in Python, met gebruik van de C++-bibliotheek voor de SpeedSensor.
+
+
+## Verdere abstractie voor gaspedaal/remsysteem
+Waarchijnlijk is het voor het implementeren makkelijker om acceleratie/deacceleratie als een functie te zien, waar deacceleratie negative acceleratie is.
+Er komt dan nog tussen de CPU en het remsysteem en gaspedaal ongeveer het volgende stukje code (abstraction interface achtig onderdeel). 
+
+```haskell
+
+RemmenOfGasgeven :: (Num a, Ord a) => (a -> b) -> (a -> b) -> a -> b
+RemmenOfGasgeven rempedaal gaspedaal a
+  | a <= 0    = rempedaal a
+  | otherwise = gaspedaal a
+
+```
+
+In dit geval zit de logica/berekening van *Acceleration in $m/s^2$* naar *GaspedaalPercentage int:(range 0,100)* nog in de  `gaspedaal a ` functie.
+
 
 ### Diagram
-![joplin render UPDATE WITH WHEELSPEED SENSOR ACUTAL OUTPUTS](images/classscreen.png){width=100%}
+![Class Diagram: functional code calling parameters is represented by a dependancy relationship.](images/finalClass.png){width=100%}
 
 ```{r,echo=FALSE, results = "asis"}
 library(DiagrammeR)
 library(networkD3)
 library(webshot2)
 
-h  <- mermaid("
-classDiagram
-    class ACCS {
-        +setVehicleSpeed()
-        +setDistanceToVehicleInFront()
-        +controlSpeed()
-    }
 
-    class VehicleSpeedSensor {
-        +getSpeed()
-    }
+#  ```mermaid
+# classDiagram
+#     class WheelSpeedSensor {
+#         +measureOutputCurrent(): float
+#     }
+#     class MeasuredSpeedCalculator {
+# 				-WHEEL_DIAMETER:float
+# 				-ENCODER_WHEEL_CPR:int
+#         +calculateVehicleSpeed(WheelSpeedSensorOutputCurrent: float, wheel_diameter: float, cpr: int): float
+#     }
+#     class MeasuredSpeedSensor {
+#         +getMeasuredSpeed(): float
+#     }
+#     class FrontRadarSensor {
+#         +measureDistanceToFrontVehicle(): float
+#     }
+#     class GasPedaal {
+#         +PressGasPedaal(percentage:int): void
+#         -MAX_ACCELERATION: float
+#     }
+#     class RemSysteem {
+#         +PressRemPedaal(percentage:int): void
+#         -MAX_DECELERATION: float
+#     }
+#     class FunctionalCPU {
+#         +calculateNewAcceleration(vehicle_speed: float, distance_to_front_vehicle: float, max_acceleration: float, seconds_distance_to_vehicle_in_front: float): float
+#         +calculateNewDeceleration(vehicle_speed: float, distance_to_front_vehicle: float, max_deceleration: float, seconds_distance_to_vehicle_in_front: float): float
+#         -DESIRED_SECONDS_TO_VEHICLE_IN_FRONT: float
+#     }
+#     class RemmenOfGasgeven {
+#         +adjustAcceleration(acceleration: float): void
+#     }
 
-    class WheelSpeedSensor {
-        +getRotationFrequency()
-    }
+#     MeasuredSpeedSensor *-- WheelSpeedSensor : Composition
+#     MeasuredSpeedSensor *-- MeasuredSpeedCalculator : Composition
+#     WheelSpeedSensor -- MeasuredSpeedCalculator : Association
+#     MeasuredSpeedSensor ..> FunctionalCPU : Dependency
+#     FrontRadarSensor ..> FunctionalCPU : Dependency
+#     FunctionalCPU ..> RemmenOfGasgeven : Dependency
+#     RemmenOfGasgeven -- GasPedaal : Association
+#     RemmenOfGasgeven -- RemSysteem : Association
+#    ", height = '100%', width = '100%')
 
-    class VehicleSpeedCalculator {
-        +calculateSpeed()
-    }
-
-    class FrontRadarSensor {
-        +getDistance()
-    }
-
-    class GasPedal {
-        +setAcceleration(int: value)
-    }
-
-    class BrakeSystem {
-        +setDeceleration(int: value)
-    }
-
-    class Constants {
-        +maxAcceleration
-        +maxDeceleration
-        +wheelDiameter
-        +countsPerRevolution
-        +secondsDistanceToVehicleInFront
-    }
-
-    ACCS -- VehicleSpeedSensor : Uses >
-    ACCS -- FrontRadarSensor : Uses >
-    ACCS -- GasPedal : Controls >
-    ACCS -- BrakeSystem : Controls >
-    ACCS -- Constants : Uses >
-
-    VehicleSpeedSensor -- WheelSpeedSensor : Uses >
-    VehicleSpeedSensor -- VehicleSpeedCalculator : Uses >
-
-    WheelSpeedSensor -- VehicleSpeedCalculator : Sends data >
-    FrontRadarSensor -- ACCS : Sends data >
-    ", height = '100%', width = '100%')
-
-saveNetwork(h, "h.html")
+# saveNetwork(h, "h.html")
 
 #webshot("h.html", file = "h.png") 
-
 
 ```
 
@@ -301,7 +312,7 @@ uhh we moeten monad maken voor actuatoren zodat deze echt iets kunnen doen
 
 ## Verdere abstractie voor gaspedaal/remsysteem
 Waarchijnlijk is het voor het implementeren makkelijker om acceleratie/deacceleratie als een functie te zien, waar deacceleratie negative acceleratie is.
-Er komt dan nog tussen de CPU en het remsysteem en gaspedaal code (abstraction interface achtig onderdeel)
+Er komt dan nog tussen de CPU en het remsysteem en gaspedaal code (abstraction interface achtig onderdeel). In dit geval zit de logica/berekening van *Acceleration in $m/s^2$* naar *GaspedaalPercentage int:(range 0,100)* nog in de  `gaspedaal a ` functie.
 
 ```haskell
 
