@@ -292,38 +292,67 @@ library(webshot2)
 
 ```
 
-## FIX SENSOR NAMES WHEELSPEED? is HIGH LOW+ ADD IN WHY WE ARE USING FUNCTIONAL? DESIGN
 
-1. WheelSpeedSensor: Deze klasse is verantwoordelijk voor het meten van de wielsnelheid. De klasse heeft twee private variabelen, CPR en WHEEL_DIAMETER, die respectievelijk het aantal counts per revolution van de wielencoder en de wieldiameter in meters bevatten.
-2. MeasuredSpeedCalculator: Deze klasse ontvangt de wielsnelheid van de WheelSpeedSensor en berekent de voertuigsnelheid op basis van de wielsnelheid. De berekening is een puur functionele operatie.
-3. FrontRadarSensor: Deze klasse meet de afstand tot het voorliggende voertuig. Deze waarde wordt vervolgens doorgegeven aan de PureFunctions klasse.
-4. Throttle: Deze klasse regelt de acceleratie van het voertuig. Het ontvangt de berekende acceleratie van de PureFunctions klasse en past deze toe op het voertuig. De klasse heeft een private variabele MAX_ACCELERATION, die de maximale acceleratieconstante in m/s² bevat.
-5. BrakeSystem: Deze klasse regelt het afremmen van het voertuig. Het ontvangt de berekende vertraging van de PureFunctions klasse en past deze toe op het voertuig. De klasse heeft een private variabele MAX_DECELERATION, die de maximale vertragingconstante (remmen) in m/s² bevat.
-6. PureFunctions: Deze klasse bevat twee puur functionele methoden, calculateNewAcceleration() en calculateNewDeceleration(). Deze methoden nemen respectievelijk de voertuigsnelheid, afstand tot het voorliggende voertuig, maximale acceleratie/deceleratie en seconden afstand tot het voorliggende voertuig als parameters en berekenen de nieuwe acceleratie of vertraging. De klasse heeft een private variabele SECONDS_DISTANCE_TO_VEHICLE_IN_FRONT, die de minimale veilige tijd aangeeft om een veilige afstand te behouden tussen het voertuig en het voorliggende voertuig.
-7. In dit diagram zijn er relaties tussen de verschillende klassen, die aangeven hoe gegevens worden doorgegeven en gebruikt:
-    - WheelSpeedSensor stuurt gegevens naar MeasuredSpeedCalculator.
-    - MeasuredSpeedCalculator stuurt gegevens naar PureFunctions.
-    - FrontRadarSensor stuurt gegevens naar PureFunctions.
-    - PureFunctions stuurt gegevens naar Throttle en BrakeSystem.
+1. **WheelSpeedSensor** : Deze klasse is verantwoordelijk voor het meten van de wielsnelheid(eigenlijk aleen Hall Effect). Het bevat een methode `measureOutputCurrent()` die de uitgangsstroom van de sensor meet.
+2. **MeasuredSpeedCalculator** : Deze klasse ontvangt de uitgangsstroom van de WheelSpeedSensor en berekent de voertuigsnelheid op basis van de wielsnelheid en andere constanten zoals WHEEL_DIAMETER en ENCODER_WHEEL_CPR. De berekening gebeurt in de methode `calculateVehicleSpeed()`.
+3. **MeasuredSpeedSensor** : Deze klasse is verantwoordelijk voor het verkrijgen van de gemeten snelheid van het voertuig. Het bevat een methode `getMeasuredSpeed()` die de gemeten voertuigsnelheid retourneert.
+4. **FrontRadarSensor** : Deze klasse meet de afstand tot het voorliggende voertuig. Deze waarde wordt vervolgens doorgegeven aan de FunctionalCPU klasse.
+5. **GasPedaal** : Deze klasse regelt de acceleratie van het voertuig. Het ontvangt de berekende acceleratie van de RemmenOfGasgeven klasse en past deze toe op het voertuig. De klasse heeft een private variabele MAX_ACCELERATION, die de maximale acceleratieconstante in m/s² bevat.
+6. **RemSysteem** : Deze klasse regelt het afremmen van het voertuig. Het ontvangt de berekende vertraging van de RemmenOfGasgeven klasse en past deze toe op het voertuig. De klasse heeft een private variabele MAX_DECELERATION, die de maximale vertragingconstante (remmen) in m/s² bevat.
+7. **FunctionalCPU** : Deze klasse bevat twee methoden, `calculateNewAcceleration()` en `calculateNewDeceleration()`. Deze methoden nemen respectievelijk de voertuigsnelheid, afstand tot het voorliggende voertuig, maximale acceleratie/deceleratie en seconden afstand tot het voorliggende voertuig als parameters en berekenen de nieuwe acceleratie of vertraging, om zo dichter bij de gewenste afstand tot de voorligger te komen. De klasse heeft een private variabele DESIRED_SECONDS_TO_VEHICLE_IN_FRONT, die de minimale veilige tijd aangeeft om een veilige afstand te behouden tussen het voertuig en het voorliggende voertuig.
+8. **RemmenOfGasgeven** : Deze klasse is verantwoordelijk voor het aanpassen van de acceleratie van het voertuig op basis van de berekende waarden van de FunctionalCPU klasse. Het bevat een methode `adjustAcceleration()` die de acceleratie aanpast.
 
-Deze relaties zorgen voor een duidelijke scheiding tussen de verschillende verantwoordelijkheden en taken van elke klasse en geven een overzicht van de stroom van gegevens en interacties tussen de componenten van het ACCS.
+De relaties tussen de verschillende klassen: 
 
-uhh we moeten monad maken voor actuatoren zodat deze echt iets kunnen doen
+- MeasuredSpeedSensor heeft een compositierelatie met WheelSpeedSensor en MeasuredSpeedCalculator. (Bestaat uit deze Twee Subsensors)
+- WheelSpeedSensor heeft een associatierelatie met MeasuredSpeedCalculator. (de Calculator moet elke keer de measureOutputCurrent() method aanroepen)
+- MeasuredSpeedSensor, FrontRadarSensor en FunctionalCPU hebben dependancyrelaties. (dependancyrelaties zijn mischien niet helemaal 'correct' maar omdat dit functioneele stukken code zijn, weergeeft deze relatie de functionele inputs) 
+- RemmenOfGasgeven heeft associatierelaties met GasPedaal en RemSysteem. (Het GasPedaal en RemSysteem moeten opvragen wat de dubbelzinnige acceleration waarde betekend in de RemmenOfGasgeven (positief of negatief))
 
-## Verdere abstractie voor gaspedaal/remsysteem
-Waarchijnlijk is het voor het implementeren makkelijker om acceleratie/deacceleratie als een functie te zien, waar deacceleratie negative acceleratie is.
-Er komt dan nog tussen de CPU en het remsysteem en gaspedaal code (abstraction interface achtig onderdeel). In dit geval zit de logica/berekening van *Acceleration in $m/s^2$* naar *GaspedaalPercentage int:(range 0,100)* nog in de  `gaspedaal a ` functie.
+## Flowchart
 
-```haskell
+### Diagram
+```{r,echo=FALSE, results = "asis"}
+library(DiagrammeR)
+library(networkD3)
+library(webshot2)
 
-RemmenOfGasgeven :: (Num a, Ord a) => (a -> b) -> (a -> b) -> a -> b
-RemmenOfGasgeven rempedaal gaspedaal a
-  | a <= 0    = rempedaal a
-  | otherwise = gaspedaal a
+k  <- mermaid("
+    graph TB
+    A[WheelSpeedSensor - TLE5041plusC]
+    B[MeasuredSpeedCalculator - C++ code]
+    F[FrontRadarSensor]
+    C[FunctionalCPU]
+    D[GasPedaal]
+    E[RemSysteem]
+    subgraph Sensors
+        subgraph VehicleSpeedSensor
+            A -->|CurrentModulation| B
+        end
+        F
+    end
+    B --> C
+    F --> C
+    subgraph FunctionalCPU
+        C
+    end
+    C --> D
+    C --> E
+    subgraph Actuators
+        D
+        E
+    end
 
+    ", height = '200%', width = '140%')
+
+saveNetwork(k, "k.html")
+
+webshot("k.html", file = "k.png",vwidth = 650) 
 ```
 
 
+
+\newpage
 
 # Testplan:
 Het testplan omvat unit tests, integratietests en systeemtests om de betrouwbaarheid en functionaliteit van het ACCS te garanderen.
