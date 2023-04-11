@@ -321,7 +321,7 @@ Het testplan omvat unit tests, integratietests en systeemtests om de betrouwbaar
 ## Unit Test: MeasuredSpeedCalculator
 
 De MeasuredSpeedCalculator is een cruciaal onderdeel van het systeem, aangezien het de snelheid van het voertuig berekent op basis van de input van de WheelSpeedSensor en de constanten (Wieldiameter en CPR van het encoderwiel). Een nauwkeurige snelheidsberekening is essentieel voor het regelen van de snelheid van het voertuig en het behouden van een veilige afstand tot het voorliggende voertuig.
-
+     
 Test: Testen of de MeasuredSpeedCalculator de snelheid van het voertuig correct berekent op basis van verschillende inputwaarden(Hatchback,SUV,Ferrari) van de WheelSpeedSensor, Wieldiameter en CPR van het encoderwiel.
 
 
@@ -386,13 +386,9 @@ Dit testplan beschrijft de testprocedures en teststrategie voor het Adaptive Cru
 
 3. Test items:
 De test items omvatten de volgende componenten van het ACCS:
-
-- Wheel speed sensor
-- Front facing radar sensor
-- Gaspedaal
-- Remsysteem
-- CPU
-- ACCS algoritme
+ 1. Unit Test: MeasuredSpeedCalculator
+ 2. Integratietest: Interface 12V Current Modulation tussen de WheelSpeedSensor en MeasuredSpeedSensor
+ 3. Systeemtest: TBA maar totaal plaatje iets van 
 
 4. Features to be tested:
 De te testen functies zijn:
