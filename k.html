@@ -15,9 +15,9 @@
 </head>
 <body style="background-color: white;">
 <div id="htmlwidget_container">
-  <div id="htmlwidget-b2cf43c27d82faf61cc5" style="width:140%;height:200%;" class="DiagrammeR html-widget "></div>
+  <div id="htmlwidget-1d96f6f390b907f387b6" style="width:140%;height:200%;" class="DiagrammeR html-widget "></div>
 </div>
-<script type="application/json" data-for="htmlwidget-b2cf43c27d82faf61cc5">{"x":{"diagram":"\n    graph TB\n    A[WheelSpeedSensor - TLE5041plusC]\n    B[MeasuredSpeedCalculator - C++ code]\n    F[FrontRadarSensor]\n    C[FunctionalCPU]\n    D[GasPedaal]\n    E[RemSysteem]\n    subgraph Sensors\n        subgraph VehicleSpeedSensor\n            A -->|CurrentModulation| B\n        end\n        F\n    end\n    B --> C\n    F --> C\n    subgraph FunctionalCPU\n        C\n    end\n    C --> D\n    C --> E\n    subgraph Actuators\n        D\n        E\n    end\n\n    "},"evals":[],"jsHooks":[]}</script>
-<script type="application/htmlwidget-sizing" data-for="htmlwidget-b2cf43c27d82faf61cc5">{"viewer":{"width":"140%","height":"200%","padding":15,"fill":false},"browser":{"width":"140%","height":"200%","padding":40,"fill":false}}</script>
+<script type="application/json" data-for="htmlwidget-1d96f6f390b907f387b6">{"x":{"diagram":"\nflowchart LR\n    Start --> FunctionalCPU\n    FunctionalCPU --> MeasureWheelSpeed\n    MeasureWheelSpeed --> CalculateVehicleSpeed\n    CalculateVehicleSpeed --> GetMeasuredSpeed\n    \n    "},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-1d96f6f390b907f387b6">{"viewer":{"width":"140%","height":"200%","padding":15,"fill":false},"browser":{"width":"140%","height":"200%","padding":40,"fill":false}}</script>
 </body>
 </html>

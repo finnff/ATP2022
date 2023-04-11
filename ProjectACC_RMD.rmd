@@ -312,155 +312,153 @@ De relaties tussen de verschillende klassen:
 ## Flowchart
 
 ### Diagram
-```{r,echo=FALSE, results = "asis"}
-library(DiagrammeR)
-library(networkD3)
-library(webshot2)
 
-k  <- mermaid("
-    graph TB
-    A[WheelSpeedSensor - TLE5041plusC]
-    B[MeasuredSpeedCalculator - C++ code]
-    F[FrontRadarSensor]
-    C[FunctionalCPU]
-    D[GasPedaal]
-    E[RemSysteem]
-    subgraph Sensors
-        subgraph VehicleSpeedSensor
-            A -->|CurrentModulation| B
-        end
-        F
-    end
-    B --> C
-    F --> C
-    subgraph FunctionalCPU
-        C
-    end
-    C --> D
-    C --> E
-    subgraph Actuators
-        D
-        E
-    end
 
-    ", height = '200%', width = '140%')
-
-saveNetwork(k, "k.html")
-
-webshot("k.html", file = "k.png",vwidth = 650) 
-```
-
+# INSERT FLOWCHART IMAGE Here
 
 
 \newpage
 
 # Testplan:
-Het testplan omvat unit tests, integratietests en systeemtests om de betrouwbaarheid en functionaliteit van het ACCS te garanderen.
+Het testplan geeft eerst uitleg over een Unit , Integratie en Systeem test, de test procedure en de motivatie warom we deze tests doen. Vervolgens is er een IEEE829 Testplan opgesteld waarin deze 3 tests worden gebruikt.
 
 
 ## Unit Test: MeasuredSpeedCalculator
 
-De MeasuredSpeedCalculator is een cruciaal onderdeel van het systeem, aangezien het de snelheid van het voertuig berekent op basis van de input van de WheelSpeedSensor en de constanten (Wieldiameter en CPR van het encoderwiel). Een nauwkeurige snelheidsberekening is essentieel voor het regelen van de snelheid van het voertuig en het behouden van een veilige afstand tot het voorliggende voertuig.
+### Motivatie
+De MeasuredSpeedCalculator is een cruciaal onderdeel van het systeem, aangezien het de snelheid van het voertuig probeert
+te berekenen op basis van de input van de WheelSpeedSensor. 
+ Een nauwkeurige snelheidsberekening is essentieel voor het ACC systeem, waardoor het op een veilige afstand tot het voorliggende voertuig kan blijven. 
+  Als de MeasuredSpeedCalculator onjuiste snelheden berekent, heeft dit via de CPU invloed op het op het GasPedaal en Remsysteem. Fouten of ongewenst gedrag in deze 2 actuatoren
+   kan dit leiden tot onveilige situaties en mogelijk ongevallen. Het testen van deze component is daarom noodzakelijk
+   om te waarborgen dat het systeem goed functioneert en om de veiligheid te garanderen.
+
      
-Test: Testen of de MeasuredSpeedCalculator de snelheid van het voertuig correct berekent op basis van verschillende inputwaarden(Hatchback,SUV,Ferrari) van de WheelSpeedSensor, Wieldiameter en CPR van het encoderwiel.
+### Testprocedure 
+
+Testen of de MeasuredSpeedCalculator de snelheid van het voertuig correct berekent op basis van verschillende inputwaarden(Hatchback,SUV,Ferrari) van de WheelSpeedSensor, Wieldiameter en CPR van het encoderwiel.
+
+1. Bereid testscenario's voor met verschillende inputwaarden voor de WheelSpeedSensor, Wieldiameter en CPR van het encoderwiel. Gebruik realistische waarden die overeenkomen met verschillende voertuigtypen (bijv. Hatchback, SUV, Ferrari).
+2. Voer de testscenario's uit met behulp van de Simulator, en leg zowel de berekende snelheden, als de TrueVehicleSpeed uit de Simulator vast.
+3. Vergelijk de berekende snelheden met de TrueVehicleSpeed, rekening houdend met de variabelen van de verschillende soorten autos uit de testscenario's. 
+4. Controleer of de berekende snelheden binnen een acceptabele foutmarge(+- 2.0%) van de verwachte snelheden vallen. Als dit niet het geval is, onderzoek dan de oorzaak en pas de implementatie van de MeasuredSpeedCalculator (of WheelSpeedSensor) aan indien nodig.
+5. Herhaal de testprocedure totdat de berekende snelheden consistent nauwkeurig(i.e. binnen de foutmarge) zijn voor alle testscenario's.
 
 
+Deze testprocedure is ontworpen met verschillende belangrijke aspecten in gedachten om de nauwkeurigheid van de snelheidsberekeningen te waarborgen en de veiligheid van het systeem te garanderen:
 
----
+- Realistische waarden worden gebruikt voor de inputvariabelen om de prestaties van het systeem in de praktijk te beoordelen.
+- Het vastleggen van zowel de berekende snelheden als de TrueVehicleSpeed stelt ons in staat om objectief de nauwkeurigheid van de berekeningen te beoordelen.
+- Door een kleine foutmarge te gebruiken, wordt rekening gehouden met de beperkingen van floating-point precisie en kleine nauwkeurigheidsfouten in de sensors.
+- Het herhalen van de testprocedure zorgt voor betrouwbaarheid en verkleint de kans op onveilige situaties of ongevallen.
+
+Door deze testprocedure te volgen, kunnen we de nauwkeurigheid van de snelheidsberekening garanderen en voorkomen dat ongewenst gedrag van het GasPedaal en Remsysteem leidt tot onveilige situaties en mogelijk ongevallen.
+
+\pagebreak
 
 ## Integratietest: Interface 12V Current Modulation tussen de WheelSpeedSensor en MeasuredSpeedSensor
 
-De communicatie tussen de WheelSpeedSensor en de MeasuredSpeedCalculator is cruciaal voor het bepalen van de snelheid van het voertuig. Als deze interface niet correct functioneert, kan de MeasuredSpeedCalculator de snelheid van het voertuig niet nauwkeurig berekenen, wat kan leiden tot onveilige situaties of onjuiste snelheidsregeling.
+### Motivatie
+De communicatie tussen de WheelSpeedSensor en de MeasuredSpeedCalculator is noodzakelijk voor het berekenen van de snelheidsberekeningen.
+Als deze interface niet goed werkt, levert dit mischien onjuiste data voor de MeasuredSpeedCalculator. Dit zal problemen opleveren voor de hierboven genoemde Unit Test.
+Het testen van de interface helpt om te waarborgen dat het systeem correct functioneert en draagt bij aan de veiligheid.
+
 
 Test: Testen of de 12V Current Modulation-interface de High/Low current outputs van de WheelSpeedSensor correct doorstuurt naar de MeasuredSpeedCalculator en of de MeasuredSpeedCalculator deze signalen correct interpreteert om de snelheid van het voertuig te berekenen.
 
-### Testprocedure:
+### Testprocedure
 
-- Zorg ervoor dat de WheelSpeedSensor en de MeasuredSpeedCalculator correct zijn aangesloten via de 12V Current Modulation-interface.
-- Simuleer of gebruik een testopstelling waarin de WheelSpeedSensor verschillende rotatiesnelheden van het wiel kan meten (bijvoorbeeld door het wiel handmatig te draaien of door een testsysteem met een draaiende as).
+- Zorg ervoor dat de WheelSpeedSensor en de MeasuredSpeedCalculator correct zijn aangesloten via de 12V Current Modulation-interface. (In ons geval is dit de C++/Python Bindings en de communicatie hier tussen)
+- Simuleer verschillende rotatiesnelheden van het wiel, met de WheelSpeedSensor daar op aangesloten.
 - Monitor de High/Low current outputs die door de WheelSpeedSensor worden gegenereerd op basis van de rotatiesnelheid van het wiel en verifieer of deze correct worden doorgegeven via de 12V Current Modulation-interface.
 - Controleer of de MeasuredSpeedCalculator de ontvangen High/Low current outputs correct interpreteert en of de berekende snelheid overeenkomt met de werkelijke snelheid van het wiel (rekening houdend met de Wieldiameter en de CPR van het encoderwiel).
-- Voer deze test uit voor verschillende rotatiesnelheden van het wiel om te verifiëren of de interface en de MeasuredSpeedCalculator onder verschillende omstandigheden correct functioneren.
+- Voer deze test uit voor verschillende rotatiesnelheden van het wiel om te verifiëren of de interface en de MeasuredSpeedCalculator onder verschillende omstandigheden correct functionert.
 
-Door het uitvoeren van deze integratietest kunnen we de correcte werking van de 12V Current Modulation-interface tussen de WheelSpeedSensor en de MeasuredSpeedCalculator valideren, wat essentieel is voor het nauwkeurig bepalen van de snelheid van het voertuig.
-
-
----
-
-## Systeemtest: Veilige afstand tot het voorliggende voertuig
-
- Het belangrijkste kwaliteitscriterium voor het ACCS is het behouden van een veilige afstand tot het voorliggende voertuig. Het systeem moet in staat zijn om op basis van de input van de sensoren en de ingestelde veilige afstand (seconden afstand tot voorligger in S) de snelheid van het voertuig effectief te regelen.
-
-Test: Testen of het systeem in verschillende verkeerssituaties en snelheden een veilige afstand tot het voorliggende voertuig kan behouden, met behulp van de ingestelde veilige afstand. Deze test kan worden uitgevoerd in een gesimuleerde omgeving of op een testbaan met verschillende verkeersscenario's.
-
-Door het uitvoeren van deze tests kunnen we de correcte werking van de individuele componenten, de communicatie tussen de componenten en de algehele systeemprestaties valideren. Dit zorgt ervoor dat het ACCS betrouwbaar en veilig functioneert, en voldoet aan de gestelde kwaliteitseisen.
-
----
+De testprocedure controleert of de 12V Current Modulation-interface correct werkt en of de MeasuredSpeedCalculator de signalen nauwkeurig interpreteert. Hierdoor wordt de nauwkeurige snelheidsberekening gegarandeerd en de veiligheid van het systeem gewaarborgd. Het testen van verschillende rotatiesnelheden zorgt ervoor dat het systeem onder uiteenlopende omstandigheden correct functioneert.
 
 
-Systeemtests:
-Systeemtest - Behoud van veilige afstand tot voorligger:
+\pagebreak
 
-Een belangrijk kenmerk van het ACCS is het handhaven van een veilige afstand tot het voorliggende voertuig. We zullen systeemtests uitvoeren om te verifiëren of het systeem voldoet aan dit kwaliteitscriterium. Deze testen omvatten:
-
-Testen of het systeem de juiste afstand tot de voorligger handhaaft op basis van de gedefinieerde veilige tijd (S) en de huidige snelheid van het voertuig.
-Testen of het systeem correct reageert op veranderingen in de snelheid van het voorliggende voertuig en de afstand tussen de voertuigen aanpast om een veilige afstand te handhaven.
-Testen of het systeem tijdig reageert op plotselinge veranderingen in de snelheid van het voorliggende voertuig, zoals plotseling remmen.
-- Test het adaptieve cruise control algoritme onder verschillende verkeersomstandigheden en snelheden om te controleren of het systeem correct functioneert en veilig en comfortabel rijgedrag bevordert.
-- Test het rijgedrag van het voertuig in een simulatie-omgeving waarin verschillende scenario's worden nagebootst, zoals een voertuig dat plotseling remt of van rijbaan verandert.
-De uitvoering van deze tests zorgt voor een grondige evaluatie van het ACCS, waarbij de betrouwbaarheid en prestaties van het
-
-Motivatie:
-Door deze testen uit te voeren, zullen we het ACCS grondig valideren en verifiëren of het systeem correct functioneert. De unit tests zullen de correcte werking van individuele componenten waarborgen, terwijl de integratietests de samenwerking tussen de software en hardware beoordelen. Ten slotte zullen de systeemtests bevestigen dat het systeem voldoet aan de kwaliteitscriteria, zoals het handhaven van een veilige afstand tot het voorlig
+## Systeemtest: ACCS houdt Veilige afstand in verschillende verkeersscenarios
 
 
+### Motivatie
+
+Het belangrijkste doel(kwaliteitscriterium) van het ACCS is het behouden van een veilige afstand tot het voorliggende voertuig. Het testen van het systeem in verschillende verkeerssituaties en snelheden helpt om te waarborgen dat het systeem correct functioneert, betrouwbaar en veilig is, en voldoet aan de gestelde kwaliteitseisen.
+
+### Testprocedure
+
+1. Bereid verschillende verkeerssituaties en snelheden voor, die het ACCS-systeem zou kunnen tegenkomen in real-world scenario's (bijv. stadsverkeer, snelwegverkeer, file, acceleratie en deceleratie, enz.). En implementeer  deze scenarios in de Simulator.
+3. Voer de test in de simulator voor verschillende soorte Constantes (Hatchback,SUV,Ferrari), voor elk van de voorbereide verkeersscenario's.
+4. Monitor en registreer de volgende waardes tijdens elk scenario:
+    - Afstand tot voorligger in meters
+    - MeasuredSpeed
+    - Afstand tot voorligger in seconden met de huidige MeasuredSpeed
+    - Het verschill tussen deze laatste waarde, en de constante 'gewenste afstand tot voorligger in secondes'
+5. Analyseer de resultaten om te bepalen of het ACCS-systeem de ingestelde veilige afstand tot het voorliggende voertuig in alle situaties heeft behouden.
+    - **Als de afstand tot voorligger in meters 0 of negatief is, betekend dit dat er een een botsing is geweest, dit is per definitie dus geen 'veilige afstand'**
+
+Als de verkeersscenarios divers genoeg zijn kijkt deze systeemtest naar: 
+
+- Of het systeem de juiste afstand tot de voorligger handhaaft op basis van de gedefinieerde veilige tijd (S) en de huidige snelheid van het voertuig.
+- Of het systeem correct reageert op veranderingen in de snelheid van het voorliggende voertuig en de afstand tussen de voertuigen aanpast om een veilige afstand te handhaven.
+- Of het systeem tijdig reageert op plotselinge veranderingen in de snelheid van het voorliggende voertuig, zoals plotseling remmen.
+
+De testprocedure controleert grondig of het ACCS-systeem effectief is in het behouden van een veilige afstand tot het voorliggende voertuig in verschillende verkeerssituaties en snelheden. 
+Door het uitvoeren van deze tests wordt de correcte werking van de individuele componenten, de communicatie tussen de componenten en de algehele systeemprestaties gevalideerd. 
+
+
+\pagebreak
 
 # Adaptive Cruise Control Systeem (ACCS) IEEE 829 Testplan
-(Op basis van <https://www.mammoth-ai.com/how-to-write-a-test-plan-with-the-ieee-829-standard/>)
+Op basis van [https://www.mammoth-ai.com/how-to-write-a-test-plan-with-the-ieee-829-standard/](https://www.mammoth-ai.com/how-to-write-a-test-plan-with-the-ieee-829-standard/)
 
-1. Test plan identifier:
-    ACCS Testplan v1.0
+##  Test plan identifier:
+`ACCS Testplan v1.0`
 
-2. Introduction:
+##  Introduction:
 Dit testplan beschrijft de testprocedures en teststrategie voor het Adaptive Cruise Control Systeem (ACCS), dat de snelheid en afstand tot het voorliggende voertuig regelt met behulp van wheel speed sensors, front facing radar sensors, gaspedaal en remsysteem.
 
-3. Test items:
-De test items omvatten de volgende componenten van het ACCS:
- 1. Unit Test: MeasuredSpeedCalculator
- 2. Integratietest: Interface 12V Current Modulation tussen de WheelSpeedSensor en MeasuredSpeedSensor
- 3. Systeemtest: TBA maar totaal plaatje iets van 
+##  Test items:
 
-4. Features to be tested:
+1. Unit Test: MeasuredSpeedCalculator
+2. Integratietest: Interface 12V Current Modulation tussen de WheelSpeedSensor en MeasuredSpeedSensor
+3. Systeemtest: Algemene werking van het ACCS, inclusief de interactie tussen alle componenten
+
+##  Features to be tested:
+
 De te testen functies zijn:
 
-- Nauwkeurigheid van de wheel speed sensor en front facing radar sensor
-- Functionaliteit van het gaspedaal en het remsysteem
-- Communicatie tussen sensoren, CPU en actuatoren
-- Adaptieve cruise control algoritme onder verschillende verkeersomstandigheden en snelheden
+- Nauwkeurigheid van de berekende snelheid in de MeasuredSpeedCalculator
+- Correcte werking van de 12V Current Modulation interface tussen de WheelSpeedSensor en MeasuredSpeedSensor
+- Algemene werking van het ACCS, inclusief de interactie tussen alle componenten
 
-5. Features not to be tested:
+##  Features not to be tested:
 
 - Niet-ACCS gerelateerde voertuigsystemen
 - Interactie tussen ACCS en bestuurder
 - Hardware- en software compatibiliteit met andere voertuigsystemen
 
-6. Item pass/fail criteria:
+##  Item pass/fail criteria:
 De volgende criteria worden gebruikt om te bepalen of een testitem slaagt of faalt:
 
-- Nauwkeurigheid van sensoren binnen specificaties
-- Correcte werking van actuatoren volgens input van de CPU
-- Ononderbroken en foutloze communicatie tussen componenten
-- Veilig en comfortabel rijgedrag onder verschillende verkeersomstandigheden
+1. Unit Test: MeasuredSpeedCalculator: De berekende snelheid ligt binnen de ± 3% foutmarge van de werkelijke snelheid.
+2. Integratietest: Interface 12V Current Modulation: De interface functioneert correct en zorgt voor een stabiele en nauwkeurige overdracht van snelheidsinformatie tussen de WheelSpeedSensor en MeasuredSpeedSensor.
+3. Systeemtest: Algemene werking van het ACCS: Het ACCS functioneert correct en zorgt voor een veilige en comfortabele rit onder verschillende verkeersomstandigheden. Er zal per verkeersscenarios worden bijgehouden of er een botsing plaats vindt.
 
-7. Suspension criteria and resumption requirements:
+
+
+##  Suspension criteria and resumption requirements:
 Testen worden opgeschort als een van de volgende situaties zich voordoet:
 
-- Kritieke hardware- of softwarefouten
-- Onveilige testomstandigheden
-- Onvoldoende testresultaten
-Hervatting van de tests zal plaatsvinden zodra de problemen zijn opgelost en de testomgeving weer veilig en functioneel is.
+1. Unit Test: MeasuredSpeedCalculator: Er wordt een fout ontdekt in de berekening van de snelheid die de nauwkeurigheid van de meting buiten de ± 3% foutmarge brengt, zelf met aanpassingen van de bijbehoorende code.
+2. Integratietest: Interface 12V Current Modulation: Er treden problemen op in de interface die leiden tot onjuiste of inconsistente overdracht van snelheidsinformatie tussen de WheelSpeedSensor en MeasuredSpeedSensor.
+3. Systeemtest: Algemene werking van het ACCS: er is geen enkel verkeersscenarios waar er geen botsing plaats vindt.
 
-8. Test deliverables:
+Hervatting van de tests zal plaatsvinden zodra de problemen zijn opgelost.
+
+
+##  Test deliverables:
 De volgende test deliverables zullen worden opgeleverd:
 
 - Testplan
@@ -468,38 +466,46 @@ De volgende test deliverables zullen worden opgeleverd:
 - Test dataverzameling en analyse
 - Testrapport
 
-9. Testing tasks:
+##  Testing tasks:
 De tests zullen de volgende taken omvatten:
 
-- Voorbereiding van testomgeving en test cases
+- Voorbereiding van simulator en schrijven van verkeersscenarioss voor de verschillende test cases
 - Uitvoeren van unit tests, integratietests en systeemtests
 - Analyseren van testresultaten
 - Opstellen van testrapport
 
-10. Environmental needs:
-De testomgeving omvat een gesimuleerd of echt voertuig met de ACCS-componenten geïnstalleerd en operationeel. Een testtraject zal worden voorbereid voor systeemtests, met verschillende verkeersomstandigheden en snelheden om de prestaties van het ACCS te evalueren.
+##  Environmental needs:
+De testomgeving omvat een simulator met de ACCS-componenten geïmplementeerd en operationeel. De simulator moet de volgende externe onderdelen bevatten om realistische testomstandigheden te creëren:
 
-11. Responsibilities:
+- TrueVehicleSpeed
+- TrueDistanceToVoorligger
+- TrueVoorliggerSpeed
+- TrueVehicleAcceleration
+Ook zal er er voor de simulator verschillende verkeersscenarios worden geschreven, zoals beschreven in de Systeemtest.
+
+##  Responsibilities:
 Het testteam is verantwoordelijk voor het plannen, uitvoeren en analyseren van de tests en het opstellen van het testrapport. Het ontwikkelteam is verantwoordelijk voor het oplossen van eventuele problemen die tijdens de tests worden geïdentificeerd.
+Maar aangezien ATP een individueel vak is bestaat het *testteam* en het *ontwikkelteam* uit dezelfde persoon, namelijk ik zelf.
 
-12. Staffing and training needs:
-Het testteam zal bestaan uit ervaren test engineers met kennis van voertuigsystemen, sensoren en actuatoren. Indien nodig, zal aanvullende training worden verzorgd om het team vertrouwd te maken met de specifieke aspecten van het ACCS en de gebruikte testapparatuur.
+##  Staffing and training needs:
+De needs zijn een beetje irrelevant gezien dat ATP een individueel vak is, we moeten testen met de enige testengineer die we hebben, ongeacht zijn traning niveau.
 
-14. Schedule:
+## Schedule:
 De tests zullen volgens het volgende schema worden uitgevoerd:
 
-- Week 1: Voorbereiding van testomgeving en test cases
-- Week 2-3: Unit tests en integratietests
-- Week 4-5: Systeemtests
+- Week 0: op 11 April wordt het Project en Testplan worden ingeleverd op canvas.
+- Week 1-3: Implementern van het ACCS systeem en de simulator.
+- Week 4: Uitvoeren van de Unit tests en integratietests
+- Week 5: Uitvoeren van Systeemtest
 - Week 6: Analyse van testresultaten en opstellen van testrapport
 
-15. Risks and contingencies:
+## Risks and contingencies:
 Mogelijke testrisico's zijn onder meer:
 
-- Onnauwkeurige of onbetrouwbare sensoren en actuatoren
-- Fouten in de communicatie tussen componenten
-- Beperkingen in de testomgeving of testapparatuur
+- Onnauwkeurige of onbetrouwbare simulatieomgeving: Als de simulator niet in staat is om realistische testomstandigheden nauwkeurig te reproduceren, kan dit leiden tot onbetrouwbare testresultaten. Om dit risico te beperken, moet de simulator zorgvuldig worden gevalideerd en gecontroleerd om ervoor te zorgen dat deze de werkelijke omstandigheden en waarden correct weergeeft.
+- Beperkte testscenario's in de simulator: Als de simulator slechts een beperkte set van testscenario's kan uitvoeren, bestaat het risico dat het ACCS-systeem niet volledig wordt getest onder alle mogelijke verkeersomstandigheden en snelheden. Om dit risico te beheersen, moeten zoveel mogelijk relevante testscenario's in de simulator worden geïmplementeerd en, indien nodig, moet overwogen worden om aanvullende tests uit te voeren in een fysieke testomgeving.
 
-In geval van problemen zullen er geschikte maatregelen worden genomen om de impact op het testschema te minimaliseren en de kwaliteit van de testresultaten te waarborgen.
-16. Approvals:
-Het testplan zal ter goedkeuring worden voorgelegd aan de projectmanager, de verantwoordelijke voor het ontwikkelteam en eventuele andere belanghebbenden. Na goedkeuring van het testplan zullen de tests worden uitgevoerd volgens het opgestelde schema.
+In geval van problemen zullen er geschikte maatregelen worden genomen om de impact op het testschema te minimaliseren en de kwaliteit van de testresultaten te waarborgen. Dit kan onder andere het aanpassen van de simulatieomgeving, het uitbreiden van de testscenario's of het corrigeren van de ACCS software omvatten.
+
+## Approvals:
+Het testplan zal ter goedkeuring worden voorgelegd aan de projectmanager (Dat ben jij, persoon die dit nu leest op canvas!), deze geeft vervolgens goedkeuring(GO) voor het testplan, en hierna zullen de tests worden uitgevoerd volgens het opgestelde schema.
