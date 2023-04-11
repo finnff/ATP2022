@@ -12,22 +12,23 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+\newpage
 
 #  Casusbeschrijving:
-Het doel van dit project is het ontwikkelen van een adaptief cruise control systeem (ACCS) voor een voertuig. Het systeem regelt de snelheid van het voertuig en de afstand tot het voorliggende voertuig, waarbij gebruik wordt gemaakt van de volgende sensoren en actuatoren:
+Het doel van dit project is het ontwikkelen van een adaptief cruise control systeem (ACCS) voor een voertuig. Het systeem regelt de snelheid van het voertuig en de afstand tot het voorliggende voertuig, waarbij gebruik wordt gemaakt van een Wheel speed sensor, Front Radar Sensor, Gas- en Rempedaal.
 
 # Sensoren:
-## **Wheel speed sensor**: meet de eigensnelheid van de wielen in m/s
+## VehicleSpeedSensor
+    Omdat de snelheid van een voortuig afhangt van hoe vaak die wielen roteren en hoe groot die wielen zijn, bestaat deze abstracte sensor uit een WheelSpeedSensor en een VehicleSpeedCalculator
+
+## **Wheel speed sensor**: meet de rotatie van de wielen in hz
 ### Hardware: Infineon TLE5041plusC
 De TLE5041plusC is een magnetische hoeksensor die de wielsnelheid kan meten dankzij het Hall-effect in combinatie met een roterende as of magneet. Deze sensor is speciaal ontwikkeld voor 'harsh automotive requirements' en heeft geen andere componenten nodig dan het magnetische encoderwiel dat vastgemaakt moet worden aan de as/wiel. 
 
-De TLE5041plusC zet de sinusoïde van de sterkte van het magnetische veld, die ontstaat als het wiel draait, om naar een High/Low signaal via een two-wire current interface. De frequentie van deze veranderingen kan vervolgens door een microcontroller (of onze C++/Python binding) samen met informatie over de grootte van het wiel en het aantal magneten op het encoderwiel (Counts Per Revolution = CPR) omgezet worden naar een snelheid in meters per seconde.
+De TLE5041plusC zet de sinusoïde van de sterkte van het magnetische veld, die ontstaat als het wiel draait, om naar een High/Low signaal via een two-wire current interface. Deze sensor weet aleen iets over de rotatiesnelheid, niet over de snelheid van het voertuig.
+De frequentie van deze veranderingen kan vervolgens door bv. een microcontroller (of onze C++/Python binding, zie VehicleSpeedCalculator) samen met informatie over de grootte van het wiel en het aantal magneten op het encoderwiel (Counts Per Revolution = CPR) omgezet worden naar een snelheid in meters per seconde.
 
-
-
-
-
-
+Kenmerken:
 - Werkt van 1-5000hz (magnetisch veld veranderingen per seconde)
 - Kosten 5.15 euro per stuk.
 - Input voltage tussen 4.5v en 20v
@@ -40,25 +41,45 @@ De TLE5041plusC zet de sinusoïde van de sterkte van het magnetische veld, die o
 [Link buy on Mouser](https://nl.mouser.com/ProductDetail/Infineon-Technologies/TLE5041PLUSCAAMA1?qs=3Bi3m9r5MQasB7gUvrCn8A%3D%3D)
 
 
-![TLE](images/TLE.jpg){width=30%}
-![TLE](images/TLElevels.png){width=30%}
+![Logic levels en magneet sterkte ](images/TLElevels.png){width=30%}
+
+![TLE5041plusC sensor](images/TLE.jpg){width=30%}
+
+## VehicleSpeedCalculator
+### C++ Code
+Normaal zou dit door een apparte microcontroller, of de CPU zelf gedaan wordt, maar dit word in C++ nageboost.
+C++ code die de High/Low current outputs van de TLE5041plusC afleest, de frequentie/interval tussen deze outputs opmeet, en samen met de gegeven constanten Wieldiameter en magnetic wheelencoder CPR kan de VehicleSpeedCalculator de snelheid van het voertuig berekenen.
+
+\newpage
 
 
-####  **Front facing radar sensor**: *meet de afstand tot het voorliggende voertuig in meters
-Bosch Front radar
-<https://www.bosch-mobility.com/en/solutions/sensors/front-radar-sensor/>
-<https://www.bosch-mobility.com/media/global/products-and-services/passenger-cars-and-light-commercial-vehicles/driver-assistance-systems/multi-camera-system/front-radar-plus/onepager_front-radar_en_200608.pdf>
+
+##  **Front facing radar sensor**: *meet de afstand tot het voorliggende voertuig in meters
+De Bosch Front Radar is een radarsensor die de afstand tot het voorliggende voertuig meet. 
+Deze sensor is speciaal ontwikkeld voor adaptieve cruise control systemen en biedt nauwkeurige en betrouwbare afstandsmetingen.
+Hoewel de sensor over veel extra functies beschikt, zoals een breede field of view en fieter en voetgangersdetectie, is dit niet relevant voor het ACCS.
+We zullen deze sensor als abstracte sensor zien die de afstand tot het voorliggende voertuig levert met de volgende kenmerken:
+
+- Accuracy: 0,1 m
+- Resolutie: 0,2 m
+- Maximaal bereik: 210 m
+- Update Rate: 500ms
+
+[Link naar Bosch mobility website](https://www.bosch-mobility.com/en/solutions/sensors/front-radar-sensor/)
+[Link naar specificaties Bosch Radar](https://www.bosch-mobility.com/media/global/products-and-services/passenger-cars-and-light-commercial-vehicles/driver-assistance-systems/multi-camera-system/front-radar-plus/onepager_front-radar_en_200608.pdf)
+
+![radar](images/bosch.jpg){width=30%}
 
 
-### Actuatoren:
+# Actuatoren:
 
-- **Gaspedaal:** regelt de acceleratie van het voertuig (verhoogt eigensnelheid)
+- **Gaspedaal:** regelt de acceleratie van het voertuig (verhoogt VehicleSpeed)
     + Met interface: 0-100% waar 100 versnellen is met de maximale acceleratie constante
 
-- **Remsysteem:** regelt het afremmen van het voertuig (vermindert eigensnelheid)
+- **Remsysteem:** regelt het afremmen van het voertuig (vermindert VehicleSpeed)
     + Met interface: 0-100% waar 100 remmen is met de maximale deacceleratie constante
 
-### Constanten:
+# Constanten:
 
 - **Maximale acceleratieconstante in $m/s^2$:** een constante waarde die de maximale acceleratie van het voertuig vertegenwoordigt
 - **Maximale vertragingconstante (remmen) in $m/s^2$:** een constante waarde die de maximale vertraging of vermindering van de snelheid van het voertuig vertegenwoordigt
@@ -66,9 +87,9 @@ Bosch Front radar
 - **Aantal counts per revolution van de wheelencoder voor wheel speed:**  een waarde die aangeeft hoeveel pulsen de wheelencoder genereert voor elke volledige omwenteling van het wiel; deze informatie wordt gebruikt om de snelheid van het voertuig te berekenen
 - **Seconden afstand tot voorligger in S:** een constante waarde die aangeeft wat de minimale veilige tijd is die nodig is om een veilige afstand te behouden tussen het voertuig en de voorligger
 
-De twee regelwaarden (eigensnelheid en afstand tot voorligger) worden beïnvloed door de actuatoren (gaspedaal en remsysteem) op basis van de constanten die in het systeem zijn gedefinieerd. Door de maximale acceleratie- en vertragingconstanten kan het systeem de snelheid van het voertuig effectief aanpassen om een veilige en comfortabele afstand tot het voorliggende voertuig te behouden. De informatie van de wheelencoder, in combinatie met de wieldiameter, stelt het systeem in staat om de eigensnelheid van het voertuig nauwkeurig te meten en te regelen.
+De twee regelwaarden (VehicleSpeed en afstand tot voorligger) worden beïnvloed door de actuatoren (gaspedaal en remsysteem) op basis van de constanten die in het systeem zijn gedefinieerd. Door de maximale acceleratie- en vertragingconstanten kan het systeem de snelheid van het voertuig effectief aanpassen om een veilige en comfortabele afstand tot het voorliggende voertuig te behouden. De informatie van de wheelencoder, in combinatie met de wieldiameter, stelt het systeem in staat om de VehicleSpeed van het voertuig nauwkeurig te meten en te regelen.
 
-Voor de simulatie gebruiken we 3 verschillende sets Constants, om zo verschillende 
+
 <!--
 # ```{r}
 # library(knitr)
@@ -85,6 +106,8 @@ Voor de simulatie gebruiken we 3 verschillende sets Constants, om zo verschillen
 # kable(my_df)
 # ```
 -->
+# Groepen Constants voor simulatie. 
+Voor de simulatie gebruiken we 3 verschillende groepen constants, om zo verschillende type voertuigen te simuleren.
 
 |                    | Hatchback | SUV | Ferrari |
 |:---------------------|----------:|-----------:|-------------:|
@@ -117,29 +140,210 @@ https://www.motortrend.com/reviews/2022-mazda-3-turbo-awd-sedan-first-test-revie
 
 
 
-Architectuurschetsen:
-Hardware:
-De wheel speed sensor is verbonden met de wielen van het voertuig en stuurt de snelheidsinformatie naar de centrale verwerkingsunit (CPU). De front facing radar sensor is aan de voorzijde van het voertuig geplaatst en stuurt afstandsgegevens naar de CPU. De CPU stuurt de signalen naar de actuatoren (gaspedaal en remsysteem).
+# Architectuurschetsen:
+## Hardware:
 
-Software:
+De hardware-architectuur bestaat uit de volgende componenten en verbindingen:
+
+- WheelSpeedSensor (Infineon TLE5041plusC): Meet de veranderingen van het magnetisch veld van de wielen, en stuurt deze door naar de VehicleSpeedCalculator.
+- VehicleSpeedCalculator (C++ code met python Bindings.): Berekent de VehicleSpeed op basis van de WheelSpeedSensor, Wieldiameter, CPR van het encoderwiel. Stuurt de VehicleSpeed door naar de CPU.
+- Front Radar Sensor (Bosch Front Radar): Meet de afstand tot het voorliggende voertuig en stuurt deze informatie door naar de CPU.
+- CPU: Verwerkt de gegevens van de Wheel Speed Sensor en Front Radar Sensor, en stuurt commando's naar de actuatoren.
+- Gaspedaal: Ontvangt commando's van de CPU om de acceleratie van het voertuig te regelen.
+- Remsysteem: Ontvangt commando's van de CPU om het afremmen van het voertuig te regelen.
+
+### Diagram
+```{r,echo=FALSE, results = "asis"}
+library(DiagrammeR)
+library(networkD3)
+library(webshot2)
+
+g  <- mermaid("
+graph TB 
+A[WheelSpeedSensor- TLE5041plusC]
+B[VehicleSpeedCalculator - C++ code]
+F[FrontRadarSensor]
+C((CPU))
+D[Gaspedaal]
+E[Remsysteem]
+    subgraph Sensors
+        subgraph VehicleSpeedSensor 
+        A ==>|CurrentModulation| B
+    end
+    F
+    end
+    B ==> C
+    F ==> C
+        C --> D
+        C --> E
+    subgraph Actuators
+    D
+    E
+    end
+    ", height = '200%', width = '140%')
+
+saveNetwork(g, "g.html")
+
+webshot("g.html", file = "g.png",vwidth = 650) 
+```
+
+- De WheelSpeedSensor zit via 12v current Modulation interface verbonden met de VehicleSpeedCalculator.
+- De Front Radar Sensor en de VehicleSpeedCalculator zijn verbonden met de CPU via een bekabelde interface.
+- De CPU communiceert via een bekabelde interface met de Gaspedaal en Remsysteem actuatoren om de snelheid van het voertuig te regelen om zo een veilige afstand tot het voorliggende voertuig te behouden.
+
+
+
+
+## Software:
 De software bestaat uit verschillende klassen die de sensoren, actuatoren, CPU en algoritmes voor ACCS bevatten. De interfaces tussen de klassen zijn gedefinieerd om gegevens uit te wisselen en de algehele werking van het systeem te coördineren. Het regelsysteem is geïmplementeerd volgens het Functional Reactive Programming principe en is geschreven in Python, met gebruik van de C++-bibliotheek van de front-facing radar sensor.
 
-Testplan:
+### Diagram
+![joplin render](images/classscreen.png){width=100%}
+
+```{r,echo=FALSE, results = "asis"}
+library(DiagrammeR)
+library(networkD3)
+library(webshot2)
+
+h  <- mermaid("
+classDiagram
+    class ACCS {
+        +setVehicleSpeed()
+        +setDistanceToVehicleInFront()
+        +controlSpeed()
+    }
+
+    class VehicleSpeedSensor {
+        +getSpeed()
+    }
+
+    class WheelSpeedSensor {
+        +getRotationFrequency()
+    }
+
+    class VehicleSpeedCalculator {
+        +calculateSpeed()
+    }
+
+    class FrontRadarSensor {
+        +getDistance()
+    }
+
+    class GasPedal {
+        +setAcceleration(int: value)
+    }
+
+    class BrakeSystem {
+        +setDeceleration(int: value)
+    }
+
+    class Constants {
+        +maxAcceleration
+        +maxDeceleration
+        +wheelDiameter
+        +countsPerRevolution
+        +secondsDistanceToVehicleInFront
+    }
+
+    ACCS -- VehicleSpeedSensor : Uses >
+    ACCS -- FrontRadarSensor : Uses >
+    ACCS -- GasPedal : Controls >
+    ACCS -- BrakeSystem : Controls >
+    ACCS -- Constants : Uses >
+
+    VehicleSpeedSensor -- WheelSpeedSensor : Uses >
+    VehicleSpeedSensor -- VehicleSpeedCalculator : Uses >
+
+    WheelSpeedSensor -- VehicleSpeedCalculator : Sends data >
+    FrontRadarSensor -- ACCS : Sends data >
+    ", height = '100%', width = '100%')
+
+saveNetwork(h, "h.html")
+
+#webshot("h.html", file = "h.png") 
+
+
+```
+
+##FIX SENSOR NAMES WHEELSPEED? is HIGH LOW+ ADD IN WHY WE ARE USING FUNCTIONAL? DESIGN
+1. VehicleSpeedSensor: Deze klasse is verantwoordelijk voor het meten van de wielsnelheid. De klasse heeft twee private variabelen, CPR en WHEEL_DIAMETER, die respectievelijk het aantal counts per revolution van de wielencoder en de wieldiameter in meters bevatten.
+2. VehicleSpeedCalculator: Deze klasse ontvangt de wielsnelheid van de VehicleSpeedSensor en berekent de voertuigsnelheid op basis van de wielsnelheid. De berekening is een puur functionele operatie.
+3. FrontRadarSensor: Deze klasse meet de afstand tot het voorliggende voertuig. Deze waarde wordt vervolgens doorgegeven aan de PureFunctions klasse.
+4. Throttle: Deze klasse regelt de acceleratie van het voertuig. Het ontvangt de berekende acceleratie van de PureFunctions klasse en past deze toe op het voertuig. De klasse heeft een private variabele MAX_ACCELERATION, die de maximale acceleratieconstante in m/s² bevat.
+5. BrakeSystem: Deze klasse regelt het afremmen van het voertuig. Het ontvangt de berekende vertraging van de PureFunctions klasse en past deze toe op het voertuig. De klasse heeft een private variabele MAX_DECELERATION, die de maximale vertragingconstante (remmen) in m/s² bevat.
+6. PureFunctions: Deze klasse bevat twee puur functionele methoden, calculateNewAcceleration() en calculateNewDeceleration(). Deze methoden nemen respectievelijk de voertuigsnelheid, afstand tot het voorliggende voertuig, maximale acceleratie/deceleratie en seconden afstand tot het voorliggende voertuig als parameters en berekenen de nieuwe acceleratie of vertraging. De klasse heeft een private variabele SECONDS_DISTANCE_TO_VEHICLE_IN_FRONT, die de minimale veilige tijd aangeeft om een veilige afstand te behouden tussen het voertuig en het voorliggende voertuig.
+7. In dit diagram zijn er relaties tussen de verschillende klassen, die aangeven hoe gegevens worden doorgegeven en gebruikt:
+    - VehicleSpeedSensor stuurt gegevens naar VehicleSpeedCalculator.
+    - VehicleSpeedCalculator stuurt gegevens naar PureFunctions.
+    - FrontRadarSensor stuurt gegevens naar PureFunctions.
+    - PureFunctions stuurt gegevens naar Throttle en BrakeSystem.
+
+Deze relaties zorgen voor een duidelijke scheiding tussen de verschillende verantwoordelijkheden en taken van elke klasse en geven een overzicht van de stroom van gegevens en interacties tussen de componenten van het ACCS.
+
+uhh we moeten monad maken voor actuatoren zodat deze echt iets kunnen doen
+
+# also add in abstraction regarding Acceleration/DECEeleration  (negative Acceleration= breaking)
+make this functional
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Testplan:
 Het testplan omvat unit tests, integratietests en systeemtests om de betrouwbaarheid en functionaliteit van het ACCS te garanderen.
 
 Unit tests:
+Unit Test - Wheel Speed Sensor:
+De wheel speed sensor is een cruciale component in het ACCS, omdat het de snelheid van het voertuig meet en doorgeeft aan het systeem. We zullen meerdere unit tests uitvoeren om de nauwkeurigheid en betrouwbaarheid van de snelheidsmetingen te garanderen. Deze testen zullen onder andere het volgende omvatten:
+
+Testen of de sensor correct de snelheid meet bij verschillende snelheden en omstandigheden.
+Testen of de sensor correct omgaat met het signaal van het magnetische veld en of deze het juiste aantal pulsen genereert.
+Testen of de sensor zichzelf goed kalibreert na 5 pulsen.
 
 - Test de nauwkeurigheid van de wheel speed sensor en de front facing radar sensor om te verzekeren dat zij correcte gegevens aanleveren.
 - Test de functionaliteit van het gaspedaal en het remsysteem om te controleren of ze correct reageren op de input van de CPU.
 Integratietests:
+Integratietest - Gaspedaal en remsysteem interface:
 
+We zullen de interface tussen het ACCS en de actuatoren (gaspedaal en remsysteem) testen. De integratietesten zijn bedoeld om te verifiëren dat de communicatie tussen de software en hardware correct functioneert en dat de actuatoren reageren op de commando's van het systeem. We zullen de volgende testen uitvoeren:
+
+Testen of het gaspedaal en het remsysteem correct reageren op commando's van het ACCS, zoals het verhogen of verlagen van de snelheid.
+Testen of de actuatoren binnen de verwachte tijdsperiode reageren op commando's.
+Testen of de maximale acceleratie- en vertragingconstanten correct worden toegepast.
 - Test de communicatie tussen de sensoren en de CPU, en tussen de CPU en de actuatoren, om te waarborgen dat gegevens correct worden uitgewisseld en het systeem op de juiste manier reageert op sensorinput.
 - Test de interface tussen het regelsysteem en de front-facing radar sensor om te controleren of de communicatie tussen het regelsysteem en de sensor correct verloopt.
 Systeemtests:
+Systeemtest - Behoud van veilige afstand tot voorligger:
 
+Een belangrijk kenmerk van het ACCS is het handhaven van een veilige afstand tot het voorliggende voertuig. We zullen systeemtests uitvoeren om te verifiëren of het systeem voldoet aan dit kwaliteitscriterium. Deze testen omvatten:
+
+Testen of het systeem de juiste afstand tot de voorligger handhaaft op basis van de gedefinieerde veilige tijd (S) en de huidige snelheid van het voertuig.
+Testen of het systeem correct reageert op veranderingen in de snelheid van het voorliggende voertuig en de afstand tussen de voertuigen aanpast om een veilige afstand te handhaven.
+Testen of het systeem tijdig reageert op plotselinge veranderingen in de snelheid van het voorliggende voertuig, zoals plotseling remmen.
 - Test het adaptieve cruise control algoritme onder verschillende verkeersomstandigheden en snelheden om te controleren of het systeem correct functioneert en veilig en comfortabel rijgedrag bevordert.
 - Test het rijgedrag van het voertuig in een simulatie-omgeving waarin verschillende scenario's worden nagebootst, zoals een voertuig dat plotseling remt of van rijbaan verandert.
 De uitvoering van deze tests zorgt voor een grondige evaluatie van het ACCS, waarbij de betrouwbaarheid en prestaties van het
+
+Motivatie:
+Door deze testen uit te voeren, zullen we het ACCS grondig valideren en verifiëren of het systeem correct functioneert. De unit tests zullen de correcte werking van individuele componenten waarborgen, terwijl de integratietests de samenwerking tussen de software en hardware beoordelen. Ten slotte zullen de systeemtests bevestigen dat het systeem voldoet aan de kwaliteitscriteria, zoals het handhaven van een veilige afstand tot het voorlig
 
 
 
