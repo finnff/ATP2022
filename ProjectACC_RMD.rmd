@@ -1,18 +1,24 @@
 ---
 title: "Project en Testplan *Adaptive Cruise Control*"
 subtitle: "Finn Fonteijn ATP Bezem 22/33"
-date: 9-4-23
+date: 11-4-23
 output:
   pdf_document:
-    toc: true
+    toc: no
     toc_depth: 3
     number_sections: true
 urlcolor: blue
 ---
 
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+
 \newpage
 
 #  Casusbeschrijving:
@@ -20,11 +26,10 @@ Het doel van dit project is het ontwikkelen van een adaptief cruise control syst
 
 # Sensoren:
 ## MeasuredSpeedSensor
-    Omdat de snelheid van een voortuig afhangt van hoe vaak die wielen roteren en hoe groot die wielen zijn, bestaat deze abstracte sensor uit twee losse 'sub-sensors' *WheelSpeedSensor* en een *MeasuredSpeedCalculator*
+Omdat de snelheid van een voortuig afhangt van hoe vaak die wielen roteren en hoe groot die wielen zijn, bestaat deze abstracte sensor uit twee losse 'sub-sensors' *WheelSpeedSensor* en een *MeasuredSpeedCalculator*
 
-### **Wheel speed sensor**: meet de rotatiesnelheid van de wielen
-#### Hardware: Infineon TLE5041plusC
-De TLE5041plusC is een magnetische hoeksensor die de wielsnelheid kan meten dankzij het Hall-effect in combinatie met een roterende as of magneet. Deze sensor is speciaal ontwikkeld voor 'harsh automotive requirements' en heeft geen andere componenten nodig dan het magnetische encoderwiel dat vastgemaakt moet worden aan de as/wiel. 
+### Wheel speed sensor (TLE5041plusC)
+De Infineon TLE5041plusC is een magnetische hoeksensor die de wielsnelheid kan meten dankzij het Hall-effect in combinatie met een roterende as of magneet. Deze sensor is speciaal ontwikkeld voor 'harsh automotive requirements' en heeft geen andere componenten nodig dan het magnetische encoderwiel dat vastgemaakt moet worden aan de as/wiel. 
 
 De TLE5041plusC zet de sinusoïde(sterkte magnetischveld over tijd) die ontstaat als het wiel draait, om naar een High/Low signaal via een two-wire current interface. Deze sensor weet aleen iets over de rotatiesnelheid van het encoderwiel, niets over de snelheid van het voertuig.
 De frequentie van deze veranderingen kan vervolgens door bv. een microcontroller (of onze C++/Python binding, zie MeasuredSpeedCalculator) samen met informatie over de grootte van het wiel en het aantal magneten op het encoderwiel (Counts Per Revolution = CPR) omgezet worden naar een snelheid in meters per seconde.
@@ -48,16 +53,15 @@ Kenmerken:
 
 
 
-### MeasuredSpeedCalculator
-#### C++ Code
+### MeasuredSpeedCalculator (C++ Code)
 Normaal zou dit door een apparte microcontroller, of de CPU zelf gedaan worden, maar we gaan dit als in C++ nabootsen. Hiervoor moeten we een current meter maken, zodat we het verschill in geleverde stroom van de wheelspeed sensor kunnen meten. Hieruit kunnen we de logic levels halen.
 Naast dat de MeasuredSpeedCalculator C++ code de High/Low current outputs van de TLE5041plusC afleest rekent die ook met de frequentie/interval tussen deze outputs. Als dit bekent is kan de MeasuredSpeedCalculator samen met de gegeven constanten Wieldiameter en magnetic wheelencoder CPR de snelheid van het voertuig berekenen, *MeasuredSpeed*.
 
 
 
 
-##  **Front facing radar sensor**: *meet de afstand tot het voorliggende voertuig in meters
-De Bosch Front Radar is een radarsensor die de afstand tot het voorliggende voertuig meet. 
+##  Front facing radar sensor (Bosch)
+De Bosch Front Radar is een radarsensor die de afstand tot het voorliggende voertuig meet in meters . 
 Deze sensor is speciaal ontwikkeld voor adaptieve cruise control systemen en biedt nauwkeurige en betrouwbare afstandsmetingen.
 Hoewel de sensor over veel extra functies beschikt, zoals een breede field of view en fieter en voetgangersdetectie, is dit niet relevant voor het ACCS.
 We zullen deze sensor als abstracte sensor zien die de afstand tot het voorliggende voertuig levert met de volgende kenmerken:
@@ -83,6 +87,8 @@ Met interface: 0-100% waar 100 versnellen is met de maximale acceleratie constan
 ## Remsysteem
 Het Remsysteem regelt het afremmen van het voertuig (vermindert TrueVehicleSpeed in de Simulator)
 Met interface: 0-100% waar 100 remmen is met de maximale deacceleratie constante
+
+\pagebreak
 
 # Constanten:
 
@@ -126,8 +132,8 @@ Door deze externe componenten in de simulatie te implementeren, kan het ACCS-sys
 
 \newpage
 
-# Groepen Constants voor Simulator. 
-Voor de simulatie gebruiken we 3 verschillende groepen constants, om zo verschillende type voertuigen te simuleren, deze zullen ook worden gebruikt een Unit test.
+# Groepen Constants voor Simulator 
+Voor de simulatie gebruiken we 3 verschillende groepen constants, om zo verschillende type voertuigen te simuleren, deze zullen ook worden gebruikt in het Testplan.
 
 |                    | Hatchback | SUV | Ferrari |
 |:---------------------|----------:|-----------:|-------------:|
@@ -172,8 +178,10 @@ De hardware-architectuur bestaat uit de volgende componenten en verbindingen:
 - Gaspedaal: Ontvangt commando's van de CPU om de acceleratie van het voertuig te regelen.
 - Remsysteem: Ontvangt commando's van de CPU om het afremmen van het voertuig te regelen.
 
+\pagebreak
+
 ### Diagram
-```{r,echo=FALSE, results = "asis"}
+```{r,echo=FALSE, results = "asis",fig.cap = "Hardware Diagram showing how the sensors and actuators are connected to each other"}
 library(DiagrammeR)
 library(networkD3)
 library(webshot2)
@@ -181,13 +189,13 @@ library(webshot2)
 g  <- mermaid("
 graph TB 
 A[WheelSpeedSensor- TLE5041plusC]
-B[VehicleSpeedCalculator - C++ code]
-F[FrontRadarSensor]
+B[MeasuredSpeedCalculator - C++ code]
+F[FrontRadarSensor - Bosch]
 C((CPU))
 D[Gaspedaal]
 E[Remsysteem]
     subgraph Sensors
-        subgraph VehicleSpeedSensor 
+        subgraph MeasuredSpeedSensor 
         A ==>|CurrentModulation| B
     end
     F
@@ -204,14 +212,14 @@ E[Remsysteem]
 
 saveNetwork(g, "g.html")
 
-webshot("g.html", file = "g.png",vwidth = 650) 
+webshot("g.html", file = "g.png") 
 ```
 
 - De WheelSpeedSensor zit via 12v current Modulation interface verbonden met de MeasuredSpeedCalculator.
 - De Front Radar Sensor en de MeasuredSpeedCalculator zijn verbonden met de CPU via een bekabelde interface.
 - De CPU communiceert via een bekabelde interface met de Gaspedaal en Remsysteem actuatoren om de snelheid van het voertuig te regelen om zo een veilige afstand tot het voorliggende voertuig te behouden.
 
-
+\pagebreak
 
 
 ## Software:
@@ -312,12 +320,9 @@ De relaties tussen de verschillende klassen:
 ## Flowchart
 
 ### Diagram
+![Flowchart that shows logic sequence, note that the order of the parameters define which sensors get read first](images/flow.png)
 
 
-# INSERT FLOWCHART IMAGE Here
-
-
-\newpage
 
 # Testplan:
 Het testplan geeft eerst uitleg over een Unit , Integratie en Systeem test, de test procedure en de motivatie warom we deze tests doen. Vervolgens is er een IEEE829 Testplan opgesteld waarin deze 3 tests worden gebruikt.
@@ -356,7 +361,7 @@ Door deze testprocedure te volgen, kunnen we de nauwkeurigheid van de snelheidsb
 
 \pagebreak
 
-## Integratietest: Interface 12V Current Modulation tussen de WheelSpeedSensor en MeasuredSpeedSensor
+## Integratietest: WheelSpeedSensor's industiele 12V Current Modulation interface 
 
 ### Motivatie
 De communicatie tussen de WheelSpeedSensor en de MeasuredSpeedCalculator is noodzakelijk voor het berekenen van de snelheidsberekeningen.
@@ -413,19 +418,19 @@ Door het uitvoeren van deze tests wordt de correcte werking van de individuele c
 # Adaptive Cruise Control Systeem (ACCS) IEEE 829 Testplan
 Op basis van [https://www.mammoth-ai.com/how-to-write-a-test-plan-with-the-ieee-829-standard/](https://www.mammoth-ai.com/how-to-write-a-test-plan-with-the-ieee-829-standard/)
 
-##  Test plan identifier:
+####  Test plan identifier:
 `ACCS Testplan v1.0`
 
-##  Introduction:
+####  Introduction:
 Dit testplan beschrijft de testprocedures en teststrategie voor het Adaptive Cruise Control Systeem (ACCS), dat de snelheid en afstand tot het voorliggende voertuig regelt met behulp van wheel speed sensors, front facing radar sensors, gaspedaal en remsysteem.
 
-##  Test items:
+####  Test items:
 
 1. Unit Test: MeasuredSpeedCalculator
 2. Integratietest: Interface 12V Current Modulation tussen de WheelSpeedSensor en MeasuredSpeedSensor
 3. Systeemtest: Algemene werking van het ACCS, inclusief de interactie tussen alle componenten
 
-##  Features to be tested:
+####  Features to be tested:
 
 De te testen functies zijn:
 
@@ -433,13 +438,13 @@ De te testen functies zijn:
 - Correcte werking van de 12V Current Modulation interface tussen de WheelSpeedSensor en MeasuredSpeedSensor
 - Algemene werking van het ACCS, inclusief de interactie tussen alle componenten
 
-##  Features not to be tested:
+####  Features not to be tested:
 
 - Niet-ACCS gerelateerde voertuigsystemen
 - Interactie tussen ACCS en bestuurder
 - Hardware- en software compatibiliteit met andere voertuigsystemen
 
-##  Item pass/fail criteria:
+####  Item pass/fail criteria:
 De volgende criteria worden gebruikt om te bepalen of een testitem slaagt of faalt:
 
 1. Unit Test: MeasuredSpeedCalculator: De berekende snelheid ligt binnen de ± 3% foutmarge van de werkelijke snelheid.
@@ -448,7 +453,7 @@ De volgende criteria worden gebruikt om te bepalen of een testitem slaagt of faa
 
 
 
-##  Suspension criteria and resumption requirements:
+####  Suspension criteria and resumption requirements:
 Testen worden opgeschort als een van de volgende situaties zich voordoet:
 
 1. Unit Test: MeasuredSpeedCalculator: Er wordt een fout ontdekt in de berekening van de snelheid die de nauwkeurigheid van de meting buiten de ± 3% foutmarge brengt, zelf met aanpassingen van de bijbehoorende code.
@@ -458,7 +463,7 @@ Testen worden opgeschort als een van de volgende situaties zich voordoet:
 Hervatting van de tests zal plaatsvinden zodra de problemen zijn opgelost.
 
 
-##  Test deliverables:
+####  Test deliverables:
 De volgende test deliverables zullen worden opgeleverd:
 
 - Testplan
@@ -466,7 +471,7 @@ De volgende test deliverables zullen worden opgeleverd:
 - Test dataverzameling en analyse
 - Testrapport
 
-##  Testing tasks:
+####  Testing tasks:
 De tests zullen de volgende taken omvatten:
 
 - Voorbereiding van simulator en schrijven van verkeersscenarioss voor de verschillende test cases
@@ -474,7 +479,7 @@ De tests zullen de volgende taken omvatten:
 - Analyseren van testresultaten
 - Opstellen van testrapport
 
-##  Environmental needs:
+####  Environmental needs:
 De testomgeving omvat een simulator met de ACCS-componenten geïmplementeerd en operationeel. De simulator moet de volgende externe onderdelen bevatten om realistische testomstandigheden te creëren:
 
 - TrueVehicleSpeed
@@ -483,14 +488,14 @@ De testomgeving omvat een simulator met de ACCS-componenten geïmplementeerd en 
 - TrueVehicleAcceleration
 Ook zal er er voor de simulator verschillende verkeersscenarios worden geschreven, zoals beschreven in de Systeemtest.
 
-##  Responsibilities:
+####  Responsibilities:
 Het testteam is verantwoordelijk voor het plannen, uitvoeren en analyseren van de tests en het opstellen van het testrapport. Het ontwikkelteam is verantwoordelijk voor het oplossen van eventuele problemen die tijdens de tests worden geïdentificeerd.
 Maar aangezien ATP een individueel vak is bestaat het *testteam* en het *ontwikkelteam* uit dezelfde persoon, namelijk ik zelf.
 
-##  Staffing and training needs:
+####  Staffing and training needs:
 De needs zijn een beetje irrelevant gezien dat ATP een individueel vak is, we moeten testen met de enige testengineer die we hebben, ongeacht zijn traning niveau.
 
-## Schedule:
+#### Schedule:
 De tests zullen volgens het volgende schema worden uitgevoerd:
 
 - Week 0: op 11 April wordt het Project en Testplan worden ingeleverd op canvas.
@@ -499,7 +504,7 @@ De tests zullen volgens het volgende schema worden uitgevoerd:
 - Week 5: Uitvoeren van Systeemtest
 - Week 6: Analyse van testresultaten en opstellen van testrapport
 
-## Risks and contingencies:
+#### Risks and contingencies:
 Mogelijke testrisico's zijn onder meer:
 
 - Onnauwkeurige of onbetrouwbare simulatieomgeving: Als de simulator niet in staat is om realistische testomstandigheden nauwkeurig te reproduceren, kan dit leiden tot onbetrouwbare testresultaten. Om dit risico te beperken, moet de simulator zorgvuldig worden gevalideerd en gecontroleerd om ervoor te zorgen dat deze de werkelijke omstandigheden en waarden correct weergeeft.
@@ -507,5 +512,20 @@ Mogelijke testrisico's zijn onder meer:
 
 In geval van problemen zullen er geschikte maatregelen worden genomen om de impact op het testschema te minimaliseren en de kwaliteit van de testresultaten te waarborgen. Dit kan onder andere het aanpassen van de simulatieomgeving, het uitbreiden van de testscenario's of het corrigeren van de ACCS software omvatten.
 
-## Approvals:
+#### Approvals:
 Het testplan zal ter goedkeuring worden voorgelegd aan de projectmanager (Dat ben jij, persoon die dit nu leest op canvas!), deze geeft vervolgens goedkeuring(GO) voor het testplan, en hierna zullen de tests worden uitgevoerd volgens het opgestelde schema.
+
+
+
+# Bronnen
+
+- https://www.infineon.com/dgdl/Infineon-TLE5041PLUSC-DataSheet-v01_02-EN.pdf?fileId=5546d46265f064ff016632437f574f75
+- https://nl.mouser.com/ProductDetail/Infineon-Technologies/TLE5041PLUSCAAMA1?qs=3Bi3m9r5MQasB7gUvrCn8A%3D%3D
+- https://www.bosch-mobility.com/en/solutions/sensors/front-radar-sensor/
+- https://www.bosch-mobility.com/media/global/products-and-services/passenger-cars-and-light-commercial-vehicles/driver-assistance-systems/multi-camera-system/front-radar-plus/onepager_front-radar_en_200608.pdf
+- https://www.caranddriver.com/features/a35048882/tahoe-yukon-escalade-braking-performance/
+- https://www.caranddriver.com/features/g29674610/best-stopping-distances-braking-tested/
+- https://www.auto-data.net/en/chevrolet-tahoe-gmt820-5.3-i-v8-4wd-273hp-14328
+- https://www.topspeed.com/ferrari-laferrari-the-best-hybrid-supercar-ever/
+- https://www.motortrend.com/reviews/2022-mazda-3-turbo-awd-sedan-first-test-review/
+- https://www.mammoth-ai.com/how-to-write-a-test-plan-with-the-ieee-829-standard/
