@@ -322,6 +322,27 @@ De relaties tussen de verschillende klassen:
 ### Diagram
 ![Flowchart that shows logic sequence, note that the order of the parameters define which sensors get read first](images/flow.png)
 
+```{r,echo=FALSE, results = "asis"}
+# flowchart RL
+# 	subgraph getFunctionalParameters
+#    B{start} --> MeasuredSpeedSensor
+#   	MeasuredSpeedSensor --> MeasuredSpeedCalculator
+#   	MeasuredSpeedCalculator --> WheelSpeedSensor
+#   	WheelSpeedSensor --> MeasuredSpeedSensor
+#   MeasuredSpeedSensor --> FrontRadarSensor
+#   FrontRadarSensor --> C((End))
+#   end
+  
+# A{Start} --> FunctionalCPU
+# FunctionalCPU --> CalculateNewAccelerationOrDeceleration
+#     CalculateNewAccelerationOrDeceleration --> getFunctionalParameters
+#   getFunctionalParameters --> RemmenOfGasgeven 
+#   RemmenOfGasgeven --> AccelerationDecision{Acceleration Negative?}
+#   AccelerationDecision -- Yes --> RemSysteem
+#   AccelerationDecision -- No --> GasPedaal
+#   RemSysteem --> FunctionalCPU
+#   GasPedaal --> FunctionalCPU
+```
 
 
 # Testplan:
