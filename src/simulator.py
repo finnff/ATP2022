@@ -2,7 +2,8 @@ import json
 import socket
 
 class CarParams:
-    def __init__(self, max_acceleration, max_deceleration, wheel_diameter, encoder_CPR, seconds_distance):
+    def __init__(self, parameter_file_name, max_acceleration, max_deceleration, wheel_diameter, encoder_CPR, seconds_distance):
+        self.parmeter_file_name = parameter_file_name 
         self.max_acceleration = max_acceleration
         self.max_deceleration = max_deceleration
         self.wheel_diameter = wheel_diameter
@@ -11,7 +12,7 @@ class CarParams:
 
 
     def __str__(self):
-        return f"Car Parameters:\n" \
+        return f"\nCar Parameters for {self.parmeter_file_name}:\n" \
                f"Max Acceleration: {self.max_acceleration}\n" \
                f"Max Deceleration: {self.max_deceleration}\n" \
                f"Wheel Diameter: {self.wheel_diameter}\n" \
@@ -21,7 +22,7 @@ class CarParams:
 def load_car_from_json(file_path):
     with open(file_path, 'r') as json_file:
         data = json.load(json_file)
-        return CarParams(data['Max Acceleration'], data['Max Deceleration'], data['Wheel Diameter'], data['Encoder CPR'], data['Seconds Distance'])
+        return CarParams(file_path,data['Max Acceleration'], data['Max Deceleration'], data['Wheel Diameter'], data['Encoder CPR'], data['Seconds Distance'])
 
 car_hatchback = load_car_from_json('./car_constants/hatchback.json')
 car_suv = load_car_from_json('./car_constants/suv.json')
@@ -58,6 +59,7 @@ class True_Sim_Values:
         self.true_vehicle_acceleration = true_vehicle_acceleration
         self.GasRemPedalPosPercentage = 0.0
         self.sockserver = sockserver
+        print(f"  myVel  |  myAc  |  diff  |dist2Voo|  VooV  | lastPedalPos")
 
     def update(self):
         if self.GasRemPedalPosPercentage >= 0:
@@ -66,10 +68,18 @@ class True_Sim_Values:
             self.true_vehicle_speed += self.true_vehicle_acceleration
         if self.GasRemPedalPosPercentage < 0:
             realChange = (self.GasRemPedalPosPercentage / 100) * self.car_parameters.max_deceleration
-            self.true_vehicle_acceleration -= realChange# considering the deceleration as negative acceleration
-            self.true_vehicle_speed += self.true_vehicle_acceleration  # if acceleration is negative, speed will decrease
-        
-        print(f" myV: {self.true_vehicle_speed}, myAc: {self.true_vehicle_acceleration} (diff: {realChange}) , dist2Voo: {self.true_distance_to_voorligger}, speedVoo: {self.true_voorligger_speed}")
+            self.true_vehicle_acceleration -= realChange
+            self.true_vehicle_speed += self.true_vehicle_acceleration
+
+        values_line2 = f"{self.true_vehicle_speed:.3f}, {self.true_vehicle_acceleration:.3f}, {realChange:.3f}, {self.true_distance_to_voorligger:.3f}, {self.true_voorligger_speed:.3f}, {self.GasRemPedalPosPercentage:.3f}"
+        values_line = f"{self.true_vehicle_speed:.3f}".ljust(9) + \
+                      f"| {self.true_vehicle_acceleration:.3f}".ljust(9) + \
+                      f"| {realChange:.3f}".ljust(9) + \
+                      f"| {self.true_distance_to_voorligger:.3f}".ljust(9) + \
+                      f"| {self.true_voorligger_speed:.3f}".ljust(9) + \
+                      f"| {self.GasRemPedalPosPercentage:.3f}".ljust(9)
+        print(values_line, end="\r")
+        # print(f" myV: {self.true_vehicle_speed:.3f}, myAc: {self.true_vehicle_acceleration:.3f} (diff: {realChange:.3f}), dist2Voo: {self.true_distance_to_voorligger:.3f}, speedVoo: {self.true_voorligger_speed:.3f}")
         self.wait()
 
     def wait(self):
@@ -84,9 +94,10 @@ class True_Sim_Values:
         data = self.sockserver.receive_data()
         GasRemPedalPosPercentage = data["GasRemPedalPosPercentage"]
         self.GasRemPedalPosPercentage = GasRemPedalPosPercentage
-        print(f"Received Gas Rem Pedal Position: {self.GasRemPedalPosPercentage}")
+        # print(f"Received Gas Rem Pedal Position: {self.GasRemPedalPosPercentage:.3f}")
 
         self.update()
+
 
 sockserver = SocketServer()
 reality = True_Sim_Values(car_hatchback,100,200,100,1, sockserver)
