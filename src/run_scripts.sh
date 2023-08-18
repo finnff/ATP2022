@@ -6,7 +6,7 @@ tmux split-window -v -t
 # Sleep for 1 second
 sleep 1
 
-tmux send 'python3 gas_rem_sender.py' ENTER
+tmux send 'python3 frpCPU.py' ENTER
 # Attach to the tmux session
 tmux a
 

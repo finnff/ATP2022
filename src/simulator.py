@@ -1,5 +1,7 @@
 import json
 import socket
+import time
+import select
 
 class CarParams:
     def __init__(self, parameter_file_name, max_acceleration, max_deceleration, wheel_diameter, encoder_CPR, seconds_distance):
@@ -29,23 +31,47 @@ car_suv = load_car_from_json('./car_constants/suv.json')
 car_ferrari = load_car_from_json('./car_constants/ferrari.json')
 
 
-
 class SocketServer:
-    def __init__(self):
+    def __init__(self, host='127.0.0.1', port=12345):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server_address = ('localhost', 12345)
-        self.server_socket.bind(self.server_address)
+        self.server_socket.bind((host, port))
         self.server_socket.listen(1)
         print("Server is listening for incoming connections...")
-        self.client_socket, self.client_address = self.server_socket.accept()
-        print(f"Connection established with {self.client_address}")
+        self.client_socket, self.addr = self.server_socket.accept()
+        print(f"Connection established with {self.addr}")
 
     def send_data(self, data):
-        self.client_socket.sendall(json.dumps(data).encode())
+        try:
+            message = json.dumps(data) + "\n"
+            self.client_socket.sendall(message.encode())
+        except socket.error as e:
+            print("Error sending data:", e)
 
     def receive_data(self):
-        data = self.client_socket.recv(1024)
-        return json.loads(data.decode())
+        try:
+            data = self.client_socket.recv(1024).decode()
+            return json.loads(data)
+        except json.JSONDecodeError:
+            print("Failed to decode incoming data.")
+            self.client_socket.close()  # Close the current socket
+            return {}
+        except socket.error as e:
+            print("Error receiving data:", e)
+            print("Connection was reset by the client. Waiting for a new connection...")
+            self.client_socket.close()  # Close the current socket
+            self.client_socket, _ = self.server_socket.accept()  # Accept a new connection
+            return None  # Or handle this situation differently based on your use case
+       
+    def message_received(self):
+        # Non-blocking check for data
+        return bool(select.select([self.client_socket], [], [], 0)[0])
+#
+#     def send_data(self, data):
+#         self.client_socket.sendall(json.dumps(data).encode())
+#
+#
+#             return data
+
 
 
 
@@ -59,7 +85,16 @@ class True_Sim_Values:
         self.true_vehicle_acceleration = true_vehicle_acceleration
         self.GasRemPedalPosPercentage = 0.0
         self.sockserver = sockserver
+        self.iteration = 0
         print(f"  myVel  |  myAc  |  diff  |dist2Voo|  VooV  | lastPedalPos")
+
+
+    def alternate_voorligger_speed(self): # for now before we load voorligger profile
+        if self.iteration % 2 == 0: # Alternating behavior every other iteration
+            self.true_voorligger_speed = 110
+        else:
+            self.true_voorligger_speed = 80
+    
 
     def update(self):
         if self.GasRemPedalPosPercentage >= 0:
@@ -79,8 +114,12 @@ class True_Sim_Values:
                       f"| {self.true_voorligger_speed:.3f}".ljust(9) + \
                       f"| {self.GasRemPedalPosPercentage:.3f}".ljust(9)
         print(values_line, end="\r")
+        self.alternate_voorligger_speed()
+        self.iteration += 1 # Increment the iteration after each update
         # print(f" myV: {self.true_vehicle_speed:.3f}, myAc: {self.true_vehicle_acceleration:.3f} (diff: {realChange:.3f}), dist2Voo: {self.true_distance_to_voorligger:.3f}, speedVoo: {self.true_voorligger_speed:.3f}")
-        self.wait()
+        # Adjust the distance to the voorligger based on relative speed:
+        relative_speed = self.true_vehicle_speed - self.true_voorligger_speed
+        self.true_distance_to_voorligger -= relative_speed
 
     def wait(self):
         # Send true_distance_to_voorligger and true_vehicle_speed via socket
@@ -96,123 +135,38 @@ class True_Sim_Values:
         self.GasRemPedalPosPercentage = GasRemPedalPosPercentage
         # print(f"Received Gas Rem Pedal Position: {self.GasRemPedalPosPercentage:.3f}")
 
-        self.update()
 
+
+
+TIME_STEP = 0.1  # Example time step value of 0.1 seconds.
 
 sockserver = SocketServer()
-reality = True_Sim_Values(car_hatchback,100,200,100,1, sockserver)
-reality.update()
-#
-#
-# class True_Sim_Values:
-#     def __init__(self, car_parameters, true_vehicle_speed, true_distance_to_voorligger, true_voorligger_speed, true_vehicle_acceleration):
-#         self.car_parameters = car_parameters 
-#         self.true_vehicle_speed = true_vehicle_speed
-#         self.true_distance_to_voorligger = true_distance_to_voorligger
-#         self.true_voorligger_speed = true_voorligger_speed
-#         self.true_vehicle_acceleration = true_vehicle_acceleration
-#         self.GasRemPedalPosPercentage = 0.0
-#         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#         self.server_address = ('localhost', 12345)
-#         self.server_socket.bind(self.server_address)
-#         self.server_socket.listen(1)
-#         print("Server is listening for incoming connections...")
-#
-#     def update(self):
-#         if self.GasRemPedalPosPercentage >= 0:
-#             realAccel = (self.GasRemPedalPosPercentage / 100) * self.car_parameters.max_acceleration
-#             self.true_vehicle_acceleration += realAccel
-#             self.true_vehicle_speed += self.true_vehicle_acceleration
-#         elif self.GasRemPedalPosPercentage < 0:
-#             realDecel = (self.GasRemPedalPosPercentage / 100) * self.car_parameters.max_deceleration
-#             self.true_vehicle_acceleration += realDecel  # considering the deceleration as negative acceleration
-#             self.true_vehicle_speed += self.true_vehicle_acceleration  # if acceleration is negative, speed will decrease
-#
-#         print(f"True Vehicle Speed: {self.true_vehicle_speed}")
-#         print(f"True Distance To Voorligger: {self.true_distance_to_voorligger}")
-#         print(f"True Voorligger Speed: {self.true_voorligger_speed}")
-#         print(f"True Vehicle Acceleration: {self.true_vehicle_acceleration}")
-#         self.wait()
-#
-#     def wait(self):
-#         # Accept a connection from a client
-#         client_socket, client_address = self.server_socket.accept()
-#         print(f"Connection established with {client_address}")
-#
-#         # Send true_distance_to_voorligger and true_vehicle_speed via socket
-#         data = {
-#             'true_distance_to_voorligger': self.true_distance_to_voorligger,
-#             'true_vehicle_speed': self.true_vehicle_speed
-#         }
-#         client_socket.sendall(json.dumps(data).encode())
-#
-#         # Receive data from the client
-#         data = client_socket.recv(1024)
-#         GasRemPedalPosPercentage = json.loads(data.decode())["GasRemPedalPosPercentage"]
-#         self.GasRemPedalPosPercentage = GasRemPedalPosPercentage
-#         print(f"Received Gas Rem Pedal Position: {self.GasRemPedalPosPercentage}")
-#
-#         # Close the connection
-#         client_socket.close()
-#         self.update()
-#
-# reality = True_Sim_Values(car_hatchback,100,200,100,1)
-# reality.update()
-# reality.wait()
-#
-#
-#
-# class True_Sim_Values:
-#     def __init__(self, true_vehicle_speed, true_distance_to_voorligger, true_voorligger_speed, true_vehicle_acceleration):
-#         self.true_vehicle_speed = true_vehicle_speed
-#         self.true_distance_to_voorligger = true_distance_to_voorligger
-#         self.true_voorligger_speed = true_voorligger_speed
-#         self.true_vehicle_acceleration = true_vehicle_acceleration
-#         self.GasRemPedalPosPercentage = 0.0
-#
-#     def update(self):
-#         # calculate realAccel ((GasRemPedalPosition)/100 * max_acceleration) if GasRemPedalPosition > 0 and 
-#         # calculate realDecel ((GasRemPedalPosition)/100 * max_deceleration) if GasRemPedalPosition < 0 
-#         # then apply either value to self.true_vehicle_acceleration (value in meters*seconds^-2) and update
-#         # self.true_vehicle_speed (value in meters*seconds^-1) to match this change
-#         wait() 
-#
-#     def wait(self):
-#         # send true_distance_to_voorligger and true_vehicle_speed via socket
-#         # wait untill message Received
-#         # this message will contain GasRemPedalPosition (intgervalue between -100 to 100)
-#         # change self.GasRemPedalPosPercentage to what we recieve in message 
-#
-# import socket
-#
-# def start_server():
-#     # Create a socket object
-#     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#
-#     # Bind the socket to a specific address and port
-#     server_address = ('localhost', 12345)
-#     server_socket.bind(server_address)
-#
-#     # Listen for incoming connections
-#     server_socket.listen(1)
-#     print("Server is listening for incoming connections...")
-#
-#     # Accept a connection from a client
-#     client_socket, client_address = server_socket.accept()
-#     print(f"Connection established with {client_address}")
-#
-#     # Receive data from the client
-#     data = client_socket.recv(1024)
-#     print(f"Received data from client: {data.decode()}")
-#
-#     # Send a response back to the client
-#     response = "Hello from the server!"
-#     client_socket.sendall(response.encode())
-#
-#     # Close the connection
-#     client_socket.close()
-#     server_socket.close()
-#
-#
-# reality = True_Sim_Values(100,200,100,1)
-# reality.update()
+print("Server is listening for incoming connections...")
+reality = True_Sim_Values(car_hatchback, 100, 2000, 100, 1, sockserver)
+print("Connection established with", sockserver.client_socket.getpeername())  # Fixed: get the address from the client_socket
+
+while True:
+    start_time = time.time()
+
+    reality.update()
+
+    # Send current state to client.
+    data = {
+        'true_distance_to_voorligger': reality.true_distance_to_voorligger,
+        'true_vehicle_speed': reality.true_vehicle_speed
+    }
+    sockserver.send_data(data)
+
+    # Check for incoming messages and update the simulation state if necessary.
+    if sockserver.message_received():
+        data = sockserver.receive_data()
+        GasRemPedalPosPercentage = data.get("GasRemPedalPosPercentage")
+        if GasRemPedalPosPercentage is not None:
+            reality.GasRemPedalPosPercentage = GasRemPedalPosPercentage
+
+    # Sleep to ensure that we're not updating faster than our TIME_STEP.
+    elapsed_time = time.time() - start_time
+    sleep_duration = max(0, TIME_STEP - elapsed_time)
+    time.sleep(sleep_duration)
+
+
