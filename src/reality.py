@@ -76,7 +76,7 @@ class Reality:
             f"  myVel  |  myAc  |  diff  |  dist2Voor  | VoorVel | lastPedalPos | Elapsed Time"
         )
 
-       def update_sim_params(self):
+    def update_sim_params(self):
         (
             self.realChangeFactor,
             self.reality_frequency,
@@ -91,6 +91,7 @@ class Reality:
         self.redis.hset(
             "Sensor_Actuator", "GasRemPedalPosPercentage", self.GasRemPedalPosPercentage
         )
+        self.redis.hset("RealitySimReplay", "timeLoop_us", (time.time() - start_time))
 
     def load_state_from_redis(self):
         self.true_distance_to_voorligger = float(
@@ -110,8 +111,14 @@ class Reality:
             self.true_voorligger_speed = 80
 
     def dummyHzWheelSpeedSensor(self):
-            1. takes   true_vehicle_speed (in meter per second)(use scaled_elapsed_time)
-            takes.self.car_parameters.wheel_diameter
+        print("xx")
+        # 1. takes   true_vehicle_speed (in meter per second)(use scaled_elapsed_time)
+        # 2 self.car_parameters.wheel_diameter * pi for length wheel
+        # 3we can now calculate with all the time and scaled_elapsed_time how much wheel roations per timeunit(sub
+        # second scaled time something) we get.
+        # 4 self.car_parameters.encoder_cpr can be multiplied by this R/S for magnetic encoder pulses per timeunit..
+        # 5  this number back to seconds to get Hz, we then ad random.choice( +- 0.3%) and Redis set to Sensor_Actuator
+        pass
 
     def bosch_radar_update(self):
         if self.radar_counter >= 500:  # Check if 500ms have passed
