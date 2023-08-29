@@ -1,6 +1,7 @@
 {
+    "Param Name": "Ferrari F69",
     "Max Acceleration": 11.17,
-    "Max Deceleration": -11.82,
+    "Max Deceleration": 11.82,
     "Wheel Diameter": 0.71,
     "Encoder CPR": 40,
     "Seconds Distance": 1.5

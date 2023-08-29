@@ -1,6 +1,7 @@
 {
+    "Param Name": "BMW X27",
     "Max Acceleration": 2.23,
-    "Max Deceleration": -6.48,
+    "Max Deceleration": 6.48,
     "Wheel Diameter": 0.838,
     "Encoder CPR": 60,
     "Seconds Distance": 2

@@ -1,7 +1,6 @@
-import json
-import socket
+import redis
 import time
-import select
+import json
 
 
 class CarParams:
@@ -50,53 +49,6 @@ car_suv = load_car_from_json("./car_constants/suv.json")
 car_ferrari = load_car_from_json("./car_constants/ferrari.json")
 
 
-class SocketServer:
-    def __init__(self, host="127.0.0.1", port=12345):
-        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server_socket.bind((host, port))
-        self.server_socket.listen(1)
-        print("Server is listening for incoming connections...")
-        self.client_socket, self.addr = self.server_socket.accept()
-        print(f"Connection established with {self.addr}")
-
-    def send_data(self, data):
-        try:
-            message = json.dumps(data) + "\n"
-            self.client_socket.sendall(message.encode())
-        except socket.error as e:
-            print("Error sending data:", e)
-
-    def receive_data(self):
-        try:
-            data = self.client_socket.recv(1024).decode()
-            return json.loads(data)
-        except json.JSONDecodeError:
-            print("Failed to decode incoming data.")
-            self.client_socket.close()  # Close the current socket
-            return {}
-        except socket.error as e:
-            print("Error receiving data:", e)
-            print("Connection was reset by the client. Waiting for a new connection...")
-            self.client_socket.close()  # Close the current socket
-            (
-                self.client_socket,
-                _,
-            ) = self.server_socket.accept()  # Accept a new connection
-            return None  # Or handle this situation differently based on your use case
-
-    def message_received(self):
-        # Non-blocking check for data
-        return bool(select.select([self.client_socket], [], [], 0)[0])
-
-
-#
-#     def send_data(self, data):
-#         self.client_socket.sendall(json.dumps(data).encode())
-#
-#
-#             return data
-
-
 class True_Sim_Values:
     def __init__(
         self,
@@ -105,18 +57,54 @@ class True_Sim_Values:
         true_distance_to_voorligger,
         true_voorligger_speed,
         true_vehicle_acceleration,
-        sockserver,
+        redis_client,
     ):
         self.car_parameters = car_parameters
-        print(f"Starting Sim..... loaded car Parameters --- {self.car_parameters}")
+        print(f"Starting Sim..... loaded car Parameters --- {self.car_parameters} \n")
         self.true_vehicle_speed = true_vehicle_speed
         self.true_distance_to_voorligger = true_distance_to_voorligger
         self.true_voorligger_speed = true_voorligger_speed
         self.true_vehicle_acceleration = true_vehicle_acceleration
         self.GasRemPedalPosPercentage = 0.0
-        self.sockserver = sockserver
         self.iteration = 0
-        print(f"  myVel  |  myAc  |  diff  |dist2Voo|  VooV  | lastPedalPos")
+        self.redis = redis_client
+        print(f"  myVel  |  myAc  |  diff  |  dist2Voor  | VoorVel | lastPedalPos")
+
+    def save_state_to_redis(self):
+        self.redis.hset(
+            "sim_state", "true_distance_to_voorligger", self.true_distance_to_voorligger
+        )
+        self.redis.hset("sim_state", "true_vehicle_speed", self.true_vehicle_speed)
+        self.redis.hset(
+            "sim_state", "GasRemPedalPosPercentage", self.GasRemPedalPosPercentage
+        )
+
+    def load_state_from_redis(self):
+        self.true_distance_to_voorligger = float(
+            self.redis.hget("sim_state", "true_distance_to_voorligger") or 0.0
+        )
+        self.true_vehicle_speed = float(
+            self.redis.hget("sim_state", "true_vehicle_speed") or 0.0
+        )
+        self.GasRemPedalPosPercentage = float(
+            self.redis.hget("sim_state", "GasRemPedalPosPercentage") or 0.0
+        )
+
+    #
+    # def save_state_to_redis(self):
+    #     state = {
+    #         "true_distance_to_voorligger": self.true_distance_to_voorligger,
+    #         "true_vehicle_speed": self.true_vehicle_speed,
+    #         "GasRemPedalPosPercentage": self.GasRemPedalPosPercentage,
+    #     }
+    #     self.redis.hset("sim_state", state)
+    #
+    # def load_state_from_redis(self):
+    #     state = self.redis.hgetall("sim_state")
+    #     if state:
+    #         self.GasRemPedalPosPercentage = float(
+    #             state.get(b"GasRemPedalPosPercentage", 0)
+    #         )
 
     def alternate_voorligger_speed(self):  # for now before we load voorligger profile
         if self.iteration % 2 == 0:  # Alternating behavior every other iteration
@@ -155,50 +143,31 @@ class True_Sim_Values:
         relative_speed = self.true_vehicle_speed - self.true_voorligger_speed
         self.true_distance_to_voorligger -= relative_speed
 
-    def wait(self):
-        # Send true_distance_to_voorligger and true_vehicle_speed via socket
-        data = {
-            "true_distance_to_voorligger": self.true_distance_to_voorligger,
-            "true_vehicle_speed": self.true_vehicle_speed,
-        }
-        self.sockserver.send_data(data)
-
-        # Receive data from the client
-        data = self.sockserver.receive_data()
-        GasRemPedalPosPercentage = data["GasRemPedalPosPercentage"]
-        self.GasRemPedalPosPercentage = GasRemPedalPosPercentage
-        # print(f"Received Gas Rem Pedal Position: {self.GasRemPedalPosPercentage:.3f}")
+    # ... (rest of your methods like `update`, `alternate_voorligger_speed`, etc. remain unchanged)
 
 
-TIME_STEP = 0.1  # Example time step value of 0.1 seconds.
+if __name__ == "__main__":
+    # Initialize Redis client
+    redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 
-sockserver = SocketServer()
-print("Server is listening for incoming connections...")
-reality = True_Sim_Values(car_hatchback, 100, 2000, 100, 1, sockserver)
-print(
-    "Connection established with", sockserver.client_socket.getpeername()
-)  # Fixed: get the address from the client_socket
+    # car_hatchback = YourCarParametersHere (Initialize it before this line)
+    reality = True_Sim_Values(car_hatchback, 100, 2000, 100, 1, redis_client)
 
-while True:
-    start_time = time.time()
+    TIME_STEP = 0.1  # Example time step value of 0.1 seconds.
 
-    reality.update()
+    while True:
+        start_time = time.time()
 
-    # Send current state to client.
-    data = {
-        "true_distance_to_voorligger": reality.true_distance_to_voorligger,
-        "true_vehicle_speed": reality.true_vehicle_speed,
-    }
-    sockserver.send_data(data)
+        # Load the latest state from Redis
+        reality.load_state_from_redis()
 
-    # Check for incoming messages and update the simulation state if necessary.
-    if sockserver.message_received():
-        data = sockserver.receive_data()
-        GasRemPedalPosPercentage = data.get("GasRemPedalPosPercentage")
-        if GasRemPedalPosPercentage is not None:
-            reality.GasRemPedalPosPercentage = GasRemPedalPosPercentage
+        # Update the simulation
+        reality.update()
 
-    # Sleep to ensure that we're not updating faster than our TIME_STEP.
-    elapsed_time = time.time() - start_time
-    sleep_duration = max(0, TIME_STEP - elapsed_time)
-    time.sleep(sleep_duration)
+        # Save the updated state to Redis
+        reality.save_state_to_redis()
+
+        # Sleep to ensure that we're not updating faster than our TIME_STEP.
+        elapsed_time = time.time() - start_time
+        sleep_duration = max(0, TIME_STEP - elapsed_time)
+        time.sleep(sleep_duration)
