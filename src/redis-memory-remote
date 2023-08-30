@@ -1,0 +1,92 @@
+#!/usr/bin/python3
+import argparse
+import redis
+import curses
+import time
+
+default_values = {
+        'RealitySimReplay': {'RealityTimeScaleFactor': '1.0', 'reality_frequency': '100.0', 'reality_update_frequency': '1.0'},
+        'Sensor_Actuator': {'GasRemPedalPosPercentage': '0.0'},
+        'sim_state': {'true_distance_to_voorligger': '300.0', 'true_vehicle_speed': '100.0', 'true_voorligger_speed': '110.0', 'true_vehicle_acceleration': '0.0'}
+    }
+
+def reset_valuesnosc(r):
+    for _ in range(5):  # Three times in a row
+        for key in ['RealitySimReplay', 'Sensor_Actuator', 'sim_state']:
+            r.hset(name=key, mapping=default_values[key])
+            print( "Reseting" ",",_+1,"/10")
+    for _ in range(5):  # Three times in a row
+        for key in ['RealitySimReplay', 'Sensor_Actuator', 'sim_state']:
+            r.hset(name=key, mapping=default_values[key])
+            print( "Reseting" ",",_+6,"/10")
+
+def reset_values(r, stdscr):
+    for _ in range(5):  # Three times in a row
+        for key in ['RealitySimReplay', 'Sensor_Actuator', 'sim_state']:
+            r.hset(name=key, mapping=default_values[key])
+        stdscr.addstr(13+_, 0, f"Resetting... {_ + 1}/10")
+    for _ in range(5):  # Three times in a row
+        for key in ['RealitySimReplay', 'Sensor_Actuator', 'sim_state']:
+            r.hset(name=key, mapping=default_values[key])
+        stdscr.addstr(18+_, 0, f"Resetting... {_  +6}/10")
+        time.sleep(0.2)
+        stdscr.refresh()
+
+def main(stdscr):
+    r = redis.Redis(host='localhost', port=6379, db=0)
+    stdscr.clear()
+    curses.curs_set(0)
+
+    selected = 0
+    while True:
+        keys = r.keys()
+        keys = [key.decode('utf-8') for key in keys]
+        
+        stdscr.addstr(0, 0, "Select a key to view its hash data:")
+        for index, key in enumerate(keys):
+            highlight = curses.A_REVERSE if index == selected else curses.A_NORMAL
+            stdscr.addstr(index + 2, 4, key, highlight)
+
+        stdscr.addstr(len(keys) + 4, 0, "Navigate: Arrow Up/Down, Select: Enter, Reset All: Shift+R, Exit: Esc")
+        
+        keypress = stdscr.getch()
+
+        if keypress == curses.KEY_UP and selected > 0:
+            selected -= 1
+        elif keypress == curses.KEY_DOWN and selected < len(keys) - 1:
+            selected += 1
+        elif keypress == ord('\n'):
+            selected_key = keys[selected]
+            hash_data = r.hgetall(selected_key)
+            hash_data_str = '\n'.join([f"{k.decode('utf-8')}: {v.decode('utf-8')}" for k, v in hash_data.items()])
+            
+            stdscr.clear()
+            stdscr.addstr(0, 0, f"Data for {selected_key}:\n{hash_data_str}")
+            stdscr.addstr(len(hash_data) + 2, 0, "Press any key to go back...")
+            stdscr.getch()
+            stdscr.clear()
+        elif keypress == ord('R'):
+            stdscr.addstr(len(keys) + 6, 0, "Are you sure you want to reset all? (y/n)")
+            confirm = stdscr.getch()
+            if confirm == ord('y'):
+                reset_values(r, stdscr)
+                stdscr.addstr(8, 0, "Reset successful! The program will restart.")
+                stdscr.getch()
+                main(stdscr)
+        elif keypress == 27:
+            break
+
+        stdscr.refresh()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Redis Key Viewer and Editor')
+    parser.add_argument('-R', '--reset', action='store_true', help='Reset all keys to default values')
+    args = parser.parse_args()
+    
+    r = redis.Redis(host='localhost', port=6379, db=0)
+
+    if args.reset:
+        reset_valuesnosc(r)
+    else:
+        curses.wrapper(main)

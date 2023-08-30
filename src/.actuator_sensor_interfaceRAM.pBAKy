@@ -46,15 +46,12 @@ class ActuatorInterface:
     def __init__(self, redis_client):
         self.redis_client = redis_client
 
-    def receive_data(self):
-        gas_rem_percentage = self.redis_client.hget("actuator_data", "GasRemPedalPosPercentage")
-        return float(gas_rem_percentage) if gas_rem_percentage else None
 
     def set_gas_pedal_force(self, force):
         if 0 <= force <= 100:
             self.redis_client.hset("actuator_data", "GasRemPedalPosPercentage", force)
         else:
-            print("Speed must be between 0 and 100.")
+            print("GasPedal must be between 0 and 100.")
 
     def set_braking_pedal_force(self, force):
         if -100 <= force <= 0:

@@ -1,43 +1,29 @@
 import time
-from actuator_sensor_interface import SensorInterface, SpeedSensor,  RadarDistanceMeter,  ActuatorInterface
+from combined_interface import CombinedInterface
 
-# Create the SensorInterface
-speed_sensor = SpeedSensor()
-RadarDistanceMeter = RadarDistanceMeter()
-sensor_interface = SensorInterface(speed_sensor, RadarDistanceMeter)
-
-# Create and connect the GasRemSender
-# gas_rem_sender = GasRemSender()
-actuator_interface = ActuatorInterface()
-
-
-# Giving it a slight delay to ensure a stable connection
-time.sleep(0.5)  # Sleep for 500 milliseconds (adjust as needed)
-
-
-# ... initialization and setup ...
+# Create the Combined Interface
+combined_interface = CombinedInterface()
 
 try:
     while True:
         # Fetch data from sensors
-        distance = sensor_interface.get_distance()
-        speed = sensor_interface.get_speed()
-
-        # Control logic
-        if distance > 100:
-            actuator_interface.set_gas_pedal_force(20)
-        elif distance < 100:
-            actuator_interface.set_braking_pedal_force(-20)
+        distance = combined_interface.get_distance()
+        speed = combined_interface.get_speed()
         
-        # Wait for a response
-        received_data = actuator_interface.receive_data()
+        # Control logic
+        if distance > 200:
+            combined_interface.set_gas_pedal_force(20)
+        elif distance < 200:
+            combined_interface.set_braking_pedal_force(-20)
+        elif distance < 100:
+            combined_interface.set_braking_pedal_force(-50)
+
+        received_data = combined_interface.receive_data()
         if received_data:
             print(f"Received data from server: {received_data}")
-
         # Sleep for control loop delay
         time.sleep(0.05)
-
+        
 except KeyboardInterrupt:
     print("\nStopping the control loop...")
-
 

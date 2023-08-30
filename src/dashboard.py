@@ -113,22 +113,42 @@ class SpecialGraph:
 
     def update_graph(self):
         cached_data = self.data_cache.get_data("Sensor_Actuator")  # fetch data using data_cache
-        value = cached_data.get("GasRemPedalPosPercentage", 0)  # Default to 0 if key is not found
+        # value = cached_data.get("GasRemPedalPosPercentage", 0)  # Default to 0 if key is not found
 
-        self.data.append(value)  # Update deque
-        
+        value_deque = cached_data.get("GasRemPedalPosPercentage", deque([0]))  # Default to deque([0]) if key is not found
+        if value_deque:
+            value = value_deque[-1]
+        else:
+            value = 0 
+
+        self.data.append(value)
         # Create bar graph traces
-        bar_trace = go.Bar(
-            x=['Positive'],
-            y=[max(0, value)],
-            marker=dict(color='green')
-        )
-
-        negative_bar_trace = go.Bar(
-            x=['Negative'],
-            y=[max(0, -value)],
-            marker=dict(color='red')
-        )
+        if value >= 0:
+            bar_trace = go.Bar(
+                x=['Positive'],
+                y=[value],
+                marker=dict(color='green'),
+                width=[0.4],
+                )
+            negative_bar_trace = go.Bar(
+                x=['Negative'],
+                y=[0],
+                marker=dict(color='red'),
+                width=[0.4],
+            )
+        else:
+            bar_trace = go.Bar(
+                x=['Positive'],
+                y=[0],
+                marker=dict(color='green'),
+                width=[0.4],
+            )
+            negative_bar_trace = go.Bar(
+                x=['Negative'],
+                y=[-value],  # Take absolute value
+                marker=dict(color='red'),
+                width=[0.4],
+            )
         
         # Create sparkline
         sparkline_trace = go.Scatter(
@@ -136,7 +156,7 @@ class SpecialGraph:
             y=list(self.data),
             mode='lines+markers',
         )
-
+        
         # Create layout
         layout = go.Layout(
             title='Special Graph',
@@ -149,9 +169,9 @@ class SpecialGraph:
         fig.add_trace(bar_trace)
         fig.add_trace(negative_bar_trace)
         fig.add_trace(sparkline_trace)
-        
+
         fig.update_layout(layout)
-        
+
         return fig
 
 
