@@ -1,13 +1,23 @@
 #!/bin/bash
 
-# Start a new tmux session named "scripts"
-tmux new-session -d -s scripts 'python3 simulator.py'
-tmux split-window -v -t
-# Sleep for 1 second
+# Start a new session
+tmux new-session -d -s scripts
+
+# Run the first command in the first window
+tmux send-keys -t scripts:0 'python3 simulator.py' C-m
+
+# Sleep for a bit
 sleep 1
 
-tmux send 'python3 frpCPU.py' ENTER
-# Attach to the tmux session
-tmux a
+# Create a new pane and run the second command
+tmux split-window -v -t scripts:0
+tmux send-keys -t scripts:0.1 'python3 frpCPU.py' C-m
 
-# Split the window vertically and run gas_rem_sender.py in the second pane
+# Create another new pane and run the third command
+tmux split-window -h -t scripts:0
+tmux send-keys -t scripts:0.2 'python3 reality.py' C-m
+
+# And so on for other commands
+
+# Attach to the session
+tmux attach -t scripts
