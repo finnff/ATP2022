@@ -1,5 +1,4 @@
-import WSS_binded
-import wssPy
+import WheelSpeedSensor  # The shared object you built
 
 
 class SpeedSensor:
@@ -13,7 +12,7 @@ class SpeedSensor:
         raw_speed = self.wss.read_speed()  # Fetch raw speed from C++ code
         self.vehicle_speed = raw_speed / self.CPR / self.diameter  # Apply the dividers
         return self.vehicle_speed
-    
+
     def set_CPR(self, CPR):
         self.CPR = CPR
         self.wss.set_CPR(CPR)  # Set in the C++ object if needed
@@ -21,6 +20,7 @@ class SpeedSensor:
     def set_diameter(self, diameter):
         self.diameter = diameter
         self.wss.set_diameter(diameter)  # Set in the C++ object if needed
+
 
 # Test the Python-C++ binding
 if __name__ == "__main__":
