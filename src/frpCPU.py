@@ -5,36 +5,31 @@ from rx import operators as ops
 from functools import wraps
 import time
 from combined_interface import CombinedInterface
+import logging
 
 
-import rx
-from rx import operators as ops
-from functools import wraps
-import time
-from combined_interface import CombinedInterface
-
-
+# Logged nu naar bestand, zodat code stateless FRP blijft
 # Aspect-Oriented decorator to measure time
-#
 def timing_decorator(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         start_time = time.time()
         result = f(*args, **kwargs)
         end_time = time.time()
-        print(f"Elapsed time: {end_time - start_time}")
-        return result
+        elapsed_time = end_time - start_time
+        logging.info(f"Elapsed time: {elapsed_time}")
+        return elapsed_time, result
 
     return wrapper
 
 
-# Logging Decorator
+# Aspect-Oriented decorator for logging args and retun values
 def logging_decorator(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         result = f(*args, **kwargs)
-        print(f"Function [{f.__name__}] arguments were {args} and {kwargs}")
-        print(f"Function [{f.__name__}] result was {result}")
+        logging.info(f"Function [{f.__name__}] arguments were {args} and {kwargs}")
+        logging.info(f"Function [{f.__name__}] result was {result}")
         return result
 
     return wrapper
@@ -43,6 +38,7 @@ def logging_decorator(f):
 # Pure Function to get sensor data
 @timing_decorator
 def get_sensor_data(interface):
+    seconds = interface.get_desiredSeconds()
     distance = interface.get_distance()
     speed = interface.get_speed()
     return distance, speed

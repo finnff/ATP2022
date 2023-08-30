@@ -3,7 +3,7 @@ import random
 import math
 import time
 
-from car_parameters import car_parameters
+from CarParamsManager import CarParamsManager
 
 
 def set_sim_params(redis, speed=1.0, frequency=100, update_frequency=1.0):
@@ -22,15 +22,25 @@ def get_sim_params(redis):
 class Reality:
     def __init__(
         self,
-        car_parameters,
+        carmanager,
         true_vehicle_speed,
         true_distance_to_voorligger,
         true_voorligger_speed,
         true_vehicle_acceleration,
         redis_client,
     ):
-        self.car_parameters = car_parameters
+        self.redis = redis_client
+        self.update_sim_params()
+        print(
+            "Running sim with sim param: ",
+            self.RealityTimeScaleFactor,
+            self.reality_frequency,
+            self.reality_update_frequency,
+        )
+        self.car_manager = carmanager
+        self.update_car_params()
         print(self.car_parameters)
+        self.true_vehicle_speed = true_vehicle_speed
         self.true_vehicle_speed = true_vehicle_speed
         self.true_distance_to_voorligger = true_distance_to_voorligger
         self.true_voorligger_speed = true_voorligger_speed
@@ -39,14 +49,17 @@ class Reality:
         self.iteration = 0
         self.time_since_reality_update = 0.01
         self.radar_counter = 0
-        self.redis = redis_client
+
         print(
             f"  myVel  |  myAc  |  diff  |  dist2Voor  | VoorVel | lastPedalPos | Elapsed Time"
         )
 
+    def update_car_params(self):
+        self.car_parameters = self.car_manager.load_car_from_redis()
+
     def update_sim_params(self):
         (
-            self.realChangeFactor,
+            self.RealityTimeScaleFactor,
             self.reality_frequency,
             self.reality_update_frequency,
         ) = get_sim_params(self.redis)
@@ -133,7 +146,6 @@ class Reality:
                 self.redis.hset("Sensor_Actuator", "Front_radar_measurable", 999)
 
     def update(self, elapsed_time, speed_scale_factor=1):
-        self.update_sim_params()
         scaled_elapsed_time = elapsed_time * speed_scale_factor
         # Update the radar counter based on scaled time
         self.radar_counter += int(scaled_elapsed_time * 1000)  # convert to ms
@@ -162,6 +174,8 @@ class Reality:
             # piggybacking of radar_counter for 100ms timer
             if self.radar_counter >= 100:
                 self.iteration += 1
+                self.update_sim_params()
+                self.update_car_params()
                 self.alternate_voorligger_speed()
                 values_line = (
                     f"{self.true_vehicle_speed:.3f}".ljust(9)
@@ -183,9 +197,13 @@ if __name__ == "__main__":
     redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 
     set_sim_params(redis_client, speed=1.00, frequency=100.00, update_frequency=1.00)
-    Loaded_Car_Parameters = load_all_cars("./car_constants")
-    print(f"Loaded car parameters for: {[i.param_name for i in Loaded_Car_Parameters]}")
-    reality = Reality(Loaded_Car_Parameters[0], 100, 2000, 100, 0, redis_client)
+
+    carmanager = CarParamsManager("../car_constants", param_no_to_set=0)
+    loaded_cars = carmanager.load_all_cars()
+    print(f"Loaded car parameters for: {[car.param_name for car in loaded_cars]}")
+
+    reality = Reality(carmanager, 100, 2000, 100, 0, redis_client)
+
     time.sleep(10)
     (
         speed_scale_factor,

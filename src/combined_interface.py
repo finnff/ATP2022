@@ -73,19 +73,15 @@ class ActuatorInterface:
         else:  # both forces are equal in magnitude
             self.set_gas_pedal_force(0)
 
+            ## ADD SECONDS FROM FRP
+            ## ADD SECONDS FROM FRP
+            ## ADD SECONDS FROM FRP
+            ## ADD SECONDS FROM FRP
+            ## ADD SECONDS FROM FRP
+            ## ADD SECONDS FROM FRP
+            ## ADD SECONDS FROM FRP
 
-# def set_combined_pedal_force(self, gas_force, brake_force):
-#         # Logic to pick the stronger force and apply it while canceling the weaker one
-#         if abs(gas_force) > abs(brake_force):
-#             self.set_gas_pedal_force(gas_force)
-#             self.set_braking_pedal_force(0)  # Explicitly set to 0
-#         elif abs(brake_force) > abs(gas_force):
-#             self.set_braking_pedal_force(brake_force)
-#             self.set_gas_pedal_force(0)  # Explicitly set to 0
-#         else:  # both forces are equal in magnitude
-#             self.set_gas_pedal_force(0)
-#             self.set_braking_pedal_force(0)
-#
+
 class CombinedInterface:
     def __init__(self):
         self.redis_client = redis.Redis(host="localhost", port=6379, db=0)

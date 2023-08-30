@@ -48,6 +48,11 @@ def reset_values(r, stdscr):
         stdscr.refresh()
 
 
+def flush_db(r):
+    r.flushall()
+    print("Flushed all keys from Redis database.")
+
+
 def main(stdscr):
     r = redis.Redis(host="localhost", port=6379, db=0)
     stdscr.clear()
@@ -57,6 +62,7 @@ def main(stdscr):
     while True:
         keys = r.keys()
         keys = [key.decode("utf-8") for key in keys]
+        time.sleep(0.05)
 
         stdscr.addstr(0, 0, "Select a key to view its hash data:")
         for index, key in enumerate(keys):
@@ -66,7 +72,7 @@ def main(stdscr):
         stdscr.addstr(
             len(keys) + 4,
             0,
-            "Navigate: Arrow Up/Down, Select: Enter, Reset All: Shift+R, Exit: Esc",
+            "Navigate: Arrow Up/Down, Select: Enter, Reset All: Shift+R, FLUSH_ALL: Shift+F, Exit: Esc",
         )
 
         keypress = stdscr.getch()
@@ -98,9 +104,20 @@ def main(stdscr):
                 stdscr.addstr(8, 0, "Reset successful! The program will restart.")
                 stdscr.getch()
                 main(stdscr)
+        elif keypress == ord("F"):
+            stdscr.addstr(
+                len(keys) + 7,
+                0,
+                "Are you sure you want to flush all? (y/n) this will crash running code  (C++ WheelSpeedSensor in particular)",
+            )
+            confirm = stdscr.getch()
+            if confirm == ord("y"):
+                flush_db(r)
+                stdscr.addstr(9, 0, "Flush successful! The program will restart.")
+                stdscr.getch()
+                main(stdscr)
         elif keypress == 27:
             break
-
         stdscr.refresh()
 
 
@@ -109,11 +126,20 @@ if __name__ == "__main__":
     parser.add_argument(
         "-R", "--reset", action="store_true", help="Reset all keys to default values"
     )
+    parser.add_argument(
+        "-F",
+        "--flush",
+        action="store_true",
+        help="Flush all keys from Redis (UNSTABLE)",
+    )
+
     args = parser.parse_args()
 
     r = redis.Redis(host="localhost", port=6379, db=0)
 
     if args.reset:
         reset_valuesnosc(r)
+    elif args.flush:
+        flush_db(r)
     else:
         curses.wrapper(main)
