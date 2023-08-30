@@ -50,9 +50,7 @@ class Reality:
         self.time_since_reality_update = 0.01
         self.radar_counter = 0
 
-        print(
-            f"  myVel  |  myAc  |  diff  |  dist2Voor  | VoorVel | lastPedalPos | Elapsed Time"
-        )
+        print(f"  myVel  |  myAc  |  diff  |dist2Voor| VoorVel |lastPedalPos| loopHz")
 
     def update_car_params(self):
         self.car_parameters = self.car_manager.load_car_from_redis()
@@ -96,9 +94,9 @@ class Reality:
 
     def alternate_voorligger_speed(self):
         if self.iteration % 2 == 0:
-            self.true_voorligger_speed = 110
+            self.true_voorligger_speed = 31
         else:
-            self.true_voorligger_speed = 90
+            self.true_voorligger_speed = 29
 
     def dummyHzWheelSpeedSensor(self, scaled_elapsed_time):
         # Step 1: Get true_vehicle_speed in meters per second
@@ -184,7 +182,7 @@ class Reality:
                     + f"| {self.true_distance_to_voorligger:.3f}".ljust(9)
                     + f"| {self.true_voorligger_speed:.3f}".ljust(9)
                     + f"| {self.GasRemPedalPosPercentage:.3f}".ljust(9)
-                    + f"| {elapsed_time:.3f}".ljust(9)
+                    + f"| {1 / (time.time() - start_time)}".ljust(9)
                 )
                 print(values_line, end="\r")
             self.bosch_radar_update()
@@ -202,7 +200,7 @@ if __name__ == "__main__":
     loaded_cars = carmanager.load_all_cars()
     print(f"Loaded car parameters for: {[car.param_name for car in loaded_cars]}")
 
-    reality = Reality(carmanager, 100, 2000, 100, 0, redis_client)
+    reality = Reality(carmanager, 10, 200, 10, 0, redis_client)
 
     time.sleep(10)
     (

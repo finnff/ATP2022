@@ -17,8 +17,8 @@ default_values = {
     },
     "sim_state": {
         "true_distance_to_voorligger": "300.0",
-        "true_vehicle_speed": "100.0",
-        "true_voorligger_speed": "110.0",
+        "true_vehicle_speed": "30.0",
+        "true_voorligger_speed": "27.0",
         "true_vehicle_acceleration": "0.0",
     },
 }

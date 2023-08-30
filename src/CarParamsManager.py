@@ -3,6 +3,27 @@ import os
 import redis
 
 
+def ext_load_car_from_redis(alternative_redis_client):
+    raw_data = alternative_redis_client.hgetall("CurrentlyLoadedCarParams")
+    # raw_data = self.redis_client.hgetall("CurrentlyLoadedCarParams")
+    if not raw_data:
+        print("No data found in Redis for the key 'CurrentlyLoadedCarParams'.")
+        return None
+    try:
+        car_params = CarParams(
+            raw_data[b"param_name"].decode("utf-8"),
+            float(raw_data[b"max_acceleration"]),
+            float(raw_data[b"max_deceleration"]),
+            float(raw_data[b"wheel_diameter"]),
+            int(raw_data[b"encoder_cpr"]),
+            float(raw_data[b"seconds_distance"]),
+        )
+        return car_params
+    except KeyError as e:
+        print(f"KeyError: {e} not found in Redis data.")
+        return None
+
+
 class CarParams:
     def __init__(
         self,
@@ -71,23 +92,29 @@ class CarParamsManager:
         self.redis_client.hset("CurrentlyLoadedCarParams", mapping=field_values)
 
     def load_car_from_redis(self):
-        raw_data = self.redis_client.hgetall("CurrentlyLoadedCarParams")
-        if not raw_data:
-            print("No data found in Redis for the key 'CurrentlyLoadedCarParams'.")
-            return None
-        try:
-            car_params = CarParams(
-                raw_data[b"param_name"].decode("utf-8"),
-                float(raw_data[b"max_acceleration"]),
-                float(raw_data[b"max_deceleration"]),
-                float(raw_data[b"wheel_diameter"]),
-                int(raw_data[b"encoder_cpr"]),
-                float(raw_data[b"seconds_distance"]),
-            )
-            return car_params
-        except KeyError as e:
-            print(f"KeyError: {e} not found in Redis data.")
-            return None
+        return ext_load_car_from_redis(self.redis_client)
+
+    # def load_car_from_redis(self, alternative_redis_client=None):
+    #     if alternative_redis_client is None:
+    #         alternative_redis_client = self.redis_client
+    #     raw_data = alternative_redis_client.hgetall("CurrentlyLoadedCarParams")
+    #     # raw_data = self.redis_client.hgetall("CurrentlyLoadedCarParams")
+    #     if not raw_data:
+    #         print("No data found in Redis for the key 'CurrentlyLoadedCarParams'.")
+    #         return None
+    #     try:
+    #         car_params = CarParams(
+    #             raw_data[b"param_name"].decode("utf-8"),
+    #             float(raw_data[b"max_acceleration"]),
+    #             float(raw_data[b"max_deceleration"]),
+    #             float(raw_data[b"wheel_diameter"]),
+    #             int(raw_data[b"encoder_cpr"]),
+    #             float(raw_data[b"seconds_distance"]),
+    #         )
+    #         return car_params
+    #     except KeyError as e:
+    #         print(f"KeyError: {e} not found in Redis data.")
+    #         return None
 
     def load_all_cars(self):
         loaded_car_parameters = []
