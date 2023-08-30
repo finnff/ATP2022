@@ -1,57 +1,9 @@
 import redis
-import os
 import random
 import math
 import time
-import json
 
-
-class CarParams:
-    def __init__(
-        self,
-        param_name,
-        max_acceleration,
-        max_deceleration,
-        wheel_diameter,
-        encoder_cpr,
-        seconds_distance,
-    ):
-        self.param_name = param_name
-        self.max_acceleration = max_acceleration
-        self.max_deceleration = max_deceleration
-        self.wheel_diameter = wheel_diameter
-        self.encoder_cpr = encoder_cpr
-        self.seconds_distance = seconds_distance
-    def __str__(self):
-        return (f"Using Parameters: {self.param_name}\n"
-                f"MaxAcc: {self.max_acceleration}\n"
-                f"MaxDec: {self.max_deceleration}\n"
-                f"Wheel_size: {self.wheel_diameter}\n"
-                f"WheelSpeed CPR: {self.encoder_cpr}\n"
-                f"Sec Dist: {self.seconds_distance}\n\n")
-
-
-
-def load_car_from_json(file_path):
-    with open(file_path, "r") as json_file:
-        data = json.load(json_file)
-        return CarParams(
-            data["Param Name"],
-            data["Max Acceleration"],
-            data["Max Deceleration"],
-            data["Wheel Diameter"],
-            data["Encoder CPR"],
-            data["Seconds Distance"],
-        )
-
-
-def load_all_cars(folder_path):
-    Loaded_Car_Parameters = []
-    for filename in os.listdir(folder_path):
-        if filename.endswith(".json"):
-            file_path = os.path.join(folder_path, filename)
-            Loaded_Car_Parameters.append(load_car_from_json(file_path))
-    return Loaded_Car_Parameters
+from car_parameters import car_parameters
 
 
 def set_sim_params(redis, speed=1.0, frequency=100, update_frequency=1.0):
@@ -100,19 +52,34 @@ class Reality:
         ) = get_sim_params(self.redis)
 
     def save_state_to_redis(self):
-        self.redis.hset("sim_state", "true_distance_to_voorligger", self.true_distance_to_voorligger)
+        self.redis.hset(
+            "sim_state", "true_distance_to_voorligger", self.true_distance_to_voorligger
+        )
         self.redis.hset("sim_state", "true_vehicle_speed", self.true_vehicle_speed)
-        self.redis.hset("sim_state", "true_voorligger_speed", self.true_voorligger_speed)
-        self.redis.hset("sim_state", "true_vehicle_acceleration", self.true_vehicle_acceleration)
-        self.redis.hset("RealitySimReplay", "realityHZ", 1/(time.time() - start_time))
+        self.redis.hset(
+            "sim_state", "true_voorligger_speed", self.true_voorligger_speed
+        )
+        self.redis.hset(
+            "sim_state", "true_vehicle_acceleration", self.true_vehicle_acceleration
+        )
+        self.redis.hset("RealitySimReplay", "realityHZ", 1 / (time.time() - start_time))
 
     def load_state_from_redis(self):
-        self.true_distance_to_voorligger = float(self.redis.hget("sim_state", "true_distance_to_voorligger") or 0.0)
-        self.true_vehicle_speed = float(self.redis.hget("sim_state", "true_vehicle_speed") or 0.0)
-        self.true_voorligger_speed = float(self.redis.hget("sim_state", "true_voorligger_speed") or 0.0)
-        self.true_vehicle_acceleration = float(self.redis.hget("sim_state", "true_vehicle_acceleration") or 0.0)
-        self.GasRemPedalPosPercentage = float(self.redis.hget("Sensor_Actuator", "GasRemPedalPosPercentage") or 0.0)
-
+        self.true_distance_to_voorligger = float(
+            self.redis.hget("sim_state", "true_distance_to_voorligger") or 0.0
+        )
+        self.true_vehicle_speed = float(
+            self.redis.hget("sim_state", "true_vehicle_speed") or 0.0
+        )
+        self.true_voorligger_speed = float(
+            self.redis.hget("sim_state", "true_voorligger_speed") or 0.0
+        )
+        self.true_vehicle_acceleration = float(
+            self.redis.hget("sim_state", "true_vehicle_acceleration") or 0.0
+        )
+        self.GasRemPedalPosPercentage = float(
+            self.redis.hget("Sensor_Actuator", "GasRemPedalPosPercentage") or 0.0
+        )
 
     def alternate_voorligger_speed(self):
         if self.iteration % 2 == 0:
