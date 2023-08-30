@@ -25,9 +25,9 @@ try:
 
         # Control logic
         if distance > 100:
-            actuator_interface.set_gas_pedal_force(50)
+            actuator_interface.set_gas_pedal_force(20)
         elif distance < 100:
-            actuator_interface.set_braking_pedal_force(-50)
+            actuator_interface.set_braking_pedal_force(-20)
         
         # Wait for a response
         received_data = actuator_interface.receive_data()

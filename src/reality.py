@@ -104,7 +104,7 @@ class Reality:
         self.redis.hset("sim_state", "true_vehicle_speed", self.true_vehicle_speed)
         self.redis.hset("sim_state", "true_voorligger_speed", self.true_voorligger_speed)
         self.redis.hset("sim_state", "true_vehicle_acceleration", self.true_vehicle_acceleration)
-        self.redis.hset("RealitySimReplay", "timeLoop_us", (time.time() - start_time))
+        self.redis.hset("RealitySimReplay", "realityHZ", 1/(time.time() - start_time))
 
     def load_state_from_redis(self):
         self.true_distance_to_voorligger = float(self.redis.hget("sim_state", "true_distance_to_voorligger") or 0.0)
@@ -151,7 +151,7 @@ class Reality:
             f"Encoder Pulses/Time Unit: {encoder_pulses_per_time_unit}, "
             f"Encoder Pulses/s (Hz): {encoder_pulses_per_second}"
         )
-        self.redis.hset("Sensor_Actuator", "WheelSpeedSensorExplanation", explanation)
+        # print(explanation)
 
     def bosch_radar_update(self):
         if self.radar_counter >= 500:  # Check if 500ms have passed
