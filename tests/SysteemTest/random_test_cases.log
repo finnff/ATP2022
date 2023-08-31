@@ -1,0 +1,41 @@
+2023-09-01 19:32:48,137 [info]: Loaded carParams for "BMW X27",
+2023-08-31 19:32:48,337 [info]: Test case Passed. Elapsed time: 2.16,, Test case: [7.65, 0.09, 0.1, 59.53], ['vV=3.60', 'p=2.16', 'cc', 'R'],
+2023-08-31 19:32:50,497 [info]: Test case Passed. Elapsed time: 17.03, Test case: [6.7, -0.3, 13.91, 442.13], ['vV=8.76', 'p=3.52', 'vV=5.75', 'p=4.20', 'mAX=0.15', 'p=4.74', 'mV=7.33', 'p=4.57', 'cc', 'R'],
+2023-08-31 19:33:07,527 [info]: Test case Passed. Elapsed time: 13.78, Test case: [9.71, 0.15, 11.22, 364.84], ['mV=9.47', 'p=4.69', 'mAX=-0.09', 'p=1.31', 'mV=7.72', 'p=4.82', 'vV=1.10', 'p=2.96', 'cc', 'R'],
+2023-08-31 19:33:21,307 [info]: Test case Passed. Elapsed time: 12.72, Test case: [8.37, -0.11, 10.46, 468.06], ['vV=2.15', 'p=2.33', 'mV=9.21', 'p=1.00', 'mAX=-0.12', 'p=4.86', 'mV=8.02', 'p=1.00', 'mV=4.04', 'p=3.53', 'cc', 'R'],
+2023-08-31 19:33:34,029 [info]: Test case Passed. Elapsed time: 7.83, Test case: [5.94, 0.06, 11.84, 299.77], ['mV=0.13', 'p=3.87', 'mAX=0.08', 'p=3.96', 'cc', 'R'],
+2023-08-31 19:33:41,859 [info]: Test case Passed. Elapsed time: 10.12, Test case: [9.24, 0.19, 14.56, 79.76], ['vV=7.53', 'p=1.09', 'vV=4.98', 'p=4.35', 'mAX=-0.08', 'p=1.00', 'vV=8.62', 'p=3.67', 'cc', 'R'],
+2023-08-31 19:33:51,971 [info]: Test case Passed. Elapsed time: 24.26, Test case: [9.11, 0.08, 14.14, 398.78], ['mV=8.08', 'p=3.58', 'mAX=0.04', 'p=1.39', 'vV=6.07', 'p=4.91', 'vV=1.91', 'p=1.21', 'mV=9.68', 'p=4.48', 'mV=7.43', 'p=4.23', 'mAX=0.16', 'p=4.47', 'cc', 'R'],
+2023-08-31 19:34:16,231 [info]: Test case Passed. Elapsed time: 14.97, Test case: [5.24, -0.07, 7.99, 421.58], ['vV=2.21', 'p=2.63', 'mV=1.79', 'p=4.70', 'mAX=-0.14', 'p=4.03', 'mAX=0.12', 'p=2.61', 'mAX=0.04', 'p=1.00', 'cc', 'R'],
+2023-08-31 19:34:31,202 [ERROR]: Test case failed. Elapsed time: 4.27, Test case: [5.9, 0.06, 0.1, 10], ['mAX=0.08', 'p=4.27', 'cc', 'R'], Crash Info: {'true_distance_to_voorligger': -15000, 'true_vehicle_speed': 9.0, 'true_voorligger_speed': 15.0, 'true_vehicle_acceleration': 0.4, 'crash_reasons': '!!!! Negative distance to voorligger'}
+2023-08-31 19:34:53,298 [ERROR]: Test case failed. Elapsed time: 19.98  Test case: [0.1, 0.12, 5.48, 329.47], ['vV=9.67', 'p=3.46', 'mV=1.83', 'p=3.28', 'Crash Info: {'crash_reasons': '!!!! Time to reach 15000.8 voorligger exceeds 15 seconds', 'true_vehicle_acceleration': 0.2, 'true_vehicle_speed': 0.1, 'true_distance_to_voorligger': 30001.6, 'true_voorligger_speed': 11.0}
+2023-08-31 19:34:53,301 [INFO]: Failed cases: 2, / 10
+2023-08-31 19:34:53,313 [INFO]: Passed cases: 8, / 10
+
+2023-08-31 19:34:54,859 [info]: Loaded carParams for "Golf GTI/GTE",
+2023-08-31 19:34:54,522 [info]: Test case Passed. Elapsed time:  9.66, Test case: [4.36, -0.0, 0.25, 453.64], ['mV=5.24', 'p=4.72', 'mV=5.89', 'p=4.95', 'cc', 'R']
+2023-08-31 19:35:03,603 [info]: Test case Passed. Elapsed time:  12.03, Test case: [3.19, 0.19, 0.1, 483.76], ['mV=5.44', 'p=3.02', 'vV=3.83', 'p=1.11', 'vV=0.85', 'p=4.43', 'vV=4.31', 'p=1.00', 'mAX=-0.01', 'p=2.52', 'cc', 'R']
+2023-08-31 19:35:05,418 [info]: Test case Passed. Elapsed time:  1.87, Test case: [5.66, 0.1, 0.1, 498.24], ['vV=3.64', 'p=1.82', 'cc', 'R']
+2023-08-31 19:35:10,768 [info]: Test case Passed. Elapsed time:  5.37, Test case: [8.55, -0.3, 8.88, 488.8], ['mAX=0.06', 'p=1.00', 'vV=6.73', 'p=4.35', 'cc', 'R']
+2023-08-31 19:35:20,711 [info]: Test case Passed. Elapsed time:  9.93, Test case: [8.39, -0.01, 7.81, 10], ['mAX=0.12', 'p=1.13', 'vV=2.15', 'p=4.41', 'mAX=0.20', 'p=4.40', 'cc', 'R']
+2023-08-31 19:35:21,954 [ERROR]: Test case failed. Elapsed time:  1.21, Test case: [8.83, 0.16, 0.25, 472.42], ['vV=2.91', 'p=1.24', 'cc', 'R'] , Crash Info: {'true_distance_to_voorligger': -1, 'true_vehicle_speed': 8.0, 'true_voorligger_speed': 15.0, 'true_vehicle_acceleration': 0.6, 'crash_reasons': '!!!! Negative distance to voorligger'}
+2023-08-31 19:35:42,151 [info]: Test case Passed. Elapsed time:  20.2, Test case: [8.09, -0.3, 0.1, 423.64], ['mAX=-0.02', 'p=3.26', 'mAX=0.19', 'p=3.88', 'mAX=-0.12', 'p=4.69', 'mAX=-0.02', 'p=3.79', 'vV=6.09', 'p=3.58', 'vV=4.61', 'p=1.00', 'cc', 'R']
+2023-08-31 19:35:55,463 [ERROR]: Test case failed. Elapsed time:  2.57, Test case: [6.11, 0.14, 16.1, 10], ['mAX=-0.09', 'p=2.53', 'cc', 'R'], Crash Info: {'crash_reasons': '!!!! Time to reach 15000.8 voorligger exceeds 15 seconds', 'true_vehicle_acceleration': 0.2, 'true_vehicle_speed': 0.1, 'true_distance_to_voorligger': 30001.6, 'true_voorligger_speed': 11.0}                                                                                                                  
+2023-08-31 19:35:57,994 [info]: Test case Passed. Elapsed time:  13.9, Test case: [4.46, 0.12, 10.79, 438.77], ['mV=9.42', 'p=1.71', 'mV=3.72', 'p=1.61', 'mV=2.93', 'p=3.19', 'vV=3.81', 'p=2.43', 'mV=9.67', 'p=4.37', 'cc', 'R']
+2023-08-31 19:35:14,875 [info]: Test case Passed. Elapsed time:  16.98  Test case: [7.71, 0.07, 14.59, 368.96], ['vV=2.37', 'p=4.35', 'mAX=0.11', 'p=4.27', 'mV=8.23', 'p=4.42', 'mV=5.70', 'p=3.84', 'cc', 'R']
+2023-08-31 19:35:14,878 [INFO]: Failed cases: 2, / 10
+2023-08-31 19:35:14,883 [INFO]: Passed cases: 8, / 10
+
+2023-08-31 19:34:54,859 [info]: Loaded carParams for "Ferrari F69",
+2023-08-31 19:35:35,275 [info]: Test case Passed. Elapsed time:  20.6,, Test case: [4.11, 0.17, 6.64, 10], ['mAX=0.03', 'p=4.59', 'mV=3.73', 'p=3.20', 'mAX=-0.23', 'p=2.51', 'mV=0.27', 'p=4.70', 'mAX=-0.07', 'p=1.00', 'mAX=-0.12', 'p=2.95', 'vV=5.96', 'p=1.45', 'cc', 'R']
+2023-08-31 19:35:50,701 [info]: Test case Passed. Elapsed time:  15.03, Test case: 2.41, 0.18, 11.61, 417.03], ['vV=7.13', 'p=1.00', 'vV=7.15', 'p=3.97', 'mV=6.83', 'p=1.98', 'vV=6.85', 'p=4.89', 'vV=2.46', 'p=3.59', 'cc', 'R']
+2023-08-31 19:36:04,228 [info]: Test case Passed. Elapsed time:  13.78, Test case: ([3.18, 0.1, 8.34, 315.25], ['vV=3.04', 'p=4.62', 'mV=3.01', 'p=3.96', 'vV=6.69', 'p=4.95', 'cc', 'R']
+2023-08-31 19:36:12,923 [info]: Test case Passed. Elapsed time:  8.672, Test case: [9.46, 0.01, 14.24, 493.66], ['mV=5.41', 'p=4.61', 'mV=1.54', 'p=4.08', 'cc', 'R'
+2023-08-31 19:36:27,724 [info]: Test case Passed. Elapsed time:  14.3, Test case:: [4.19, -0.15, 9.38, 369.43], ['mAX=0.03', 'p=2.58', 'mV=9.83', 'p=4.84', 'mAX=-0.10', 'p=4.04', 'vV=1.43', 'p=3.35', 'cc', 'R']
+2023-08-31 19:36:34,255 [info]: Test case Passed. Elapsed time:  6.512, Test case: ([8.29, 0.03, 12.18, 266.1], ['mAX=-0.30', 'p=3.49', 'vV=5.76', 'p=1.00', 'vV=2.33', 'p=1.00', 'mAX=0.06', 'p=1.04', 'cc', 'R']
+2023-08-31 19:36:38,471 [info]: Test case Passed. Elapsed time:  4.226, Test case: [7.83, 0.13, 0.1, 10], ['vV=5.03', 'p=4.22', 'cc', 'R']
+2023-08-31 19:36:43,003 [info]: Test case Passed. Elapsed time:  4.597, Test case: [5.37, 0.12, 10.36, 439.74], ['vV=2.19', 'p=4.53', 'cc', 'R']
+2023-08-31 19:36:49,442 [info]: Test case Passed. Elapsed time:  6.427, Test case: [0.1, -0.08, 1.32, 361.49], ['vV=4.14', 'p=3.69', 'mAX=-0.10', 'p=2.75', 'cc', 'R']
+2023-08-31 19:37:07,662 [info]: Test case Passed. Elapsed time:  18.98  Test cas: ([8.66, -0.29, 0.1, 210.53], ['mV=2.12', 'p=4.86', 'vV=2.42', 'p=4.90', 'mAX=-0.24', 'p=3.90', 'mV=4.07', 'p=4.56', 'cc', 'R']) 
+2023-08-31 19:37:07,671 [INFO]: Failed cases: 0, / 10
+2023-08-31 19:37:07,682 [INFO]: Passed cases: 10, / 10

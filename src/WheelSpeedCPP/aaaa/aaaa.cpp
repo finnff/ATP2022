@@ -22,16 +22,12 @@ WheelSpeedSensor::~WheelSpeedSensor()
 float WheelSpeedSensor::read_speed()
 {
     redisReply* reply = (redisReply*)redisCommand(redis_client, "HGET Sensor_Actuator WheelSpeedSensorHz");
-
     float encoder_pulses_per_second = 0.0;
-
     if (reply->type == REDIS_REPLY_STRING) {
         encoder_pulses_per_second = std::atof(reply->str);
     }
-
     freeReplyObject(reply);
-
-    // Convert pulses per second to rotations per second
+    // Convert pulses per second naar rotations
     float rotations_per_second = encoder_pulses_per_second / this->cpr;
 
     // Calculate the wheel circumference we use this instead of math.h pi good enough

@@ -39,6 +39,13 @@ Door deze testprocedure te volgen, kunnen we de nauwkeurigheid van de snelheidsb
 
 
 
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+
+
 
 De Measuresed Speed snso werkt voor alle sorten wielen, ook bij bewegeing , hoewel in eerste we de foutmarge wel haal maar dat er nog wel relatief veel foutmarge zit in het lezenv van de sensor:
 
@@ -129,4 +136,110 @@ Dit suggereert dat het merendeel van de geobserveerde fout waarschijnlijk toe te
 *De testprocedure controleert of de 12V Current Modulation-interface correct werkt en of de MeasuredSpeedCalculator de signalen nauwkeurig interpreteert. Hierdoor wordt de nauwkeurige snelheidsberekening gegarandeerd en de veiligheid van het systeem gewaarborgd. Het testen van verschillende rotatiesnelheden zorgt ervoor dat het systeem onder uiteenlopende omstandigheden correct functioneert.*
 
 
-dat de unit test hierboven voor zoon goed werkt is niet voor niets: oorspronkelijk hadden we wel 
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+
+
+
+
+Test gefaald:
+Dat de unit test hierboven zo goed werkt is niet voor niets. Oorspronkelijk heb ik geprobeerd om, zoals ooit bedacht in het projecttestplan, het hardwaredeel 'WheelSpeedSensor' (de ADC-achtige Infineon-TLE5041PLUSC) en het softwaredeel `MeasuredSpeedCalculator` apart te houden. Waar de ene enkel waarden las, had de andere informatie over de auto Wielgrote om deze terug te rekenen naar echte snelheid. Zoals hierboven beschreven, heb ik eerst (via Python sockets zelfs nog) geprobeerd om met HI-LO signalen te versturen vanuit de TrueVehicleSpeed, die dan vervolgens opgevangen zouden moeten worden door een ander stuk Python-code. Dit werkte absoluut niet goed. Ik heb was aan het proberen om een soort binaire digital-to-analog-converter te maken die de timinginformatie van data over de Python-implementatie van de sockets netwerkinterface? beheerde. Issues hier mee was een belangrijke reden om over te schakelen naar Redis voor betere prestaties. Hoewel dit hielp en we (na filtering en averaging) wel een getal hadden dat gerelateerd was aan de snelheid, varieerde dit enorm (+- 50%) en was het dus niet geschikt voor gebruik. Dit lijkt meer een implementatiefout te zijn dan slecht ontwerp, aangezien ik met een echte TLE5041 hardware sensor eigenlijk geforceerd was om het zo te maken.
+
+
+Hierdoor heb ik ervoor gekozen om de twee componenten samen te voegen in één bestand. In plaats van HI-LO signalen slaan we nu de 'WheelSpeedSensorHz' op en versturen we deze als interproces-item. Door deze abstractie toe te passen, moeten we nog steeds rekening houden met de diameter en de encoderwiel-count. Dit komt omdat we eerst in de simulator met de werkelijke data deze waarden moeten omrekenen naar het aantal pulsen dat deze sensor zou uitzenden, gebaseerd op de gegeven autospecificaties.
+
+
+Het resultaat is dat de code hiervoor werd samengevoegd, deze is later nog omgeschreven naar C++ voor de binding. We sturen ook data (CPR en diameter) naar deze C++-binding, zodat we de hele berekening hierin kunnen uitvoeren.
+
+```cpp
+float WheelSpeedSensor::read_speed(){
+    redisReply* reply = (redisReply*)redisCommand(redis_client, "HGET Sensor_Actuator WheelSpeedSensorHz");
+    float encoder_pulses_per_second = 0.0;
+    if (reply->type == REDIS_REPLY_STRING) {
+        encoder_pulses_per_second = std::atof(reply->str);
+    }
+    freeReplyObject(reply);
+    // Convert pulses per second naar rotations
+    float rotations_per_second = encoder_pulses_per_second / this->cpr;
+
+    // Calculate the wheel circumference we use this instead of math.h pi good enough
+    float wheel_circumference = 3.141592 * this->diameter;
+
+    // Convert to speed in meters per second
+    float true_vehicle_speed = rotations_per_second * wheel_circumference;
+
+    return true_vehicle_speed;
+}
+void WheelSpeedSensor::set_cpr(float cpr){
+    this->cpr = cpr;
+}
+void WheelSpeedSensor::set_diameter(float diameter){
+    this->diameter = diameter;
+}
+```
+
+
+Zoals te zien is in de loguitvoer en in `/UnitTest/removedInternalError.log`, is het zelfs met C++ niet echt snel (varieerde tussen 5000-9000 Hz voor alleen de read_speed()-operatie). Dit zou waarschijnlijk ook onvoldoende zijn geweest als ik het op mijn oorspronkelijke manier had gemaakt, waarschijnlijk niet via Redis, omdat deze te langzaam is.
+
+
+```
+True Speed: 12.300423,          Calculated Speed: 12.30042076110839,  Elapsed Time: 0.00011110305786132812, 1/Elapsed Time: 9000.652360515021
+True Speed: 12.410620000000002, Calculated Speed: 12.41061782836914,  Elapsed Time: 0.0001347064971923828,  1/Elapsed Time: 7423.546902654867
+True Speed: 12.519560000000002, Calculated Speed: 12.51955795288086,  Elapsed Time: 0.0001900196075439453,  1/Elapsed Time: 5262.614805520702
+```
+
+
+
+
+
+
+## Systeemtest: ACCS houdt Veilige afstand in verschillende verkeersscenario's
+
+### Motivatie
+
+Het belangrijkste doel (kwaliteitscriterium) van het ACCS is het behouden van een veilige afstand tot het voorliggende voertuig. Het testen van het systeem in verschillende verkeerssituaties en snelheden helpt om te waarborgen dat het systeem correct functioneert, betrouwbaar en veilig is, en voldoet aan de gestelde kwaliteitseisen.*
+
+### Testprocedure
+
+1. Bereid verschillende verkeerssituaties en snelheden voor, die het ACCS-systeem zou kunnen tegenkomen in real-world scenario's (bijv. stadsverkeer, snelwegverkeer, file, acceleratie en deceleratie, enz.). En implementeer deze scenario's in de Simulator.*
+2. Voer de test in de simulator uit voor verschillende soorten auto's (Hatchback, SUV, Ferrari), voor elk van de voorbereide verkeersscenario's.
+3. Monitor en registreer de volgende waarden tijdens elk scenario:
+    - Afstand tot voorligger in meters*
+    - MeasuredSpeed*
+    - Afstand tot voorligger in seconden met de huidige MeasuredSpeed*
+    - Het verschil tussen deze laatste waarde, en de constante 'gewenste afstand tot voorligger in seconden'*
+4. Analyseer de resultaten om te bepalen of het ACCS-systeem de ingestelde veilige afstand tot het voorliggende voertuig in alle situaties heeft behouden.*
+    - **Als de afstand tot de voorligger in meters 0 of negatief is, betekent dit dat er een botsing is geweest; dit is per definitie dus geen 'veilige afstand'***
+
+We hebben een PID-systeem geïmplementeerd voor de controle van onze auto. Echter, het is zo slecht afgesteld dat het alleen effectief is voor willekeurige testgevallen in de Ferrari. De auto's reageren te verschillend om dezelfde set PID-waarden te gebruiken. Ik ben hieraan begonnen en heb zelfs een PyTorch-implementatie met een neuraal netwerk gebruikt, dat ongeveer 15 minuten nodig had om geschikte waarden te vinden. Desondanks is het me niet gelukt om het systeem veilig te laten werken voor alle drie de auto's. Omdat het wel is gelukt met de Ferrari, lijkt dit meer een kwestie van tijd dan een systeemfout.
+
+
+
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+HIER ONDER LEZEN
+
+We hebben ook een simulator ontwikkeld die aangepaste testgevallen kan uitvoeren. De invoer hiervoor is een string-gebaseerde DSL (Domain Specific Language) die elk testgeval kan vertegenwoordigen. Elke actie in het testgeval kan een tuple zijn, weergegeven als een string.
+
+Specification:
+* pX: Pause for X seconds (e.g., p5 means pause for 5 seconds).
+* mV=X: Set myVel to X (e.g., mV=30 means set true_vehicle_speed to 30).
+* mAX=X: Set myAcc to X (e.g., mAX=1 means set true_vehicle_acceleration to 1).
+* vV=X: Set voVel to X (e.g., vV=20 means set true_voorligger_speed to 20).
+* d2v=X: Set dist2vo to X (e.g., d2v=100 means set true_distance_to_voorligger to 100).
+* cc: Check if the vehicle has crashed and update the counters.
+* R: Reset the simulation.
+* +=X: Increment the last float value by X.
+* -=X: Decrement the last float value by X.
+
+
+
+Omdat ik niet echt gemakkelijk handmatig scenarios kon bedenken voor stadsverkeer, snelwegverkeer, file, etc, heb ik deze scenarios automatisch laten genereren als test cases.
+zo is : ([9.46, 0.01, 14.24, 493.66], ['mV=5.41', 'p=4.61', 'mV=1.54', 'p=4.08', 'cc', 'R']) een valide test scenario die automatisch gegenereerd kan worden. Zie ./SysteemTest/random_test_cases.log voor een voorbeeld van deze testgevallen (en de code om deze te genereren).
+
+
