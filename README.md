@@ -2,7 +2,12 @@
 
 ## Project- en Testplan
 
-* zie /projectTestPlan/ 
+* zie /projectTestPlan/
+
+## Eindopdracht Testrapport
+zie hiervoor [tests/README.md](https://github.com/finnff/ATP2022/blob/main/tests/README.md)
+
+---
 
 ## Eindopdracht
 
