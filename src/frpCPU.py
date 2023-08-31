@@ -10,6 +10,9 @@ from combined_interface import CombinedInterface
 import logging
 
 LOG_FILE_NAME = "frp.log"
+# PID_CONTOLLER = True
+PID_CONTOLLER = True
+# PID_CONTOLLER = False
 
 # Logged nu naar bestand, zodat code stateless FRP blijft
 logging.basicConfig(filename=LOG_FILE_NAME, level=logging.INFO)
@@ -46,10 +49,9 @@ def logging_decorator(f):
     return wrapper
 
 
-import math
-
-
 # PID Controller Logic
+# Werkt functioneel maar kost te veel tijd (ben nu 3 uur bezig)
+# om deze zo te tunen om voor alle 3 de type autos te laten werken
 def pid_controller(
     kp,
     ki,
@@ -82,6 +84,40 @@ def pid_controller(
         return (control, int(output)), integral, error
 
 
+def bang_bang_pid_controller(
+    kp,
+    ki,
+    kd,
+    prev_integral,
+    prev_error,
+    desire_seconds_to_voorligger,
+    current_speed,
+    distance_to_vehicle_in_front,
+):
+    if current_speed != 0:
+        current_seconds_to_voorligger = distance_to_vehicle_in_front / current_speed
+    else:
+        current_seconds_to_voorligger = float("inf")
+
+    error = current_seconds_to_voorligger - desire_seconds_to_voorligger
+    print(f"Error: {error}")
+
+    integral = prev_integral + error
+    derivative = error - prev_error
+
+    output = kp * error + ki * integral + kd * derivative
+    output = min(max(output, -100), 100)
+
+    output_level = 10 if abs(error) >= 0.5 else 30
+
+    if current_seconds_to_voorligger > desire_seconds_to_voorligger:
+        control = "gas"
+        return (control, int(output_level)), integral, error
+    else:
+        control = "brake"
+        return (control, int(-output_level)), integral, error
+
+
 # Function to get sensor data
 @logging_decorator
 def get_sensor_data(interface):
@@ -93,17 +129,6 @@ def get_sensor_data(interface):
     return desire_seconds, distance, speed
 
 
-# Control logic function
-# @logging_decorator
-# def control_logic(data, prev_integral, prev_error, interface):
-#     desire_seconds, distance, speed = data
-#     # kp, ki, kd = 10, 0.1, 0.01  # example PID gains
-#     kp, ki, kd = interface.getScalars()
-#     control_data, new_integral, new_error = pid_controller(
-#         kp, ki, kd, prev_integral, prev_error, desire_seconds, speed, distance
-#     )
-#     return control_data, new_integral, new_error
-#
 #
 @logging_decorator
 def control_logic(data, prev_integral, prev_error, interface):
@@ -117,12 +142,19 @@ def control_logic(data, prev_integral, prev_error, interface):
         kp, ki, kd = scalars
     else:
         # Handle error here, maybe set defaults or raise exception
-        kp, ki, kd = 10.0, 0.1, 0.01
+        # deze defaults werken aleen voor ferrari
+        kp, ki, kd = 0.01, 0.00131, 0.031
 
     print(f"After calling getScalars: kp={kp}, ki={ki}, kd={kd}")
-    control_data, new_integral, new_error = pid_controller(
-        kp, ki, kd, prev_integral, prev_error, desire_seconds, speed, distance
-    )
+    if PID_CONTOLLER:
+        control_data, new_integral, new_error = pid_controller(
+            kp, ki, kd, prev_integral, prev_error, desire_seconds, speed, distance
+        )
+    else:
+        control_data, new_integral, new_error = bang_bang_pid_controller(
+            kp, ki, kd, prev_integral, prev_error, desire_seconds, speed, distance
+        )
+
     print("Exiting control_logic")
 
     return control_data, new_integral, new_error
@@ -133,37 +165,13 @@ def apply_control(interface, full_control_data):
     print("[apply_control] Function called")
 
     control_data, new_integral, new_error = full_control_data
-    print(f"[apply_control] Full control data: {full_control_data}")
-
     control, value = control_data
-    print(
-        f"[apply_control] Control action: {control}, Value: {value}, New integral: {new_integral}, New error: {new_error}"
-    )
-
     if control == "gas":
         print("[apply_control] Setting gas_pedal_force")
         interface.set_gas_pedal_force(value)
     elif control == "brake":
         print("[apply_control] Setting braking_pedal_force")
         interface.set_braking_pedal_force(value)
-
-
-# Simulated Interface for demonstration
-class SimulatedInterface:
-    def get_desiredSeconds(self):
-        return 2.0  # Example value
-
-    def get_distance(self):
-        return 20.0  # Example value
-
-    def get_speed(self):
-        return 10.0  # Example value
-
-    def set_gas_pedal_force(self, value):
-        print(f"Gas pedal set to {value}")
-
-    def set_braking_pedal_force(self, value):
-        print(f"Braking pedal set to {-value}")
 
 
 if __name__ == "__main__":

@@ -43,24 +43,38 @@ if __name__ == "__main__":
     input_reality = InputReality(redis_client)
     counterfailed = 0
     counterPassed = 0
-
-    # while not input_reality.checkCrashed():
     print("\n-----------starting test run---------\n")
     while True:
         # Set initial conditions: car is standing still and there is a stationary vehicle 100 meters ahead
-        input_reality.set_starting_conditions(myVel=10, myAcc=0.0, voVel=11, dist2vo=50)
+
+        input_reality.set_starting_conditions(myVel=12, myAcc=0.0, voVel=40, dist2vo=36)
         while True:
             input_reality.save_state_to_redis("true_voorligger_speed", 11)
+            time.sleep(2)  # Wait 5 secondsy
+            input_reality.save_state_to_redis("true_voorligger_speed", 13)
             time.sleep(2)  # Wait 5 seconds
-            input_reality.save_state_to_redis("true_voorligger_speed", 9)
-            time.sleep(2)  # Wait 5 seconds
-        # time.sleep(5)  # Allow the simulation to run for 5 seconds
-        # input_reality.save_state_to_redis("true_vehicle_acceleration", 3)
-        # time.sleep(5)  # Wait 5 seconds
+        # # time.sleep(5)  # Allow the simulation to run for 5 seconds
         # input_reality.save_state_to_redis("true_vehicle_acceleration", -3)
         # time.sleep(5)  # Wait 5 seconds
         # Suddenly accelerate to 30 m/s
-        #
+    #     #
+    # # while not input_reality.checkCrashed():
+    # print("\n-----------starting test run---------\n")
+    # while True:
+    #     # Set initial conditions: car is standing still and there is a stationary vehicle 100 meters ahead
+    #     input_reality.set_starting_conditions(myVel=12, myAcc=0.0, voVel=40, dist2vo=50)
+    #     while True:
+    #         input_reality.save_state_to_redis("true_voorligger_speed", 15)
+    #         time.sleep(2)  # Wait 5 seconds
+    #         input_reality.save_state_to_redis("true_voorligger_speed", 10)
+    #         time.sleep(2)  # Wait 5 seconds
+    #     # time.sleep(5)  # Allow the simulation to run for 5 seconds
+    #     # input_reality.save_state_to_redis("true_vehicle_acceleration", 3)
+    #     # time.sleep(5)  # Wait 5 seconds
+    #     # input_reality.save_state_to_redis("true_vehicle_acceleration", -3)
+    #     # time.sleep(5)  # Wait 5 seconds
+    #     # Suddenly accelerate to 30 m/s
+    #     #
 
     # input_reality.reset()
 

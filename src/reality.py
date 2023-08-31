@@ -177,9 +177,9 @@ class Reality:
             rotations_per_time_unit * self.car_parameters.encoder_cpr
         )
         encoder_pulses_per_second = encoder_pulses_per_time_unit / scaled_elapsed_time
-        encoder_pulses_per_second *= 1 + random.choice(
-            [-0.003, 0.003]
-        )  # Add random choice of +- 0.3% as per datasheet
+        # encoder_pulses_per_second *= 1 + random.choice(
+        # [-0.003, 0.003]
+        # )  # Add random choice of +- 0.3% as per datasheet
         self.redis.hset(
             "Sensor_Actuator", "WheelSpeedSensorHz", encoder_pulses_per_second
         )
@@ -203,6 +203,8 @@ class Reality:
                 )
                 radar_meas = round(radar_meas / 0.2) * 0.2
                 self.redis.hset("Sensor_Actuator", "Front_radar_measurable", radar_meas)
+            elif self.true_distance_to_voorligger < 20:
+                self.redis.hset("Sensor_Actuator", "Front_radar_measurable", 20)
             else:
                 self.redis.hset("Sensor_Actuator", "Front_radar_measurable", 999)
 
@@ -263,7 +265,8 @@ class Reality:
         # 10ms interval
         if self.time_since_reality_update >= (1 / self.reality_update_frequency):
             self.time_since_reality_update = 0  # Reset the accumulated time
-            realChangeFactor = 1.0
+            realChangeFactor = 0.01
+            self.true_vehicle_acceleration = 0
             if self.GasRemPedalPosPercentage >= 0:
                 realChange = (
                     (self.GasRemPedalPosPercentage / 100)
