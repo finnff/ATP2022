@@ -10,7 +10,6 @@ from combined_interface import CombinedInterface
 import logging
 
 LOG_FILE_NAME = "frp.log"
-# PID_CONTOLLER = True
 PID_CONTOLLER = True
 # PID_CONTOLLER = False
 
@@ -132,10 +131,10 @@ def get_sensor_data(interface):
 #
 @logging_decorator
 def control_logic(data, prev_integral, prev_error, interface):
-    print("Entering control_logic")
+    # print("Entering control_logic")
 
     desire_seconds, distance, speed = data
-    print("Before calling getScalars")
+    # print("Before calling getScalars")
 
     scalars = interface.getScalars()
     if scalars is not None:
@@ -178,15 +177,18 @@ if __name__ == "__main__":
     interface = CombinedInterface()
     pool_scheduler = ThreadPoolScheduler(2)
 
-    # Initialize integral and error
+    # Initialize integral and error worden aleen op 0 geniti anders gaat het fout, maar worden altijd functioneel als
+    # parameter door gegeven.
     integral, error = 0.0, 0.0
 
     # Using rx.interval to generate sensor data
+    # dit is  main 100hz Observable sequence
     sens_acc_observable = rx.interval(0.01).pipe(
         ops.map(lambda x: get_sensor_data(interface)),
     )
 
-    log_observable = rx.interval(0.1).pipe(
+    # quasi frp way of sending values to redis and dashboard as we are doing it via a log file.
+    log_observable = rx.interval(1.0).pipe(
         ops.map(lambda x: "Logging..."),
     )
 
@@ -207,65 +209,3 @@ if __name__ == "__main__":
         input("FRP is running. Press any key to exit\n")
     finally:
         disposable.dispose()
-
-# ##
-#
-#
-# # Create the Combined Interface
-# combined_interface = CombinedInterface()
-#
-# # Create a ThreadPoolScheduler
-# pool_scheduler = ThreadPoolScheduler(2)
-# #
-# # # main 100hz Observable sequence
-# sens_acc_observable = rx.interval(0.01).pipe(
-# ops.map(lambda x: get_sensor_data(combined_interface))
-# )
-# # # quasi frp way of sending values to redis and dashboard as we are doing it via a log file.
-# log_observable = rx.interval(1).pipe(
-#     ops.map(lambda y: log_data_every_second(combined_interface))
-# )
-#
-# # Merge observables
-# merged_observable = rx.merge(sens_acc_observable, log_observable)
-#
-# # Create disposable
-# # disposable = merged_observable.subscribe(
-#
-# disposable = merged_observable.subscribe(
-#     on_next=lambda s: (
-#         print(f"Received: {s}, Type: {type(s)}"),
-#         apply_control(combined_interface, control_logic(s)),
-#     )
-#     if isinstance(s, tuple) and s != ("LOGGING_DONE",)
-#     else 1 + 1,
-#     # print(f"Skipped: {s}, Type: {type(s)}"),
-#     on_error=lambda e: print(f"Error Occurred: {e}"),
-#     on_completed=lambda: print("Done!"),
-#     scheduler=pool_scheduler,
-# )
-# try:
-#     input("FRP is running, check frp.log ,Press any key to exit\n")
-# finally:
-#     disposable.dispose()
-#
-#
-# #
-# merged_observable = rx.merge(sens_acc_observable, log_observable)
-#
-#  disposable = merged_observable.subscribe(
-#      on_next=lambda s: apply_control(combined_interface, control_logic(s))
-#      if isinstance(s, tuple)
-#      else None,
-#      on_error=lambda e: print(f"Error Occurred: {e}"),
-#      on_completed=lambda: print("Done!"),
-#      scheduler=pool_scheduler,
-#  )
-# # try:
-# #     print(get_sensor_data(combined_interface))
-# #     print(get_sensor_data(combined_interface))
-# #     print(get_sensor_data(combined_interface))
-# #     print(get_sensor_data(combined_interface))
-# #     input("FRP is running, check frp.log ,Press any key to exit\n")
-# # finally:
-# #     disposable.dispose()

@@ -288,24 +288,7 @@ verkleint de kans op onveilige situaties of ongevallen.</li>
 snelheidsberekening garanderen en voorkomen dat ongewenst gedrag van het
 GasPedaal en Remsysteem leidt tot onveilige situaties en mogelijk
 ongevallen.</p>
-<p>HIER ONDER LEZEN HIER ONDER LEZEN HIER ONDER LEZEN HIER ONDER LEZEN
-HIER ONDER LEZEN</p>
-<p>De Measuresed Speed snso werkt voor alle sorten wielen, ook bij
-bewegeing , hoewel in eerste we de foutmarge wel haal maar dat er nog
-wel relatief veel foutmarge zit in het lezenv van de sensor:</p>
-<p class="heading" id="section"></p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Param Name&quot;</span><span class="fu">:</span> <span class="st">&quot;Ferrari F69&quot;</span><span class="fu">,</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Wheel Diameter&quot;</span><span class="fu">:</span> <span class="fl">0.71</span><span class="fu">,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Encoder CPR&quot;</span><span class="fu">:</span> <span class="dv">40</span><span class="fu">,</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Param Name&quot;</span><span class="fu">:</span> <span class="st">&quot;Golf GTI/GTE&quot;</span><span class="fu">,</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Wheel Diameter&quot;</span><span class="fu">:</span> <span class="fl">0.625</span><span class="fu">,</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Encoder CPR&quot;</span><span class="fu">:</span> <span class="dv">45</span><span class="fu">,</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Param Name&quot;</span><span class="fu">:</span> <span class="st">&quot;BMW X27&quot;</span><span class="fu">,</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Wheel Diameter&quot;</span><span class="fu">:</span> <span class="fl">0.838</span><span class="fu">,</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Encoder CPR&quot;</span><span class="fu">:</span> <span class="dv">60</span><span class="fu">,</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h1 id="test-resultaten">Test resultaten</h1>
 <p>De Measured Speed sensor is ontworpen om compatibel te zijn met
 verschillende soorten wielen en bewegingsomstandigheden. Uit de eerste
 testresultaten blijkt dat we binnen de gespecificeerde foutmarge van
@@ -319,32 +302,32 @@ dat we een interne fout van 0.3% hebben gemodelleerd voor de sensor,
 zoals aangegeven op pagina 17 van de <a
 href="https://www.infineon.com/dgdl/Infineon-TLE5041PLUSC-DataSheet-v01_02-EN.pdf?fileId=5546d46265f064ff016632437f574f75">Infineon-TLE5041PLUSC
 datasheet</a>.</p>
-<p>Hij is getest met de volgende 3 Autos:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Param Name&quot;</span><span class="fu">:</span> <span class="st">&quot;Ferrari F69&quot;</span><span class="fu">,</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Wheel Diameter&quot;</span><span class="fu">:</span> <span class="fl">0.71</span><span class="fu">,</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Encoder CPR&quot;</span><span class="fu">:</span> <span class="dv">40</span><span class="fu">,</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Param Name&quot;</span><span class="fu">:</span> <span class="st">&quot;Golf GTI/GTE&quot;</span><span class="fu">,</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Wheel Diameter&quot;</span><span class="fu">:</span> <span class="fl">0.625</span><span class="fu">,</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Encoder CPR&quot;</span><span class="fu">:</span> <span class="dv">45</span><span class="fu">,</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Param Name&quot;</span><span class="fu">:</span> <span class="st">&quot;BMW X27&quot;</span><span class="fu">,</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Wheel Diameter&quot;</span><span class="fu">:</span> <span class="fl">0.838</span><span class="fu">,</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Encoder CPR&quot;</span><span class="fu">:</span> <span class="dv">60</span><span class="fu">,</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
-<p>De enige fouten die ik ben tegen gekomen gebeurden als ik handmatig
-(via de simulator) de snelheid van het voertuig ging veranderen, en dat
-de berekening van de oude snelheid al was gestart (Multi threaded
-concurreny ):</p>
+<p>Deze sensor is getest met de volgende 3 Autos:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Param Name&quot;</span><span class="fu">:</span> <span class="st">&quot;Ferrari F69&quot;</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Wheel Diameter&quot;</span><span class="fu">:</span> <span class="fl">0.71</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Encoder CPR&quot;</span><span class="fu">:</span> <span class="dv">40</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Param Name&quot;</span><span class="fu">:</span> <span class="st">&quot;Golf GTI/GTE&quot;</span><span class="fu">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Wheel Diameter&quot;</span><span class="fu">:</span> <span class="fl">0.625</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Encoder CPR&quot;</span><span class="fu">:</span> <span class="dv">45</span><span class="fu">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Param Name&quot;</span><span class="fu">:</span> <span class="st">&quot;BMW X27&quot;</span><span class="fu">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Wheel Diameter&quot;</span><span class="fu">:</span> <span class="fl">0.838</span><span class="fu">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;Encoder CPR&quot;</span><span class="fu">:</span> <span class="dv">60</span><span class="fu">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>De enige fouten die ik ben tegen gekomen traden op wanneer ik
+handmatig (via de simulator) de snelheid van het voertuig ging
+veranderen, terwijl de berekening van de oude snelheid al was gestart
+(Multi threaded concurreny ):</p>
 <figure>
 <img src="img/2023-08-30-21-54-34.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code voor het toevoegen van een willekeurige fout van ± 0.3% zoals gespecificeerd in de datasheet.</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>encoder_pulses_per_second <span class="op">*=</span> <span class="dv">1</span> <span class="op">+</span> random.choice([<span class="op">-</span><span class="fl">0.003</span>, <span class="fl">0.003</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code voor het toevoegen van een willekeurige fout van ± 0.3% zoals gespecificeerd in de datasheet.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>encoder_pulses_per_second <span class="op">*=</span> <span class="dv">1</span> <span class="op">+</span> random.choice([<span class="op">-</span><span class="fl">0.003</span>, <span class="fl">0.003</span>])</span></code></pre></div>
 <p>Wanneer deze sensorfout wordt verwijderd uit de simulatie, zijn de
 foutmarges extreem laag, wat betekend dat onze code en C++-binding zeer
 nauwkeurig zijn in het berekenen van de snelheid, ongeacht het
@@ -363,33 +346,35 @@ WheelSpeedSensor’s industriele 12V Current Modulation interface</h2>
 <h3 id="motivatie-1">Motivatie</h3>
 <p><em>De communicatie tussen de WheelSpeedSensor en de
 MeasuredSpeedCalculator is noodzakelijk voor het berekenen van de
-snelheidsberekeningen.</em> <em>Als deze interface niet goed werkt,
-levert dit misschien onjuiste data voor de MeasuredSpeedCalculator. Dit
-zal problemen opleveren voor de hierboven genoemde Unit Test.</em>
-<em>Het testen van de interface helpt om te waarborgen dat het systeem
-correct functioneert en draagt bij aan de veiligheid.</em> <em>Test:
-Testen of de 12V Current Modulation-interface de High/Low current
-outputs van de WheelSpeedSensor correct doorstuurt naar de
+snelheidsberekeningen.</em></p>
+<p><em>Als deze interface niet goed werkt, levert dit misschien onjuiste
+data voor de MeasuredSpeedCalculator. Dit zal problemen opleveren voor
+de hierboven genoemde Unit Test.</em></p>
+<p><em>Het testen van de interface helpt om te waarborgen dat het
+systeem correct functioneert en draagt bij aan de veiligheid.</em></p>
+<p><em>Test: Testen of de 12V Current Modulation-interface de High/Low
+current outputs van de WheelSpeedSensor correct doorstuurt naar de
 MeasuredSpeedCalculator en of de MeasuredSpeedCalculator deze signalen
 correct interpreteert om de snelheid van het voertuig te
 berekenen.</em></p>
-<p><em>### Testprocedure</em></p>
+<h3 id="testprocedure-1">Testprocedure*</h3>
 <p><em>- Zorg ervoor dat de WheelSpeedSensor en de
 MeasuredSpeedCalculator correct zijn aangesloten via de 12V Current
 Modulation-interface. (In ons geval is dit de C++/Python Bindings en de
-communicatie hiertussen)</em> <em>- Simuleer verschillende
-rotatiesnelheden van het wiel, met de WheelSpeedSensor daarop
-aangesloten.</em> <em>- Monitor de High/Low current outputs die door de
+communicatie hiertussen)</em></p>
+<p><em>- Simuleer verschillende rotatiesnelheden van het wiel, met de
+WheelSpeedSensor daarop aangesloten.</em></p>
+<p><em>- Monitor de High/Low current outputs die door de
 WheelSpeedSensor worden gegenereerd op basis van de rotatiesnelheid van
 het wiel en verifieer of deze correct worden doorgegeven via de 12V
-Current Modulation-interface.</em> <em>- Controleer of de
-MeasuredSpeedCalculator de ontvangen High/Low current outputs correct
-interpreteert en of de berekende snelheid overeenkomt met de werkelijke
-snelheid van het wiel (rekening houdend met de wieldiameter en de CPR
-van het encoderwiel).</em> <em>- Voer deze test uit voor verschillende
-rotatiesnelheden van het wiel om te verifiëren of de interface en de
-MeasuredSpeedCalculator onder verschillende omstandigheden correct
-functioneert.</em></p>
+Current Modulation-interface.</em></p>
+<p><em>- Controleer of de MeasuredSpeedCalculator de ontvangen High/Low
+current outputs correct interpreteert en of de berekende snelheid
+overeenkomt met de werkelijke snelheid van het wiel (rekening houdend
+met de wieldiameter en de CPR van het encoderwiel).</em></p>
+<p><em>- Voer deze test uit voor verschillende rotatiesnelheden van het
+wiel om te verifiëren of de interface en de MeasuredSpeedCalculator
+onder verschillende omstandigheden correct functioneert.</em></p>
 <p><em>De testprocedure controleert of de 12V Current
 Modulation-interface correct werkt en of de MeasuredSpeedCalculator de
 signalen nauwkeurig interpreteert. Hierdoor wordt de nauwkeurige
@@ -397,19 +382,19 @@ snelheidsberekening gegarandeerd en de veiligheid van het systeem
 gewaarborgd. Het testen van verschillende rotatiesnelheden zorgt ervoor
 dat het systeem onder uiteenlopende omstandigheden correct
 functioneert.</em></p>
-<p>HIER ONDER LEZEN HIER ONDER LEZEN HIER ONDER LEZEN HIER ONDER LEZEN
-HIER ONDER LEZEN</p>
-<p>Test gefaald: Dat de unit test hierboven zo goed werkt is niet voor
-niets. Oorspronkelijk heb ik geprobeerd om, zoals ooit bedacht in het
-projecttestplan, het hardwaredeel ‘WheelSpeedSensor’ (de ADC-achtige
+<h1 id="testresultaten">Testresultaten</h1>
+<p><strong>Test gefaald zoals beschreven</strong></p>
+<p>Dat de unit test hierboven zo goed werkt heeft heel wat voeten in
+aarde gehad. Oorspronkelijk heb ik geprobeerd om, zoals ooit bedacht in
+het projecttestplan, het hardwaredeel ‘WheelSpeedSensor’ (de ADC-achtige
 Infineon-TLE5041PLUSC) en het softwaredeel
 <code>MeasuredSpeedCalculator</code> apart te houden. Waar de ene enkel
 waarden las, had de andere informatie over de auto Wielgrote om deze
 terug te rekenen naar echte snelheid. Zoals hierboven beschreven, heb ik
-eerst (via Python sockets zelfs nog) geprobeerd om met HI-LO signalen te
-versturen vanuit de TrueVehicleSpeed, die dan vervolgens opgevangen
-zouden moeten worden door een ander stuk Python-code. Dit werkte
-absoluut niet goed. Ik heb was aan het proberen om een soort binaire
+eerst via Python sockets geprobeerd om met HI-LO signalen te versturen
+vanuit de TrueVehicleSpeed, die dan vervolgens opgevangen zouden moeten
+worden door een ander stuk Python-code.</p>
+<p>Dit werkte absoluut niet goed. Ik heb geprobeerd om een soort binaire
 digital-to-analog-converter te maken die de timinginformatie van data
 over de Python-implementatie van de sockets netwerkinterface? beheerde.
 Issues hier mee was een belangrijke reden om over te schakelen naar
@@ -428,108 +413,126 @@ simulator met de werkelijke data deze waarden moeten omrekenen naar het
 aantal pulsen dat deze sensor zou uitzenden, gebaseerd op de gegeven
 autospecificaties.</p>
 <p>Het resultaat is dat de code hiervoor werd samengevoegd, deze is
-later nog omgeschreven naar C++ voor de binding. We sturen ook data (CPR
-en diameter) naar deze C++-binding, zodat we de hele berekening hierin
-kunnen uitvoeren.</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> WheelSpeedSensor<span class="op">::</span>read_speed<span class="op">(){</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    redisReply<span class="op">*</span> reply <span class="op">=</span> <span class="op">(</span>redisReply<span class="op">*)</span>redisCommand<span class="op">(</span>redis_client<span class="op">,</span> <span class="st">&quot;HGET Sensor_Actuator WheelSpeedSensorHz&quot;</span><span class="op">);</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> encoder_pulses_per_second <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>reply<span class="op">-&gt;</span>type <span class="op">==</span> REDIS_REPLY_STRING<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        encoder_pulses_per_second <span class="op">=</span> <span class="bu">std::</span>atof<span class="op">(</span>reply<span class="op">-&gt;</span>str<span class="op">);</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    freeReplyObject<span class="op">(</span>reply<span class="op">);</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Convert pulses per second naar rotations</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> rotations_per_second <span class="op">=</span> encoder_pulses_per_second <span class="op">/</span> <span class="kw">this</span><span class="op">-&gt;</span>cpr<span class="op">;</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Calculate the wheel circumference we use this instead of math.h pi good enough</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> wheel_circumference <span class="op">=</span> <span class="fl">3.141592</span> <span class="op">*</span> <span class="kw">this</span><span class="op">-&gt;</span>diameter<span class="op">;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Convert to speed in meters per second</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> true_vehicle_speed <span class="op">=</span> rotations_per_second <span class="op">*</span> wheel_circumference<span class="op">;</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> true_vehicle_speed<span class="op">;</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> WheelSpeedSensor<span class="op">::</span>set_cpr<span class="op">(</span><span class="dt">float</span> cpr<span class="op">){</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>cpr <span class="op">=</span> cpr<span class="op">;</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> WheelSpeedSensor<span class="op">::</span>set_diameter<span class="op">(</span><span class="dt">float</span> diameter<span class="op">){</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>diameter <span class="op">=</span> diameter<span class="op">;</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>Zoals te zien is in de loguitvoer en in
-<code>/UnitTest/removedInternalError.log</code>, is het zelfs met C++
-niet echt snel (varieerde tussen 5000-9000 Hz voor alleen de
-read_speed()-operatie). Dit zou waarschijnlijk ook onvoldoende zijn
-geweest als ik het op mijn oorspronkelijke manier had gemaakt,
-waarschijnlijk niet via Redis, omdat deze te langzaam is.</p>
+later nog omgeschreven naar C++ voor de binding. We sturen ook nog twee
+integers naar de C++ binding (CPR en diameter), zodat we de hele
+berekening hierin kunnen uitvoeren.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> WheelSpeedSensor<span class="op">::</span>read_speed<span class="op">(){</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    redisReply<span class="op">*</span> reply <span class="op">=</span> <span class="op">(</span>redisReply<span class="op">*)</span>redisCommand<span class="op">(</span>redis_client<span class="op">,</span> <span class="st">&quot;HGET Sensor_Actuator WheelSpeedSensorHz&quot;</span><span class="op">);</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> encoder_pulses_per_second <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>reply<span class="op">-&gt;</span>type <span class="op">==</span> REDIS_REPLY_STRING<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        encoder_pulses_per_second <span class="op">=</span> <span class="bu">std::</span>atof<span class="op">(</span>reply<span class="op">-&gt;</span>str<span class="op">);</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    freeReplyObject<span class="op">(</span>reply<span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Convert pulses per second naar rotations</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> rotations_per_second <span class="op">=</span> encoder_pulses_per_second <span class="op">/</span> <span class="kw">this</span><span class="op">-&gt;</span>cpr<span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Calculate the wheel circumference we use this instead of math.h pi good enough</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> wheel_circumference <span class="op">=</span> <span class="fl">3.141592</span> <span class="op">*</span> <span class="kw">this</span><span class="op">-&gt;</span>diameter<span class="op">;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Convert to speed in meters per second</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> true_vehicle_speed <span class="op">=</span> rotations_per_second <span class="op">*</span> wheel_circumference<span class="op">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> true_vehicle_speed<span class="op">;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> WheelSpeedSensor<span class="op">::</span>set_cpr<span class="op">(</span><span class="dt">float</span> cpr<span class="op">){</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>cpr <span class="op">=</span> cpr<span class="op">;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> WheelSpeedSensor<span class="op">::</span>set_diameter<span class="op">(</span><span class="dt">float</span> diameter<span class="op">){</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>diameter <span class="op">=</span> diameter<span class="op">;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Zoals te zien is in de loguitvoer hieronder en in
+<code>/UnitTest/removedInternalError.log</code>, verloopt het process
+zelfs met C++ niet echt snel (varieerde tussen 5000-9000 Hz voor alleen
+de read_speed()-operatie). Dit zou waarschijnlijk ook onvoldoende zijn
+geweest als ik het op mijn oorspronkelijke manier, met HI- LO] signalen.
+Om dit wel te laten werken hadden we geen Redis moeten gebruiken, omdat
+deze te langzaam is zelfs met een C++ binding.</p>
 <pre><code>True Speed: 12.300423,          Calculated Speed: 12.30042076110839,  Elapsed Time: 0.00011110305786132812, 1/Elapsed Time: 9000.652360515021
 True Speed: 12.410620000000002, Calculated Speed: 12.41061782836914,  Elapsed Time: 0.0001347064971923828,  1/Elapsed Time: 7423.546902654867
 True Speed: 12.519560000000002, Calculated Speed: 12.51955795288086,  Elapsed Time: 0.0001900196075439453,  1/Elapsed Time: 5262.614805520702</code></pre>
 <h2
-id="systeemtest-accs-houdt-veilige-afstand-in-verschillende-verkeersscenarios">Systeemtest:
-ACCS houdt Veilige afstand in verschillende verkeersscenario’s</h2>
+id="systeemtest-adaptive-cruise-control-systeem-accs-houdt-veilige-afstand-in-verschillende-verkeersscenarios">Systeemtest:
+Adaptive Cruise Control Systeem (ACCS) houdt Veilige afstand in
+verschillende verkeersscenario’s</h2>
 <h3 id="motivatie-2">Motivatie</h3>
-<p>Het belangrijkste doel (kwaliteitscriterium) van het ACCS is het
+<p><em>Het belangrijkste doel (kwaliteitscriterium) van het ACCS is het
 behouden van een veilige afstand tot het voorliggende voertuig. Het
 testen van het systeem in verschillende verkeerssituaties en snelheden
-helpt om te waarborgen dat het systeem correct functioneert, betrouwbaar
-en veilig is, en voldoet aan de gestelde kwaliteitseisen.*</p>
-<h3 id="testprocedure-1">Testprocedure</h3>
+helpt om te waarborgen dat het systeem correct functioneert, voldoet aan
+de gestelde kwaliteitseisen, en bovenal betrouwbaar en veilig
+is.</em></p>
+<h3 id="testprocedure-2">Testprocedure</h3>
 <ol type="1">
-<li>Bereid verschillende verkeerssituaties en snelheden voor, die het
-ACCS-systeem zou kunnen tegenkomen in real-world scenario’s (bijv.
+<li><em>Bereid verschillende verkeerssituaties en snelheden voor, die
+het ACCS-systeem zou kunnen tegenkomen in real-world scenario’s (bijv.
 stadsverkeer, snelwegverkeer, file, acceleratie en deceleratie, enz.).
-En implementeer deze scenario’s in de Simulator.*</li>
-<li>Voer de test in de simulator uit voor verschillende soorten auto’s
-(Hatchback, SUV, Ferrari), voor elk van de voorbereide
-verkeersscenario’s.</li>
-<li>Monitor en registreer de volgende waarden tijdens elk scenario:
+En implementeer deze scenario’s in de Simulator.</em></li>
+<li><em>Voer de test in de simulator uit voor verschillende soorten
+auto’s (Hatchback, SUV, Ferrari), voor elk van de voorbereide
+verkeersscenario’s.</em></li>
+<li><em>Monitor en registreer de volgende waarden tijdens elk
+scenario:</em>
 <ul>
-<li>Afstand tot voorligger in meters*</li>
-<li>MeasuredSpeed*</li>
-<li>Afstand tot voorligger in seconden met de huidige
-MeasuredSpeed*</li>
-<li>Het verschil tussen deze laatste waarde, en de constante ‘gewenste
-afstand tot voorligger in seconden’*</li>
+<li><em>Afstand tot voorligger in meters</em></li>
+<li><em>MeasuredSpeed</em></li>
+<li><em>Afstand tot voorligger in seconden met de huidige
+MeasuredSpeed</em></li>
+<li><em>Het verschil tussen deze laatste waarde, en de constante
+‘gewenste afstand tot voorligger in seconden’</em></li>
 </ul></li>
-<li>Analyseer de resultaten om te bepalen of het ACCS-systeem de
+<li><em>Analyseer de resultaten om te bepalen of het ACCS-systeem de
 ingestelde veilige afstand tot het voorliggende voertuig in alle
-situaties heeft behouden.*
+situaties heeft behouden.</em>
 <ul>
-<li><strong>Als de afstand tot de voorligger in meters 0 of negatief is,
+<li><em>Als de afstand tot de voorligger in meters 0 of negatief is,
 betekent dit dat er een botsing is geweest; dit is per definitie dus
-geen ‘veilige afstand’</strong>*</li>
+geen ‘veilige afstand’</em></li>
 </ul></li>
 </ol>
-<p>We hebben een PID-systeem geïmplementeerd voor de controle van onze
-auto. Echter, het is zo slecht afgesteld dat het alleen effectief is
-voor willekeurige testgevallen in de Ferrari. De auto’s reageren te
-verschillend om dezelfde set PID-waarden te gebruiken. Ik ben hieraan
-begonnen en heb zelfs een PyTorch-implementatie met een neuraal netwerk
-gebruikt, dat ongeveer 15 minuten nodig had om geschikte waarden te
-vinden. Desondanks is het me niet gelukt om het systeem veilig te laten
-werken voor alle drie de auto’s. Omdat het wel is gelukt met de Ferrari,
-lijkt dit meer een kwestie van tijd dan een systeemfout.</p>
-<p>HIER ONDER LEZEN HIER ONDER LEZEN HIER ONDER LEZEN HIER ONDER LEZEN
-HIER ONDER LEZEN</p>
-<p>We hebben ook een simulator ontwikkeld die aangepaste testgevallen
-kan uitvoeren. De invoer hiervoor is een string-gebaseerde DSL (Domain
-Specific Language) die elk testgeval kan vertegenwoordigen. Elke actie
-in het testgeval kan een tuple zijn, weergegeven als een string.</p>
-<p>Specification: * pX: Pause for X seconds (e.g., p5 means pause for 5
-seconds). * mV=X: Set myVel to X (e.g., mV=30 means set
-true_vehicle_speed to 30). * mAX=X: Set myAcc to X (e.g., mAX=1 means
-set true_vehicle_acceleration to 1). * vV=X: Set voVel to X (e.g., vV=20
-means set true_voorligger_speed to 20). * d2v=X: Set dist2vo to X (e.g.,
-d2v=100 means set true_distance_to_voorligger to 100). * cc: Check if
-the vehicle has crashed and update the counters. * R: Reset the
-simulation. * +=X: Increment the last float value by X. * -=X: Decrement
-the last float value by X.</p>
+<h1 id="test-resultaat">Test Resultaat</h1>
+<p>We hebben een Proportional–integral–derivative (PID) systeem
+geïmplementeerd voor de controle van onze auto. Echter, het is zo slecht
+afgesteld dat het alleen effectief is voor willekeurige test cases in de
+Ferrari. De auto’s reageren te verschillend om dezelfde set PID-waarden
+te gebruiken. Ik ben hieraan begonnen en heb zelfs een
+PyTorch-implementatie met een neuraal netwerk gebruikt, dat ongeveer 15
+minuten nodig had om geschikte waarden te vinden. Desondanks is het me
+niet gelukt om het systeem veilig te laten werken voor alle drie de
+auto’s. Omdat het wel is gelukt met de Ferrari, lijkt dit meer een
+kwestie van tijd dan een systeemfout.</p>
+<p>Zoals de zien op het dashboard, houd de auto een veilige afstand
+ookal verandert de snelheid van de voorligger, het GasPedaal niveau is
+proportioneel aan de gemeten afstand tot de voorligger.</p>
+<figure>
+<img src="./ezgif-3-763dc54088.gif" alt="dashboard gif" />
+<figcaption aria-hidden="true">dashboard gif</figcaption>
+</figure>
+<p>We hebben ook een simulator ontwikkeld die aangepaste test cases kan
+uitvoeren. De invoer hiervoor is een string-gebaseerde DSL (Domain
+Specific Language) die elk test case kan vertegenwoordigen. Elke actie
+in de de test is kan weergegeven worden als een string.</p>
+<p>Specification:</p>
+<ul>
+<li>pX: Pause for X seconds (e.g., p5 means pause for 5 seconds).</li>
+<li>mV=X: Set myVel to X (e.g., mV=30 means set true_vehicle_speed to
+30).</li>
+<li>mAX=X: Set myAcc to X (e.g., mAX=1 means set
+true_vehicle_acceleration to 1).</li>
+<li>vV=X: Set voVel to X (e.g., vV=20 means set true_voorligger_speed to
+20).</li>
+<li>d2v=X: Set dist2vo to X (e.g., d2v=100 means set
+true_distance_to_voorligger to 100).</li>
+<li>cc: Check if the vehicle has crashed and update the counters.</li>
+<li>R: Reset the simulation.</li>
+<li>+=X: Increment the last float value by X.</li>
+<li>-=X: Decrement the last float value by X.</li>
+</ul>
 <p>Omdat ik niet echt gemakkelijk handmatig scenarios kon bedenken voor
 stadsverkeer, snelwegverkeer, file, etc, heb ik deze scenarios
-automatisch laten genereren als test cases. zo is : ([9.46, 0.01, 14.24,
-493.66], [‘mV=5.41’, ‘p=4.61’, ‘mV=1.54’, ‘p=4.08’, ‘cc’, ‘R’]) een
-valide test scenario die automatisch gegenereerd kan worden. Zie
+automatisch laten genereren als test cases. zo is :
+<code>([9.46, 0.01, 14.24, 493.66], ['mV=5.41', 'p=4.61', 'mV=1.54', 'p=4.08', 'cc', 'R'])</code>
+een valide test scenario dat automatisch gegenereerd kan worden. Zie
 ./SysteemTest/random_test_cases.log voor een voorbeeld van deze
 testgevallen (en de code om deze te genereren).</p>
 </body>

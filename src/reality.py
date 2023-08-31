@@ -177,9 +177,9 @@ class Reality:
             rotations_per_time_unit * self.car_parameters.encoder_cpr
         )
         encoder_pulses_per_second = encoder_pulses_per_time_unit / scaled_elapsed_time
-        # encoder_pulses_per_second *= 1 + random.choice(
-        # [-0.003, 0.003]
-        # )  # Add random choice of +- 0.3% as per datasheet
+        encoder_pulses_per_second *= 1 + random.choice(
+            [-0.003, 0.003]
+        )  # Add random choice of +- 0.3% as per datasheet
         self.redis.hset(
             "Sensor_Actuator", "WheelSpeedSensorHz", encoder_pulses_per_second
         )
