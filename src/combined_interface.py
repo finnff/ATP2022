@@ -4,6 +4,11 @@ import redis
 import re
 import subprocess
 from CarParamsManager import ext_load_car_from_redis
+import sys
+
+sys.path.append("WheelSpeedCPP")  # OR SO LIB WONT LOAD
+
+from reader import SpeedSensor  # Import the new SpeedSensor class
 
 
 class dashboard_log_logger:
@@ -46,7 +51,7 @@ class dashboard_log_logger:
         self.extract_numbers_from_log(tail_output)
 
 
-class SpeedSensor:
+class truSpeedSensor:
     def __init__(self, redis_client):
         self.vehicle_speed = 0  # starting speed
         self.redis_client = redis_client
@@ -122,7 +127,9 @@ class ActuatorInterface:
 class CombinedInterface:
     def __init__(self):
         self.redis_client = redis.Redis(host="localhost", port=6379, db=0)
-        self.speed_sensor = SpeedSensor(self.redis_client)
+
+        self.speed_sensor = SpeedSensor()  # Initialize the new SpeedSensor class
+        # self.speed_sensor = SpeedSensor(self.redis_client)
         self.radar_distance_meter = RadarDistanceMeter(self.redis_client)
         self.sensor_interface = SensorInterface(
             self.speed_sensor, self.radar_distance_meter
@@ -140,6 +147,10 @@ class CombinedInterface:
         self.car_par_sec = _temp_carpars.seconds_distance
         self.car_par_CPR = _temp_carpars.encoder_cpr
         self.car_par_Diameter = _temp_carpars.wheel_diameter
+        self.speed_sensor.set_CPR(self.car_par_CPR)  # UPDATE C++ BINDING INTERNALS
+        self.speed_sensor.set_diameter(
+            self.car_par_Diameter
+        )  # UPDATE C++ BINDING INTERNALS
 
     def get_desiredSeconds(self):
         if self.update_param_every_x_calls < self.counter:
@@ -169,10 +180,13 @@ class CombinedInterface:
 
 def main():
     combined_interface = CombinedInterface()
+    truSpeed = truSpeedSensor(combined_interface.redis_client)
 
     while True:
         print(combined_interface.GetUpdatedCarParams())
         current_speed = combined_interface.get_speed()
+        curr_Truespeed = truSpeed.read_speed()
+
         current_distance = combined_interface.get_distance()
 
         # Here, replace with your logic to decide gas and braking force
@@ -184,6 +198,9 @@ def main():
         )
         resultforce = combined_interface.actuator_interface.receive_data()
 
+        print(
+            f"c++ Speed reading:{current_speed}, True Speed: : {curr_Truespeed },  ( /n"
+        )
         print(
             f"Current Speed: {current_speed}, Current Distance: {current_distance}, Gas Force: {gas_force}, Brake Force: {brake_force},Result Force: {resultforce}"
         )
