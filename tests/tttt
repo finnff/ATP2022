@@ -1,0 +1,606 @@
+Testing car configuration from ../car_constants/suv.json
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004546642303466797, 1/Elapsed Time: 2199.4252753015207
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005335807800292969, 1/Elapsed Time: 1874.130473637176
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0008234977722167969, 1/Elapsed Time: 1214.332368268674
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003135204315185547, 1/Elapsed Time: 3189.5847908745245
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00044155120849609375, 1/Elapsed Time: 2264.742980561555
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00045180320739746094, 1/Elapsed Time: 2213.3530343007915
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.000484466552734375, 1/Elapsed Time: 2064.1259842519685
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004124641418457031, 1/Elapsed Time: 2424.4531791907516
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003333091735839844, 1/Elapsed Time: 3000.217453505007
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0001971721649169922, 1/Elapsed Time: 5071.7097944377265
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00048089027404785156, 1/Elapsed Time: 2079.476450173525
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004897117614746094, 1/Elapsed Time: 2042.0175267770205
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004355907440185547, 1/Elapsed Time: 2295.7328954570335
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005192756652832031, 1/Elapsed Time: 1925.7594123048668
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004780292510986328, 1/Elapsed Time: 2091.9221945137156
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00048041343688964844, 1/Elapsed Time: 2081.540446650124
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005218982696533203, 1/Elapsed Time: 1916.0822293284605
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00014257431030273438, 1/Elapsed Time: 7013.886287625418
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004906654357910156, 1/Elapsed Time: 2038.0485908649173
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00021386146545410156, 1/Elapsed Time: 4675.924191750279
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0002892017364501953, 1/Elapsed Time: 3457.7938994229185
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00020742416381835938, 1/Elapsed Time: 4821.03908045977
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00018405914306640625, 1/Elapsed Time: 5433.036269430052
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00011396408081054688, 1/Elapsed Time: 8774.694560669455
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003731250762939453, 1/Elapsed Time: 2680.0664536741215
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004401206970214844, 1/Elapsed Time: 2272.104008667389
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00040030479431152344, 1/Elapsed Time: 2498.096486003574
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003879070281982422, 1/Elapsed Time: 2577.937307928703
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.002918243408203125, 1/Elapsed Time: 342.6718954248366
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0001437664031982422, 1/Elapsed Time: 6955.728026533997
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005288124084472656, 1/Elapsed Time: 1891.029756537421
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00040078163146972656, 1/Elapsed Time: 2495.124330755503
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.000507354736328125, 1/Elapsed Time: 1971.0075187969924
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0002739429473876953, 1/Elapsed Time: 3650.3951261966927
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.000370025634765625, 1/Elapsed Time: 2702.5154639175257
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005440711975097656, 1/Elapsed Time: 1837.9947414548642
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003209114074707031, 1/Elapsed Time: 3116.124814264487
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00038242340087890625, 1/Elapsed Time: 2614.9027431421446
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00041484832763671875, 1/Elapsed Time: 2410.519540229885
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005698204040527344, 1/Elapsed Time: 1754.938912133891
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0002086162567138672, 1/Elapsed Time: 4793.490285714286
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.000415802001953125, 1/Elapsed Time: 2404.9908256880735
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00024700164794921875, 1/Elapsed Time: 4048.5559845559847
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005714893341064453, 1/Elapsed Time: 1749.813934084272
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004036426544189453, 1/Elapsed Time: 2477.438865918488
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005257129669189453, 1/Elapsed Time: 1902.1786848072563
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005135536193847656, 1/Elapsed Time: 1947.2163416898793
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0002772808074951172, 1/Elapsed Time: 3606.452278589854
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00012993812561035156, 1/Elapsed Time: 7695.970642201835
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003612041473388672, 1/Elapsed Time: 2768.517491749175
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004992485046386719, 1/Elapsed Time: 2003.0105062082139
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005130767822265625, 1/Elapsed Time: 1949.0260223048326
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005254745483398438, 1/Elapsed Time: 1903.0417422867513
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004119873046875, 1/Elapsed Time: 2427.259259259259
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003905296325683594, 1/Elapsed Time: 2560.6251526251526
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005285739898681641, 1/Elapsed Time: 1891.8827244023455
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005586147308349609, 1/Elapsed Time: 1790.1425522833974
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0006420612335205078, 1/Elapsed Time: 1557.4838470107686
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0002689361572265625, 1/Elapsed Time: 3718.354609929078
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00054168701171875, 1/Elapsed Time: 1846.0845070422536
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0002913475036621094, 1/Elapsed Time: 3432.327332242226
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00038814544677734375, 1/Elapsed Time: 2576.3538083538083
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00042510032653808594, 1/Elapsed Time: 2352.385866517106
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005114078521728516, 1/Elapsed Time: 1955.3864801864802
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00040435791015625, 1/Elapsed Time: 2473.056603773585
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00018095970153808594, 1/Elapsed Time: 5526.092226613966
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0009336471557617188, 1/Elapsed Time: 1071.0684371807968
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00027751922607421875, 1/Elapsed Time: 3603.3539518900343
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0006105899810791016, 1/Elapsed Time: 1637.760249902382
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005249977111816406, 1/Elapsed Time: 1904.770208900999
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005414485931396484, 1/Elapsed Time: 1846.8974020255393
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005519390106201172, 1/Elapsed Time: 1811.794384449244
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004584789276123047, 1/Elapsed Time: 2181.1253250130007
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005230903625488281, 1/Elapsed Time: 1911.7155879671832
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004839897155761719, 1/Elapsed Time: 2066.15960591133
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005185604095458984, 1/Elapsed Time: 1928.415632183908
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0007779598236083984, 1/Elapsed Time: 1285.4134232301562
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00020766258239746094, 1/Elapsed Time: 4815.50401836969
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0002574920654296875, 1/Elapsed Time: 3883.614814814815
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003600120544433594, 1/Elapsed Time: 2777.6847682119205
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00023865699768066406, 1/Elapsed Time: 4190.113886113886
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004475116729736328, 1/Elapsed Time: 2234.5785828449652
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0005326271057128906, 1/Elapsed Time: 1877.4861235452104
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003638267517089844, 1/Elapsed Time: 2748.5609436435125
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0002884864807128906, 1/Elapsed Time: 3466.3669421487602
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00038695335388183594, 1/Elapsed Time: 2584.290819470117
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0003733634948730469, 1/Elapsed Time: 2678.3550446998725
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004239082336425781, 1/Elapsed Time: 2359.001124859393
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00021600723266601562, 1/Elapsed Time: 4629.474613686534
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00034928321838378906, 1/Elapsed Time: 2863.00614334471
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0002620220184326172, 1/Elapsed Time: 3816.4731574158327
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00044798851013183594, 1/Elapsed Time: 2232.2001064395954
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00042939186096191406, 1/Elapsed Time: 2328.875069405886
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00028252601623535156, 1/Elapsed Time: 3539.497046413502
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00021576881408691406, 1/Elapsed Time: 4634.590055248619
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00026726722717285156, 1/Elapsed Time: 3741.5735950044605
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00018286705017089844, 1/Elapsed Time: 5468.4537157757495
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004398822784423828, 1/Elapsed Time: 2273.3355013550135
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.0004909038543701172, 1/Elapsed Time: 2037.058766391452
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.1379752159118652, Delta: 96.86202478408813, Delta %: 96.86202478408813, Elapsed Time: 0.00032806396484375, 1/Elapsed Time: 3048.186046511628
+Error: Delta % is higher than acceptable margin of error.
+Average Calculated Speed: 3.1379752159118652, Average True Speed: 100.0, Average Elapsed Time: 0.0004320049285888672
+Testing car configuration from ../car_constants/ferrari.json
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 5.841255187988281e-05, 1/Elapsed Time: 17119.608163265308
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004603862762451172, 1/Elapsed Time: 2172.089073019161
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0002815723419189453, 1/Elapsed Time: 3551.485182049111
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00047707557678222656, 1/Elapsed Time: 2096.103948025987
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.000457763671875, 1/Elapsed Time: 2184.5333333333333
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00044226646423339844, 1/Elapsed Time: 2261.080323450135
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003142356872558594, 1/Elapsed Time: 3182.3247344461306
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004534721374511719, 1/Elapsed Time: 2205.2071503680336
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004119873046875, 1/Elapsed Time: 2427.259259259259
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.000507354736328125, 1/Elapsed Time: 1971.0075187969924
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004913806915283203, 1/Elapsed Time: 2035.0819990295972
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005083084106445312, 1/Elapsed Time: 1967.3095684803002
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0002853870391845703, 1/Elapsed Time: 3504.0133667502087
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0002846717834472656, 1/Elapsed Time: 3512.817420435511
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00022077560424804688, 1/Elapsed Time: 4529.48596112311
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.000278472900390625, 1/Elapsed Time: 3591.013698630137
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004546642303466797, 1/Elapsed Time: 2199.4252753015207
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005013942718505859, 1/Elapsed Time: 1994.4384213029007
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00044536590576171875, 1/Elapsed Time: 2245.3447537473235
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0009198188781738281, 1/Elapsed Time: 1087.17055469155
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003116130828857422, 1/Elapsed Time: 3209.107880642693
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005927085876464844, 1/Elapsed Time: 1687.1697506033788
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005285739898681641, 1/Elapsed Time: 1891.8827244023455
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003886222839355469, 1/Elapsed Time: 2573.19263803681
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00049591064453125, 1/Elapsed Time: 2016.4923076923078
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00021648406982421875, 1/Elapsed Time: 4619.277533039648
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003650188446044922, 1/Elapsed Time: 2739.5845852384064
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00021696090698242188, 1/Elapsed Time: 4609.125274725275
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003845691680908203, 1/Elapsed Time: 2600.3124612523247
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00022220611572265625, 1/Elapsed Time: 4500.326180257511
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.000492095947265625, 1/Elapsed Time: 2032.124031007752
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004000663757324219, 1/Elapsed Time: 2499.585220500596
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004451274871826172, 1/Elapsed Time: 2246.5474022495982
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0006275177001953125, 1/Elapsed Time: 1593.580547112462
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003783702850341797, 1/Elapsed Time: 2642.9136735979837
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00019812583923339844, 1/Elapsed Time: 5047.297232250301
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005178451538085938, 1/Elapsed Time: 1931.0791896869246
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005464553833007812, 1/Elapsed Time: 1829.975567190227
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00044798851013183594, 1/Elapsed Time: 2232.2001064395954
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00042557716369628906, 1/Elapsed Time: 2349.7501400560222
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005497932434082031, 1/Elapsed Time: 1818.865568083261
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005404949188232422, 1/Elapsed Time: 1850.1561535068372
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005040168762207031, 1/Elapsed Time: 1984.0605487228004
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0002791881561279297, 1/Elapsed Time: 3581.8138343296328
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003063678741455078, 1/Elapsed Time: 3264.049805447471
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0002944469451904297, 1/Elapsed Time: 3396.1975708502023
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005176067352294922, 1/Elapsed Time: 1931.9686780285583
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004107952117919922, 1/Elapsed Time: 2434.3029599535694
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004825592041015625, 1/Elapsed Time: 2072.284584980237
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005395412445068359, 1/Elapsed Time: 1853.4264250994256
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004885196685791016, 1/Elapsed Time: 2047.0004880429478
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003790855407714844, 1/Elapsed Time: 2637.927044025157
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005004405975341797, 1/Elapsed Time: 1998.2391615054787
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004601478576660156, 1/Elapsed Time: 2173.2145077720206
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0002646446228027344, 1/Elapsed Time: 3778.6522522522523
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005595684051513672, 1/Elapsed Time: 1787.0916063059224
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0006101131439208984, 1/Elapsed Time: 1639.0402500976945
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005714893341064453, 1/Elapsed Time: 1749.813934084272
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005280971527099609, 1/Elapsed Time: 1893.5909706546274
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005018711090087891, 1/Elapsed Time: 1992.5434679334917
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004949569702148438, 1/Elapsed Time: 2020.3776493256262
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005238056182861328, 1/Elapsed Time: 1909.1051433773328
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0006086826324462891, 1/Elapsed Time: 1642.8922835879357
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005574226379394531, 1/Elapsed Time: 1793.9709153122326
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00048279762268066406, 1/Elapsed Time: 2071.2612345679013
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004994869232177734, 1/Elapsed Time: 2002.054415274463
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005152225494384766, 1/Elapsed Time: 1940.9088385006942
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0009288787841796875, 1/Elapsed Time: 1076.5667351129364
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0002315044403076172, 1/Elapsed Time: 4319.5715756951595
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005781650543212891, 1/Elapsed Time: 1729.6098969072166
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.000492095947265625, 1/Elapsed Time: 2032.124031007752
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004994869232177734, 1/Elapsed Time: 2002.054415274463
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004489421844482422, 1/Elapsed Time: 2227.458311205523
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00021219253540039062, 1/Elapsed Time: 4712.701123595506
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00035452842712402344, 1/Elapsed Time: 2820.6482851378614
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00033926963806152344, 1/Elapsed Time: 2947.50808151792
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004611015319824219, 1/Elapsed Time: 2168.719751809721
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005366802215576172, 1/Elapsed Time: 1863.3069746779208
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00038886070251464844, 1/Elapsed Time: 2571.614960147149
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003917217254638672, 1/Elapsed Time: 2552.832623250152
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00030112266540527344, 1/Elapsed Time: 3320.9057798891527
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005640983581542969, 1/Elapsed Time: 1772.7404902789517
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00023794174194335938, 1/Elapsed Time: 4202.709418837675
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005469322204589844, 1/Elapsed Time: 1828.3801220575415
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005147457122802734, 1/Elapsed Time: 1942.706808707735
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00040841102600097656, 1/Elapsed Time: 2448.5137186223
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004978179931640625, 1/Elapsed Time: 2008.766283524904
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005846023559570312, 1/Elapsed Time: 1710.5644371941273
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00048804283142089844, 1/Elapsed Time: 2049.000488519785
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005431175231933594, 1/Elapsed Time: 1841.2221246707638
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005035400390625, 1/Elapsed Time: 1985.939393939394
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0003917217254638672, 1/Elapsed Time: 2552.832623250152
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0001499652862548828, 1/Elapsed Time: 6668.20985691574
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00043582916259765625, 1/Elapsed Time: 2294.477024070022
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004734992980957031, 1/Elapsed Time: 2111.9355488418933
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.000507354736328125, 1/Elapsed Time: 1971.0075187969924
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005133152008056641, 1/Elapsed Time: 1948.1207617278217
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.00040650367736816406, 1/Elapsed Time: 2460.0023460410557
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0005342960357666016, 1/Elapsed Time: 1871.6215975011155
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.9879989624023438, Delta: 96.01200103759766, Delta %: 96.01200103759766, Elapsed Time: 0.0004444122314453125, 1/Elapsed Time: 2250.1630901287554
+Error: Delta % is higher than acceptable margin of error.
+Average Calculated Speed: 3.9879989624023438, Average True Speed: 100.0, Average Elapsed Time: 0.0004433846473693848
+Testing car configuration from ../car_constants/hatchback.json
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 7.033348083496094e-05, 1/Elapsed Time: 14217.979661016949
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00020241737365722656, 1/Elapsed Time: 4940.287396937573
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0003762245178222656, 1/Elapsed Time: 2657.9873257287704
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00027370452880859375, 1/Elapsed Time: 3653.574912891986
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004792213439941406, 1/Elapsed Time: 2086.718407960199
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004596710205078125, 1/Elapsed Time: 2175.46887966805
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00030875205993652344, 1/Elapsed Time: 3238.8447876447876
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0003972053527832031, 1/Elapsed Time: 2517.5894357743095
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005612373352050781, 1/Elapsed Time: 1781.7774001699236
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0006127357482910156, 1/Elapsed Time: 1632.0249027237355
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0002429485321044922, 1/Elapsed Time: 4116.098135426889
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.000492095947265625, 1/Elapsed Time: 2032.124031007752
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005371570587158203, 1/Elapsed Time: 1861.652907234798
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005445480346679688, 1/Elapsed Time: 1836.385288966725
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0006711483001708984, 1/Elapsed Time: 1489.9836589698045
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0002510547637939453, 1/Elapsed Time: 3983.1946818613487
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005056858062744141, 1/Elapsed Time: 1977.5124941065535
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005307197570800781, 1/Elapsed Time: 1884.2336028751124
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004999637603759766, 1/Elapsed Time: 2000.144969003338
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00035881996154785156, 1/Elapsed Time: 2786.9129568106314
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00028133392333984375, 1/Elapsed Time: 3554.494915254237
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004904270172119141, 1/Elapsed Time: 2039.0393777345648
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005223751068115234, 1/Elapsed Time: 1914.333181195801
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00046896934509277344, 1/Elapsed Time: 2132.3355363497712
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00030803680419921875, 1/Elapsed Time: 3246.3653250773996
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004661083221435547, 1/Elapsed Time: 2145.424040920716
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00033092498779296875, 1/Elapsed Time: 3021.8328530259364
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0008075237274169922, 1/Elapsed Time: 1238.3537053439622
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004756450653076172, 1/Elapsed Time: 2102.4080200501253
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0002455711364746094, 1/Elapsed Time: 4072.1398058252425
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.000225067138671875, 1/Elapsed Time: 4443.118644067797
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0002570152282714844, 1/Elapsed Time: 3890.8200371057515
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0002732276916503906, 1/Elapsed Time: 3659.951134380454
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005753040313720703, 1/Elapsed Time: 1738.2113551595523
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004887580871582031, 1/Elapsed Time: 2046.0019512195122
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00046062469482421875, 1/Elapsed Time: 2170.9648033126296
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005323886871337891, 1/Elapsed Time: 1878.3269144648455
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.000461578369140625, 1/Elapsed Time: 2166.4793388429753
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004909038543701172, 1/Elapsed Time: 2037.058766391452
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00025153160095214844, 1/Elapsed Time: 3975.6436018957347
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004985332489013672, 1/Elapsed Time: 2005.8842659014826
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005598068237304688, 1/Elapsed Time: 1786.3304940374787
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004127025604248047, 1/Elapsed Time: 2423.052570768342
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004482269287109375, 1/Elapsed Time: 2231.012765957447
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005104541778564453, 1/Elapsed Time: 1959.0397010742643
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0003726482391357422, 1/Elapsed Time: 2683.495841330774
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005390644073486328, 1/Elapsed Time: 1855.0659000442283
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005645751953125, 1/Elapsed Time: 1771.2432432432433
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0006389617919921875, 1/Elapsed Time: 1565.0388059701493
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00029087066650390625, 1/Elapsed Time: 3437.9540983606557
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005426406860351562, 1/Elapsed Time: 1842.8400702987697
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004742145538330078, 1/Elapsed Time: 2108.750125691302
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005002021789550781, 1/Elapsed Time: 1999.1916110581506
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004878044128417969, 1/Elapsed Time: 2050.001955034213
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0003426074981689453, 1/Elapsed Time: 2918.791927627001
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0003941059112548828, 1/Elapsed Time: 2537.3889897156687
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0011017322540283203, 1/Elapsed Time: 907.6615451201038
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00045299530029296875, 1/Elapsed Time: 2207.5284210526315
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004820823669433594, 1/Elapsed Time: 2074.3343224530167
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00021076202392578125, 1/Elapsed Time: 4744.68778280543
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0003612041473388672, 1/Elapsed Time: 2768.517491749175
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0001709461212158203, 1/Elapsed Time: 5849.796373779637
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004725456237792969, 1/Elapsed Time: 2116.1977800201817
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00013899803161621094, 1/Elapsed Time: 7194.346483704974
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0003914833068847656, 1/Elapsed Time: 2554.3873325213153
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0009174346923828125, 1/Elapsed Time: 1089.995841995842
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00021314620971679688, 1/Elapsed Time: 4691.615212527964
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0002753734588623047, 1/Elapsed Time: 3631.4320346320346
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00025272369384765625, 1/Elapsed Time: 3956.890566037736
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004849433898925781, 1/Elapsed Time: 2062.0963618485744
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005338191986083984, 1/Elapsed Time: 1873.293434569004
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005030632019042969, 1/Elapsed Time: 1987.8218009478674
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005328655242919922, 1/Elapsed Time: 1876.6460850111857
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00031948089599609375, 1/Elapsed Time: 3130.0776119402985
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005271434783935547, 1/Elapsed Time: 1897.0167345092718
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004355907440185547, 1/Elapsed Time: 2295.7328954570335
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005004405975341797, 1/Elapsed Time: 1998.2391615054787
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00031256675720214844, 1/Elapsed Time: 3199.316552250191
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00024819374084472656, 1/Elapsed Time: 4029.1104707012487
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004024505615234375, 1/Elapsed Time: 2484.7772511848343
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005340576171875, 1/Elapsed Time: 1872.4571428571428
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005185604095458984, 1/Elapsed Time: 1928.415632183908
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0003840923309326172, 1/Elapsed Time: 2603.540657976412
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00033855438232421875, 1/Elapsed Time: 2953.735211267606
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0002391338348388672, 1/Elapsed Time: 4181.758723828514
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00025177001953125, 1/Elapsed Time: 3971.878787878788
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00010919570922851562, 1/Elapsed Time: 9157.868995633187
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00022673606872558594, 1/Elapsed Time: 4410.414300736067
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00011587142944335938, 1/Elapsed Time: 8630.255144032923
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00038123130798339844, 1/Elapsed Time: 2623.0794246404002
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004107952117919922, 1/Elapsed Time: 2434.3029599535694
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0002009868621826172, 1/Elapsed Time: 4975.449584816133
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005064010620117188, 1/Elapsed Time: 1974.719397363465
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0004961490631103516, 1/Elapsed Time: 2015.5233061028352
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005645751953125, 1/Elapsed Time: 1771.2432432432433
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00018835067749023438, 1/Elapsed Time: 5309.245569620253
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005228519439697266, 1/Elapsed Time: 1912.5873233014136
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00015401840209960938, 1/Elapsed Time: 6492.730650154799
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.0005280971527099609, 1/Elapsed Time: 1893.5909706546274
+Error: Delta % is higher than acceptable margin of error.
+True Speed: 100.0, Calculated Speed: 3.120500087738037, Delta: 96.87949991226196, Delta %: 96.87949991226196, Elapsed Time: 0.00042700767517089844, 1/Elapsed Time: 2341.8782802903406
+Error: Delta % is higher than acceptable margin of error.
+Average Calculated Speed: 3.120500087738037, Average True Speed: 100.0, Average Elapsed Time: 0.0004170680046081543
