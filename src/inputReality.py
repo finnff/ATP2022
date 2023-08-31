@@ -44,19 +44,16 @@ if __name__ == "__main__":
     counterfailed = 0
     counterPassed = 0
 
-    while not input_reality.checkCrashed():
-        time.sleep(2)
-        print("\n-----------starting test run---------\n")
-
+    # while not input_reality.checkCrashed():
+    print("\n-----------starting test run---------\n")
+    while True:
         # Set initial conditions: car is standing still and there is a stationary vehicle 100 meters ahead
-        input_reality.set_starting_conditions(
-            myVel=10, myAcc=0.0, voVel=11, dist2vo=100
-        )
+        input_reality.set_starting_conditions(myVel=10, myAcc=0.0, voVel=11, dist2vo=50)
         while True:
             input_reality.save_state_to_redis("true_voorligger_speed", 11)
-            time.sleep(5)  # Wait 5 seconds
+            time.sleep(2)  # Wait 5 seconds
             input_reality.save_state_to_redis("true_voorligger_speed", 9)
-            time.sleep(5)  # Wait 5 seconds
+            time.sleep(2)  # Wait 5 seconds
         # time.sleep(5)  # Allow the simulation to run for 5 seconds
         # input_reality.save_state_to_redis("true_vehicle_acceleration", 3)
         # time.sleep(5)  # Wait 5 seconds
@@ -65,7 +62,7 @@ if __name__ == "__main__":
         # Suddenly accelerate to 30 m/s
         #
 
-    input_reality.reset()
+    # input_reality.reset()
 
 #
 # counterfailed = 0

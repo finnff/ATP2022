@@ -9,14 +9,15 @@ from inputReality import InputReality  # Import the InputReality class
 from CarParamsManager import CarParamsManager
 
 
-MAX_VEHICLE_SPEED = 150
+MAX_VEHICLE_SPEED = 15
 MIN_VEHICLE_SPEED = 1
 MAX_VOORLIGGER_SPEED = 160
 MIN_VOORLIGGER_SPEED = 1
 MAX_VEHICLE_ACCELERATION = 15
 MIN_VEHICLE_ACCELERATION = -15
 MAX_TIME_BETWEEN = 15
-MAX_DISTANCE_INTBETWEEN = MAX_VEHICLE_SPEED * MAX_TIME_BETWEEN
+# MAX_DISTANCE_INTBETWEEN = MAX_VEHICLE_SPEED * MAX_TIME_BETWEEN
+MAX_DISTANCE_INTBETWEEN = 100
 
 
 def get_sim_params(redis):
@@ -207,14 +208,14 @@ class Reality:
 
     def check_crashed(self):
         if self.true_distance_to_voorligger < 0:
-            return True
+            return False
 
         # Calculate the time to cover the distance at the current speed.
         # Avoid division by zero.
         if self.true_vehicle_speed != 0:
             time_to_reach = self.true_distance_to_voorligger / self.true_vehicle_speed
             if time_to_reach > MAX_TIME_BETWEEN:
-                return True
+                return False
 
         return False
 
@@ -262,7 +263,7 @@ class Reality:
         # 10ms interval
         if self.time_since_reality_update >= (1 / self.reality_update_frequency):
             self.time_since_reality_update = 0  # Reset the accumulated time
-            realChangeFactor = 0.01
+            realChangeFactor = 1.0
             if self.GasRemPedalPosPercentage >= 0:
                 realChange = (
                     (self.GasRemPedalPosPercentage / 100)
@@ -287,8 +288,8 @@ class Reality:
                 values = [
                     f"{self.true_vehicle_speed:.3f}",
                     f"{self.true_vehicle_acceleration:.3f}",
-                    f"{realChange:.3f}",
                     f"{self.GasRemPedalPosPercentage:.1f}",
+                    f"{realChange:.3f}",
                     f"{self.true_distance_to_voorligger/self.true_vehicle_speed:.2f}",
                     f"{self.true_distance_to_voorligger:.2f}",
                     f"{self.true_voorligger_speed:.3f}",

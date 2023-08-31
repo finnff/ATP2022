@@ -194,10 +194,10 @@ class SpecialGraph:
 
 # Generate graphs
 #
-graph2 = GraphGenerator("Sensor_Actuator", data_cache, max_points=100)
-graph1 = GraphGenerator("sim_state", data_cache, max_points=100)
-graph3 = GraphGenerator("RealitySimReplay", data_cache, max_points=100)
-graph4 = GraphGenerator("TestResults", data_cache, max_points=100)
+graph4 = GraphGenerator("Sensor_Actuator", data_cache, max_points=100)
+graph3 = GraphGenerator("sim_state", data_cache, max_points=100)
+graph1 = GraphGenerator("RealitySimReplay", data_cache, max_points=100)
+graph2 = GraphGenerator("TestResults", data_cache, max_points=100)
 # graph9 = SpecialGraph(data_cache, max_points=100)
 
 # Dash Layout

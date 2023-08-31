@@ -56,6 +56,12 @@ class truSpeedSensor:
         self.vehicle_speed = 0  # starting speed
         self.redis_client = redis_client
 
+    def set_CPR(self, x):
+        pass
+
+    def set_diameter(self, x):
+        pass
+
     def read_speed(self):
         self.vehicle_speed = float(
             # self.redis_client.hget("Sensor_Actuator", "WheelSpeedSensorHz") or 0.0
@@ -89,6 +95,19 @@ class SensorInterface:
         return self.RadarDistanceMeter.read_distance()
 
 
+class ScalarGetter:
+    def __init__(self, redis_client):
+        self.redis_client = redis_client
+
+    def getScalars(self):
+        pid_values = self.redis_client.get("PIDValues")
+        if pid_values is not None:
+            print("set PID ", tuple(map(float, pid_values.decode().split())))
+            return tuple(map(float, pid_values.decode().split()))
+        else:
+            return 10.1, 2.1, 3.1
+
+
 # Actuators
 
 
@@ -109,10 +128,8 @@ class ActuatorInterface:
             print("Speed must be between 0 and 100.")
 
     def set_braking_pedal_force(self, force):
-        if -100 <= force <= 0:
+        if -100 <= force < 0:
             self.redis_client.hset("Sensor_Actuator", "GasRemPedalPosPercentage", force)
-        else:
-            print("Force must be between -100 and 0.")
 
     def set_combined_pedal_force(self, gas_force, brake_force):
         # Logic to pick the stronger force and apply it while canceling the weaker one
@@ -128,9 +145,11 @@ class CombinedInterface:
     def __init__(self):
         self.redis_client = redis.Redis(host="localhost", port=6379, db=0)
 
-        self.speed_sensor = SpeedSensor()  # Initialize the new SpeedSensor class
+        # self.speed_sensor = SpeedSensor()
+        self.speed_sensor = truSpeedSensor(self.redis_client)
         # self.speed_sensor = SpeedSensor(self.redis_client)
         self.radar_distance_meter = RadarDistanceMeter(self.redis_client)
+        self.pidgetter = ScalarGetter(self.redis_client)
         self.sensor_interface = SensorInterface(
             self.speed_sensor, self.radar_distance_meter
         )
@@ -171,6 +190,9 @@ class CombinedInterface:
     def set_gas_pedal_force(self, force):
         self.actuator_interface.set_gas_pedal_force(force)
 
+    def getScalars(self):
+        return self.pidgetter.getScalars()
+
     def set_braking_pedal_force(self, force):
         self.actuator_interface.set_braking_pedal_force(force)
 
@@ -181,31 +203,10 @@ class CombinedInterface:
 def main():
     combined_interface = CombinedInterface()
     truSpeed = truSpeedSensor(combined_interface.redis_client)
+    combined_interface.speed_sensor = truSpeedSensor(combined_interface.redis_client)
 
     while True:
-        print(combined_interface.GetUpdatedCarParams())
-        current_speed = combined_interface.get_speed()
-        curr_Truespeed = truSpeed.read_speed()
-
-        current_distance = combined_interface.get_distance()
-
-        # Here, replace with your logic to decide gas and braking force
-        gas_force = random.randint(0, 100)
-        brake_force = random.randint(-100, 0)
-
-        combined_interface.actuator_interface.set_combined_pedal_force(
-            gas_force, brake_force
-        )
-        resultforce = combined_interface.actuator_interface.receive_data()
-
-        print(
-            f"c++ Speed reading:{current_speed}, True Speed: : {curr_Truespeed },   /n"
-        )
-        print(
-            f"Current Speed: {current_speed}, Current Distance: {current_distance}, Gas Force: {gas_force}, Brake Force: {brake_force},Result Force: {resultforce}"
-        )
-
-        time.sleep(1)  # Simulate a time delay
+        print(combined_interface.get_speed())
 
 
 if __name__ == "__main__":
