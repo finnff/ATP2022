@@ -9,13 +9,14 @@ from inputReality import InputReality  # Import the InputReality class
 from CarParamsManager import CarParamsManager
 
 
-MAX_VEHICLE_SPEED = 100
-MIN_VEHICLE_SPEED = 2
-MAX_VOORLIGGER_SPEED = 100
-MIN_VOORLIGGER_SPEED = 0
-MAX_VEHICLE_ACCELERATION = 153
-MIN_VEHICLE_ACCELERATION = -10
+MAX_VEHICLE_SPEED = 150
+MIN_VEHICLE_SPEED = 1
+MAX_VOORLIGGER_SPEED = 160
+MIN_VOORLIGGER_SPEED = 1
+MAX_VEHICLE_ACCELERATION = 15
+MIN_VEHICLE_ACCELERATION = -15
 MAX_TIME_BETWEEN = 15
+MAX_DISTANCE_INTBETWEEN = MAX_VEHICLE_SPEED * MAX_TIME_BETWEEN
 
 
 def get_sim_params(redis):
@@ -73,9 +74,18 @@ class Reality:
         print(self.car_parameters)
         print("\n\n\n")
         self.redis.hset("RealitySimReplay", "RESET_FLAG", 0)
-        print(
-            f"  myVel  |  myAc  |lastPedal%|  diff  | t2voor | dist2Voor| VelVoo | loopHz"
-        )
+        ## use custom printfunc
+        self.plabels = [
+            "myVel",
+            "myAc",
+            "lastPedal%",
+            "diff",
+            "t2voor",
+            "dist2Voor",
+            "VelVoo",
+            "loopHz",
+        ]
+        # print(# f"  myVel  |  myAc  |lastPedal%|  diff  | t2voor | dist2Voor| VelVoo | loopHz")
 
     #######################################
     def update_car_params(self):
@@ -123,6 +133,8 @@ class Reality:
             self.true_vehicle_acceleration = 0.0
 
     def save_state_to_redis(self):
+        ##prevent us from exceeding light speed etc
+        self.constrain_values_to_limits()
         self.redis.hset(
             "sim_state", "true_distance_to_voorligger", self.true_distance_to_voorligger
         )
@@ -135,25 +147,38 @@ class Reality:
         )
         self.redis.hset("RealitySimReplay", "realityHZ", 1 / (time.time() - start_time))
 
+    def constrain_values_to_limits(self):
+        self.true_vehicle_speed = max(
+            min(self.true_vehicle_speed, MAX_VEHICLE_SPEED), MIN_VEHICLE_SPEED
+        )
+        self.true_voorligger_speed = max(
+            min(self.true_voorligger_speed, MAX_VOORLIGGER_SPEED), MIN_VOORLIGGER_SPEED
+        )
+        self.true_vehicle_acceleration = max(
+            min(self.true_vehicle_acceleration, MAX_VEHICLE_ACCELERATION),
+            MIN_VEHICLE_ACCELERATION,
+        )
+        self.true_distance_to_voorligger = max(
+            min(self.true_distance_to_voorligger, MAX_DISTANCE_INTBETWEEN), -100
+        )
+
     def dummyHzWheelSpeedSensor(self, scaled_elapsed_time):
-        # Step 1: Get true_vehicle_speed in meters per second
+        # Get true_vehicle_speed in meters per second
         speed_mps = self.true_vehicle_speed
-        # Step 2: Calculate wheel circumference in meters
+        #  Calculate wheel circumference in meters
         wheel_circumference = math.pi * self.car_parameters.wheel_diameter
-        # Step 3: Calculate rotations per scaled time unit
+        #  Calculate rotations per scaled time unit
         rotations_per_time_unit = (
             speed_mps * scaled_elapsed_time
         ) / wheel_circumference
-        # Step 4: Calculate encoder pulses per time unit
+        #  Calculate encoder pulses per time unit
         encoder_pulses_per_time_unit = (
             rotations_per_time_unit * self.car_parameters.encoder_cpr
         )
-        # Step 5: Convert this to Hz (pulses per second)
         encoder_pulses_per_second = encoder_pulses_per_time_unit / scaled_elapsed_time
         encoder_pulses_per_second *= 1 + random.choice(
             [-0.003, 0.003]
-        )  # Add random choice of +- 0.3%
-        # Step 6: Save to Redis
+        )  # Add random choice of +- 0.3% as per datasheet
         self.redis.hset(
             "Sensor_Actuator", "WheelSpeedSensorHz", encoder_pulses_per_second
         )
@@ -259,19 +284,17 @@ class Reality:
                 self.iteration += 1
                 self.update_sim_params()
                 self.update_car_params()
-                values_line = (
-                    f"{self.true_vehicle_speed:.3f}".ljust(9)
-                    + f"| {self.true_vehicle_acceleration:.3f}".ljust(9)
-                    + f"| {realChange:.3f}".ljust(9)
-                    + f"| {self.GasRemPedalPosPercentage:.1f}".ljust(9)
-                    + f"| {self.true_distance_to_voorligger/self.true_vehicle_speed:.2f}".ljust(
-                        9
-                    )
-                    + f"| {self.true_distance_to_voorligger:.2f}".ljust(9)
-                    + f"| {self.true_voorligger_speed:.3f}".ljust(9)
-                    + f"| {1 / (time.time() - start_time):1f}".ljust(5)
-                )
-                print(values_line, end="\r")
+                values = [
+                    f"{self.true_vehicle_speed:.3f}",
+                    f"{self.true_vehicle_acceleration:.3f}",
+                    f"{realChange:.3f}",
+                    f"{self.GasRemPedalPosPercentage:.1f}",
+                    f"{self.true_distance_to_voorligger/self.true_vehicle_speed:.2f}",
+                    f"{self.true_distance_to_voorligger:.2f}",
+                    f"{self.true_voorligger_speed:.3f}",
+                    f"{1 / (time.time() - start_time):1f}",
+                ]
+                format_and_print_values(self.plabels, values)
             self.bosch_radar_update()
             self.dummyHzWheelSpeedSensor(scaled_elapsed_time)
 
@@ -302,6 +325,27 @@ class Reality:
                         break
                     print("Waiting for fresh_dump to be reset...", end="\r")
                     time.sleep(1)
+
+
+def format_and_print_values(labels, values):
+    time.sleep(0.005)
+    # Calculate the maximum length needed for each field
+    max_lengths = [
+        max(len(str(lbl)), len(str(val))) for lbl, val in zip(labels, values)
+    ]
+
+    # Create strings with values and labels, padded to the maximum length
+    padded_labels = [
+        str(lbl).ljust(max_len) for lbl, max_len in zip(labels, max_lengths)
+    ]
+    padded_values = [
+        str(val).ljust(max_len) for val, max_len in zip(values, max_lengths)
+    ]
+
+    # Join the padded strings and print them
+    print("\n\n\n" + " | ".join(padded_labels))
+    print(" | ".join(padded_values), end="\r")
+    time.sleep(0.005)
 
 
 if __name__ == "__main__":

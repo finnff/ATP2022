@@ -23,7 +23,7 @@ class InputReality:
     def set_starting_conditions(self, myVel=25.0, myAcc=0.0, voVel=20.0, dist2vo=300.0):
         self.save_state_to_redis("true_vehicle_speed", myVel)
         self.save_state_to_redis("true_vehicle_acceleration", myAcc)
-        self.save_state_to_redis("true_voorligger_speed ", voVel)
+        self.save_state_to_redis("true_voorligger_speed", voVel)
         self.save_state_to_redis("true_distance_to_voorligger", dist2vo)
 
     def reset(self):
@@ -44,25 +44,27 @@ if __name__ == "__main__":
     counterfailed = 0
     counterPassed = 0
 
-    input_reality.reset()
-
     while not input_reality.checkCrashed():
+        time.sleep(2)
         print("\n-----------starting test run---------\n")
 
         # Set initial conditions: car is standing still and there is a stationary vehicle 100 meters ahead
         input_reality.set_starting_conditions(
-            myVel=100, myAcc=0.0, voVel=211.1, dist2vo=1000000
+            myVel=10, myAcc=0.0, voVel=11, dist2vo=100
         )
-        input_reality.save_state_to_redis("true_vehicle_acceleration", 4)
-        time.sleep(5)  # Wait 5 seconds
-        input_reality.save_state_to_redis("true_vehicle_acceleration", -4)
-        time.sleep(5)  # Allow the simulation to run for 5 seconds
-        input_reality.save_state_to_redis("true_vehicle_acceleration", 3)
-        time.sleep(5)  # Wait 5 seconds
-        input_reality.save_state_to_redis("true_vehicle_acceleration", -3)
-        time.sleep(5)  # Wait 5 seconds
+        while True:
+            input_reality.save_state_to_redis("true_voorligger_speed", 11)
+            time.sleep(5)  # Wait 5 seconds
+            input_reality.save_state_to_redis("true_voorligger_speed", 9)
+            time.sleep(5)  # Wait 5 seconds
+        # time.sleep(5)  # Allow the simulation to run for 5 seconds
+        # input_reality.save_state_to_redis("true_vehicle_acceleration", 3)
+        # time.sleep(5)  # Wait 5 seconds
+        # input_reality.save_state_to_redis("true_vehicle_acceleration", -3)
+        # time.sleep(5)  # Wait 5 seconds
         # Suddenly accelerate to 30 m/s
         #
+
     input_reality.reset()
 
 #

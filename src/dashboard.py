@@ -9,9 +9,11 @@ from collections import deque
 import random
 import threading
 import time
+from dash.exceptions import PreventUpdate
 
 
-UPDATE_RATE = 100
+UPDATE_RATE = 200  # voor dashboard (in ms)
+REDIS_INTERVAL = UPDATE_RATE / 1000  # Convert naar sec voor redis cacher
 
 
 ## data cacher so we dont ahve to IO operation every interval tick for each graph
@@ -19,7 +21,7 @@ class RedisDataCache:
     def __init__(self, redis_client, hash_names, interval=1, max_points=25):
         self.redis_client = redis_client
         self.hash_names = hash_names
-        self.interval = 10 / interval
+        self.interval = interval
         self.max_points = max_points
         self.data = {hash_name: {} for hash_name in hash_names}
         self.update_lock = threading.Lock()
@@ -60,13 +62,15 @@ hash_names = [
     "TestResults",
     "FRPloggedInfo",
 ]
-data_cache = RedisDataCache(r, hash_names, interval=UPDATE_RATE, max_points=100)
+
+data_cache = RedisDataCache(r, hash_names, interval=REDIS_INTERVAL, max_points=100)
 
 # Initialize the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
 
 def random_color():
+    # BEter dan niks
     return "#{:02x}{:02x}{:02x}".format(
         random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
     )
@@ -99,14 +103,14 @@ class GraphGenerator:
                 go.Scatter(
                     x=list(range(self.max_points)),
                     y=list(values),
-                    mode="lines+markers",
+                    mode="lines",
                     name=f"{key}",
                     line=dict(color=self.colors[key]),
                 )
             )
 
         layout = go.Layout(
-            title=f"{self.hash_name} Over Time",
+            title=f"{self.hash_name} x Time",
             xaxis=dict(title="Time", range=[0, self.max_points - 1]),
             yaxis=dict(title="Value"),
         )
@@ -228,6 +232,8 @@ app.layout = dbc.Container(
     Input("interval-update", "n_intervals"),
 )
 def update_all_graphs(n):
+    if n is None:
+        raise PreventUpdate
     return (
         graph1.update_graph(),
         graph2.update_graph(),

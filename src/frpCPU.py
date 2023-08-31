@@ -55,7 +55,7 @@ def Proportional_controller(
         current_seconds_to_voorligger = float("inf")
 
     timeDelta = current_seconds_to_voorligger - desire_seconds_to_voorligger
-    print(timeDelta)
+    print("[Propo Cont] TimeDelta: ", timeDelta)
 
     Kp = 10  # Proportional gain constant
 
@@ -71,7 +71,6 @@ def Proportional_controller(
 
 # Function to get sensor data
 def get_sensor_data(interface):
-    print("[get_sensor_data] Function called")
     desire_seconds = interface.get_desiredSeconds()
     distance = interface.get_distance()
     speed = interface.get_speed()
@@ -84,7 +83,6 @@ def get_sensor_data(interface):
 # Function for control logic
 @logging_decorator
 def control_logic(data):
-    print("[control_logic] Function called")
     desire_seconds, distance, speed = data
     print(
         f"[control_logic] Input data: desire_seconds: {desire_seconds}, distance: {distance}, speed: {speed}"
@@ -96,7 +94,6 @@ def control_logic(data):
 
 # Function to apply control
 def apply_control(interface, control_data):
-    print("[apply_control] Function called")
     control, value = control_data
     print(f"[apply_control] control: {control}, value: {value}")
 
