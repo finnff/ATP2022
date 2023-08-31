@@ -1,1 +1,0 @@
-/usr/lib64/ccache/c++ -fPIC -shared  -o libwsp_mod.so CMakeFiles/wsp_mod.dir/aaaa.cpp.o CMakeFiles/wsp_mod.dir/bindings.cpp.o 
