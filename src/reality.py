@@ -1,66 +1,123 @@
+import sys
 import redis
 import random
 import math
 import time
+import select  # This is to check for user input within the 5-second window
 
+from inputReality import InputReality  # Import the InputReality class
 from CarParamsManager import CarParamsManager
 
 
-def set_sim_params(redis, speed=1.0, frequency=100, update_frequency=1.0):
-    redis.hset("RealitySimReplay", "RealityTimeScaleFactor", speed)
-    redis.hset("RealitySimReplay", "reality_frequency", frequency)
-    redis.hset("RealitySimReplay", "reality_update_frequency", update_frequency)
+MAX_VEHICLE_SPEED = 100
+MIN_VEHICLE_SPEED = 2
+MAX_VOORLIGGER_SPEED = 100
+MIN_VOORLIGGER_SPEED = 0
+MAX_VEHICLE_ACCELERATION = 153
+MIN_VEHICLE_ACCELERATION = -10
+MAX_TIME_BETWEEN = 15
 
 
 def get_sim_params(redis):
     A = float(redis.hget("RealitySimReplay", "RealityTimeScaleFactor") or -1.0)
     B = float(redis.hget("RealitySimReplay", "reality_frequency") or -1.0)
     C = float(redis.hget("RealitySimReplay", "reality_update_frequency") or -1.0)
+    if int(redis.hget("RealitySimReplay", "RESET_FLAG") or 0):
+        redis.hset("RealitySimReplay", "CRASHED_FLAG", 0)
+        print("\n\n RESET_FLAG: re-initializing...\n")
+        reality.initialize()
+        reality.update(0)
     return A, B, C
 
 
 class Reality:
-    def __init__(
-        self,
-        carmanager,
-        true_vehicle_speed,
-        true_distance_to_voorligger,
-        true_voorligger_speed,
-        true_vehicle_acceleration,
-        redis_client,
-    ):
+    def __init__(self, carmanager, redis_client):
         self.redis = redis_client
+        self.reality_input = InputReality(redis_client)
+        self.car_manager = carmanager
+        self.initialize()
+
+    def initialize(self):
+        self.GasRemPedalPosPercentage = 0.0
+        self.iteration = 0
+        self.time_since_reality_update = 0.01
+        self.radar_counter = 0
+        self.simulation_start_time = time.time()
+
+        self.load_state_from_redis()
         self.update_sim_params()
+        self.update_car_params()
+
+        # Check if values are all zero (rare case)
+        if all(
+            val <= 0
+            for val in [
+                self.true_distance_to_voorligger,
+                self.true_vehicle_speed,
+                self.true_voorligger_speed,
+            ]
+        ) or int(self.redis.hget("RealitySimReplay", "RESET_FLAG")):
+            print("Warning: All Redis values were zero. Setting to preset values.")
+            (
+                self.true_distance_to_voorligger,
+                self.true_vehicle_speed,
+                self.true_voorligger_speed,
+                self.true_vehicle_acceleration,
+            ) = [10, 10, 10, 0.3]
         print(
             "Running sim with sim param: ",
             self.RealityTimeScaleFactor,
             self.reality_frequency,
             self.reality_update_frequency,
         )
-        self.car_manager = carmanager
-        self.update_car_params()
         print(self.car_parameters)
-        self.true_vehicle_speed = true_vehicle_speed
-        self.true_vehicle_speed = true_vehicle_speed
-        self.true_distance_to_voorligger = true_distance_to_voorligger
-        self.true_voorligger_speed = true_voorligger_speed
-        self.true_vehicle_acceleration = true_vehicle_acceleration
-        self.GasRemPedalPosPercentage = 0.0
-        self.iteration = 0
-        self.time_since_reality_update = 0.01
-        self.radar_counter = 0
+        print("\n\n\n")
+        self.redis.hset("RealitySimReplay", "RESET_FLAG", 0)
+        print(
+            f"  myVel  |  myAc  |lastPedal%|  diff  | t2voor | dist2Voor| VelVoo | loopHz"
+        )
 
-        print(f"  myVel  |  myAc  |  diff  |dist2Voor| VoorVel |lastPedalPos| loopHz")
-
+    #######################################
     def update_car_params(self):
         self.car_parameters = self.car_manager.load_car_from_redis()
 
     def update_sim_params(self):
-        (
-            self.RealityTimeScaleFactor,
-            self.reality_frequency,
-            self.reality_update_frequency,
-        ) = get_sim_params(self.redis)
+        try:
+            (
+                self.RealityTimeScaleFactor,
+                self.reality_frequency,
+                self.reality_update_frequency,
+            ) = get_sim_params(self.redis)
+        except Exception as e:
+            print(
+                f"Warning: Exception {e} encountered while updating sim params. Setting to default values."
+            )
+            self.RealityTimeScaleFactor = 1
+            self.reality_frequency = 10
+            self.reality_update_frequency = 1
+
+    def load_state_from_redis(self):
+        try:
+            self.true_distance_to_voorligger = float(
+                self.redis.hget("sim_state", "true_distance_to_voorligger") or 0.0
+            )
+            self.true_vehicle_speed = float(
+                self.redis.hget("sim_state", "true_vehicle_speed") or 0.0
+            )
+            self.true_voorligger_speed = float(
+                self.redis.hget("sim_state", "true_voorligger_speed") or 0.0
+            )
+            self.true_vehicle_acceleration = float(
+                self.redis.hget("sim_state", "true_vehicle_acceleration") or 0.0
+            )
+        except TypeError:
+            print(
+                "Warning: TypeError encountered while loading from Redis. Setting all values to 0."
+            )
+            self.true_distance_to_voorligger = 0.0
+            self.true_vehicle_speed = 0.0
+            self.true_voorligger_speed = 0.0
+            self.true_vehicle_acceleration = 0.0
 
     def save_state_to_redis(self):
         self.redis.hset(
@@ -74,29 +131,6 @@ class Reality:
             "sim_state", "true_vehicle_acceleration", self.true_vehicle_acceleration
         )
         self.redis.hset("RealitySimReplay", "realityHZ", 1 / (time.time() - start_time))
-
-    def load_state_from_redis(self):
-        self.true_distance_to_voorligger = float(
-            self.redis.hget("sim_state", "true_distance_to_voorligger") or 0.0
-        )
-        self.true_vehicle_speed = float(
-            self.redis.hget("sim_state", "true_vehicle_speed") or 0.0
-        )
-        self.true_voorligger_speed = float(
-            self.redis.hget("sim_state", "true_voorligger_speed") or 0.0
-        )
-        self.true_vehicle_acceleration = float(
-            self.redis.hget("sim_state", "true_vehicle_acceleration") or 0.0
-        )
-        self.GasRemPedalPosPercentage = float(
-            self.redis.hget("Sensor_Actuator", "GasRemPedalPosPercentage") or 0.0
-        )
-
-    def alternate_voorligger_speed(self):
-        if self.iteration % 2 == 0:
-            self.true_voorligger_speed = 31
-        else:
-            self.true_voorligger_speed = 29
 
     def dummyHzWheelSpeedSensor(self, scaled_elapsed_time):
         # Step 1: Get true_vehicle_speed in meters per second
@@ -143,6 +177,54 @@ class Reality:
             else:
                 self.redis.hset("Sensor_Actuator", "Front_radar_measurable", 999)
 
+    def check_crashed(self):
+        if self.true_distance_to_voorligger < 0:
+            return True
+
+        # Calculate the time to cover the distance at the current speed.
+        # Avoid division by zero.
+        if self.true_vehicle_speed != 0:
+            time_to_reach = self.true_distance_to_voorligger / self.true_vehicle_speed
+            if time_to_reach > MAX_TIME_BETWEEN:
+                return True
+
+        return False
+
+    def log_crash_info(self):
+        # Check if fresh_dump exists and is 0
+        fresh_dump = self.redis.hget("RealitySimReplay", "fresh_dump")
+        if fresh_dump is not None and int(fresh_dump) != 0:
+            return  # Return early if fresh_dump is not 0
+        print("\n ---CRASHED----\n")
+
+        crash_reasons = []
+
+        if self.true_distance_to_voorligger < 0:
+            crash_reasons.append("!!!! Negative distance to voorligger")
+
+        if self.true_vehicle_speed != 0:
+            time_to_reach = self.true_distance_to_voorligger / self.true_vehicle_speed
+            if time_to_reach > MAX_TIME_BETWEEN:
+                crash_reasons.append(
+                    f"!!!! Time to reach {time_to_reach} voorligger exceeds {MAX_TIME_BETWEEN} seconds"
+                )
+
+        duration = time.time() - self.simulation_start_time
+        print(f"Crash detected after {duration:.2f} seconds of simulation.")
+        print(f"State at time of crash:")
+
+        # Log crash info in Redis and print
+        crash_data = {
+            "true_distance_to_voorligger": self.true_distance_to_voorligger,
+            "true_vehicle_speed": self.true_vehicle_speed,
+            "true_voorligger_speed": self.true_voorligger_speed,
+            "true_vehicle_acceleration": self.true_vehicle_acceleration,
+            "crash_reasons": ", ".join(crash_reasons),
+        }
+        for key, value in crash_data.items():
+            self.redis.hset("crash_info", key, value)
+            print(f"  {key}: {value}")
+
     def update(self, elapsed_time, speed_scale_factor=1):
         scaled_elapsed_time = elapsed_time * speed_scale_factor
         # Update the radar counter based on scaled time
@@ -174,35 +256,62 @@ class Reality:
                 self.iteration += 1
                 self.update_sim_params()
                 self.update_car_params()
-                self.alternate_voorligger_speed()
                 values_line = (
                     f"{self.true_vehicle_speed:.3f}".ljust(9)
                     + f"| {self.true_vehicle_acceleration:.3f}".ljust(9)
                     + f"| {realChange:.3f}".ljust(9)
-                    + f"| {self.true_distance_to_voorligger:.3f}".ljust(9)
+                    + f"| {self.GasRemPedalPosPercentage:.1f}".ljust(9)
+                    + f"| {self.true_distance_to_voorligger/self.true_vehicle_speed:.2f}".ljust(
+                        9
+                    )
+                    + f"| {self.true_distance_to_voorligger:.2f}".ljust(9)
                     + f"| {self.true_voorligger_speed:.3f}".ljust(9)
-                    + f"| {self.GasRemPedalPosPercentage:.3f}".ljust(9)
-                    + f"| {1 / (time.time() - start_time)}".ljust(9)
+                    + f"| {1 / (time.time() - start_time):1f}".ljust(5)
                 )
                 print(values_line, end="\r")
             self.bosch_radar_update()
             self.dummyHzWheelSpeedSensor(scaled_elapsed_time)
-        else:
-            self.time_since_reality_update += elapsed_time  # ?
+
+            self.true_vehicle_speed = max(
+                min(self.true_vehicle_speed, MAX_VEHICLE_SPEED), MIN_VEHICLE_SPEED
+            )
+            self.true_voorligger_speed = max(
+                min(self.true_voorligger_speed, MAX_VOORLIGGER_SPEED),
+                MIN_VOORLIGGER_SPEED,
+            )
+            self.true_vehicle_acceleration = max(
+                min(self.true_vehicle_acceleration, MAX_VEHICLE_ACCELERATION),
+                MIN_VEHICLE_ACCELERATION,
+            )
+
+            # Check crash condition
+            if self.check_crashed():
+                self.log_crash_info()  # Log crash info only if fresh_dump is 0
+                self.redis.hset(
+                    "RealitySimReplay", "CRASHED_FLAG", 1
+                )  # Set CRASHED_FLAG
+                # Wait until fresh_dump is 0
+                while True:
+                    fresh_dump = int(
+                        self.redis.hget("RealitySimReplay", "fresh_dump") or 0
+                    )
+                    if fresh_dump == 0:
+                        break
+                    print("Waiting for fresh_dump to be reset...", end="\r")
+                    time.sleep(1)
 
 
 if __name__ == "__main__":
     redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 
-    set_sim_params(redis_client, speed=1.00, frequency=100.00, update_frequency=1.00)
+    input_reality = InputReality(redis_client)
 
     carmanager = CarParamsManager("../car_constants", param_no_to_set=0)
     loaded_cars = carmanager.load_all_cars()
     print(f"Loaded car parameters for: {[car.param_name for car in loaded_cars]}")
 
-    reality = Reality(carmanager, 10, 200, 10, 0, redis_client)
+    reality = Reality(carmanager, redis_client)
 
-    time.sleep(10)
     (
         speed_scale_factor,
         reality_frequency,

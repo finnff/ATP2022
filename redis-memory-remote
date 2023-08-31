@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import argparse
+from os import name
 import redis
 import curses
 import time
@@ -33,6 +34,7 @@ def reset_valuesnosc(r):
         for key in ["RealitySimReplay", "Sensor_Actuator", "sim_state"]:
             r.hset(name=key, mapping=default_values[key])
             print("Reseting" ",", _ + 6, "/10")
+    r.hset("RealitySimReplay", "RESET_FLAG", "1")
 
 
 def reset_values(r, stdscr):
@@ -45,6 +47,7 @@ def reset_values(r, stdscr):
             r.hset(name=key, mapping=default_values[key])
         stdscr.addstr(18 + _, 0, f"Resetting... {_  +6}/10")
         time.sleep(0.2)
+        r.hset("RealitySimReplay", "RESET_FLAG", "1")
         stdscr.refresh()
 
 
@@ -72,7 +75,7 @@ def main(stdscr):
         stdscr.addstr(
             len(keys) + 4,
             0,
-            "Navigate: Arrow Up/Down, Select: Enter, Reset All: Shift+R, FLUSH_ALL: Shift+F, Exit: Esc",
+            "Navigate: Arrow Up/Down, Select: Enter, Reset All: Shift+R, FLUSH_ALL: Shift+F,RESET_FLAG: i, Exit: Esc",
         )
 
         keypress = stdscr.getch()
@@ -96,6 +99,16 @@ def main(stdscr):
             stdscr.addstr(len(hash_data) + 2, 0, "Press any key to go back...")
             stdscr.getch()
             stdscr.clear()
+
+        elif keypress == ord("i") or keypress == ord("I"):
+            stdscr.addstr(len(keys) + 8, 0, " Setting Reset Flag")
+            r.hset(name="sim_state", mapping=default_values["sim_state"])
+            r.hset(name="Sensor_Actuator", mapping=default_values["Sensor_Actuator"])
+            r.hset("RealitySimReplay", "RESET_FLAG", "1")
+            stdscr.addstr(9, 0, "Reset successful! The program will restart.")
+            time.sleep(1)
+            main(stdscr)
+
         elif keypress == ord("R"):
             stdscr.addstr(len(keys) + 6, 0, "Are you sure you want to reset all? (y/n)")
             confirm = stdscr.getch()
@@ -132,6 +145,12 @@ if __name__ == "__main__":
         action="store_true",
         help="Flush all keys from Redis (UNSTABLE)",
     )
+    parser.add_argument(
+        "-i",
+        "--init",
+        action="store_true",
+        help="sets RESET_FLAG for reality re init",
+    )
 
     args = parser.parse_args()
 
@@ -141,5 +160,9 @@ if __name__ == "__main__":
         reset_valuesnosc(r)
     elif args.flush:
         flush_db(r)
+    elif args.init:
+        r.hset(name="sim_state", mapping=default_values["sim_state"])
+        r.hset(name="sensor_actuator", mapping=default_values["Sensor_Actuator"])
+        r.hset("realitysimreplay", "reset_flag", "1")
     else:
         curses.wrapper(main)

@@ -57,7 +57,6 @@ class SpeedSensor:
             self.redis_client.hget("sim_state", "true_vehicle_speed")
             or 0.0
         )
-        print(self.vehicle_speed, "ssss")
         return self.vehicle_speed
 
 

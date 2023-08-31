@@ -14,8 +14,8 @@ tmux split-window -v -t scripts:0
 tmux send-keys -t scripts:0.1 'python3 frpCPU.py' C-m
 
 # Create another new pane and run the third command
-tmux split-window -h -t scripts:0
-tmux send-keys -t scripts:0.2 'python3 dashboard.py' C-m
+# tmux split-window -h -t scripts:0
+# tmux send-keys -t scripts:0.2 'python3 dashboard.py' C-m
 
 # And so on for other commands
 
