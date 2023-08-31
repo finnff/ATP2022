@@ -31,6 +31,31 @@ def ext_load_car_from_redis(alternative_redis_client):
         save_car_to_redis(alternative_redis_client, CarParams(*defalutcp))
 
 
+def save_car_to_redis(redis_client, car_params):
+    field_values = {
+        "param_name": car_params.param_name,
+        "max_acceleration": car_params.max_acceleration,
+        "max_deceleration": car_params.max_deceleration,
+        "wheel_diameter": car_params.wheel_diameter,
+        "encoder_cpr": car_params.encoder_cpr,
+        "seconds_distance": car_params.seconds_distance,
+    }
+    redis_client.hset("CurrentlyLoadedCarParams", mapping=field_values)
+
+
+def load_car_from_json(file_path):
+    with open(file_path, "r") as json_file:
+        data = json.load(json_file)
+        return CarParams(
+            data["Param Name"],
+            data["Max Acceleration"],
+            data["Max Deceleration"],
+            data["Wheel Diameter"],
+            data["Encoder CPR"],
+            data["Seconds Distance"],
+        )
+
+
 class CarParams:
     def __init__(
         self,
@@ -57,18 +82,6 @@ class CarParams:
             f"WheelSpeed CPR: {self.encoder_cpr}\n"
             f"Sec Dist: {self.seconds_distance}\n\n"
         )
-
-
-def save_car_to_redis(redis_client, car_params):
-    field_values = {
-        "param_name": car_params.param_name,
-        "max_acceleration": car_params.max_acceleration,
-        "max_deceleration": car_params.max_deceleration,
-        "wheel_diameter": car_params.wheel_diameter,
-        "encoder_cpr": car_params.encoder_cpr,
-        "seconds_distance": car_params.seconds_distance,
-    }
-    redis_client.hset("CurrentlyLoadedCarParams", mapping=field_values)
 
 
 class CarParamsManager:

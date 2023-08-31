@@ -217,11 +217,10 @@ if __name__ == "__main__":
     input_reality = InputReality(redis_client)
 
     list_of_test_cases = [
-        ([1.1, 0, 0.1, 100], ["p=5", "mV=1", "p=5", "cc", "R"]),
-        ([1.1, 0, 0.1, 100], ["p=5", "mV=1", "p=5", "cc", "R"]),
-        ([1.1, 0, 0.1, 100], ["p=5", "mV=1", "p=5", "cc", "R"]),
-        ([1.1, 0, 0.1, 100], ["p=5", "mV=1", "p=5", "cc", "R"]),
-        ([1.1, 0, 0.1, 100], ["p=5", "mV=1", "p=5", "cc", "R"]),
+        (
+            [100, 2, 1190.1, 10000],
+            ["p=5", "mV=1", "p=5", "mAX=-1.1" "p=5", "mV=1", "p=5", "cc", "R"],
+        ),
     ]
     # list_of_test_cases = generate_valid_test_cases(50)
 

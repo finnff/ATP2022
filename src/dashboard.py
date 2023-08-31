@@ -53,7 +53,13 @@ class RedisDataCache:
 
 # Initialize Redis client
 r = redis.Redis(host="localhost", port=6379, db=0)
-hash_names = ["Sensor_Actuator", "sim_state", "RealitySimReplay", "FRPloggedInfo"]
+hash_names = [
+    "Sensor_Actuator",
+    "sim_state",
+    "RealitySimReplay",
+    "TestResults",
+    "FRPloggedInfo",
+]
 data_cache = RedisDataCache(r, hash_names, interval=UPDATE_RATE, max_points=100)
 
 # Initialize the Dash app
@@ -187,7 +193,7 @@ class SpecialGraph:
 graph2 = GraphGenerator("Sensor_Actuator", data_cache, max_points=100)
 graph1 = GraphGenerator("sim_state", data_cache, max_points=100)
 graph3 = GraphGenerator("RealitySimReplay", data_cache, max_points=100)
-graph4 = GraphGenerator("FRPloggedInfo", data_cache, max_points=100)
+graph4 = GraphGenerator("TestResults", data_cache, max_points=100)
 # graph9 = SpecialGraph(data_cache, max_points=100)
 
 # Dash Layout

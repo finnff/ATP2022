@@ -199,7 +199,7 @@ def main():
         resultforce = combined_interface.actuator_interface.receive_data()
 
         print(
-            f"c++ Speed reading:{current_speed}, True Speed: : {curr_Truespeed },  ( /n"
+            f"c++ Speed reading:{current_speed}, True Speed: : {curr_Truespeed },   /n"
         )
         print(
             f"Current Speed: {current_speed}, Current Distance: {current_distance}, Gas Force: {gas_force}, Brake Force: {brake_force},Result Force: {resultforce}"
