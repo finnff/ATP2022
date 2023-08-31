@@ -110,6 +110,9 @@ class Reality:
             self.true_vehicle_acceleration = float(
                 self.redis.hget("sim_state", "true_vehicle_acceleration") or 0.0
             )
+            self.GasRemPedalPosPercentage = float(
+                self.redis.hget("Sensor_Actuator", "GasRemPedalPosPercentage") or 0.0
+            )
         except TypeError:
             print(
                 "Warning: TypeError encountered while loading from Redis. Setting all values to 0."

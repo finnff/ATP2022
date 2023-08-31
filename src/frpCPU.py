@@ -108,7 +108,7 @@ def apply_control(interface, control_data):
         interface.set_braking_pedal_force(value)
 
 
-# # Pure Function to get sensor data
+# Pure Function to get sensor data
 # # @timing_decorator
 # def get_sensor_data(interface):
 #     print("xxx")
